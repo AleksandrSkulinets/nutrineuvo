@@ -4,16 +4,17 @@
   "private": true,
   "dependencies": {
     "cra-template": "1.2.0",
+    "framer-motion": "^12.4.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1"
   },
- "scripts": {
-  "start": "react-scripts start",
-  "build": "cross-env PUBLIC_URL=/wordpress_7/wp-content/reactpress/apps/nutrineuvo/build react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject"
- },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "cross-env PUBLIC_URL=/wordpress_7/wp-content/reactpress/apps/nutrineuvo/build react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
