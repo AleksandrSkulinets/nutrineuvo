@@ -6,10 +6,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'], 
+        roboto: ['Roboto', 'serif'], 
       },
       backdropFilter: {
-        'blur-5': 'blur(5px)', 
+        'blur-3': 'blur(3px)', 
       },
     },
   },
@@ -17,8 +17,8 @@ module.exports = {
    
     function ({ addUtilities }) {
       const newUtilities = {
-        '.webkit-backdrop-blur-5': {
-          '-webkit-backdrop-filter': 'blur(5px)', 
+        '.webkit-backdrop-blur-3': {
+          '-webkit-backdrop-filter': 'blur(3px)', 
         },
       };
       addUtilities(newUtilities, ['responsive', 'hover']);

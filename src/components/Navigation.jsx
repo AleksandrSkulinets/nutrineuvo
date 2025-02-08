@@ -94,7 +94,7 @@ import Linkedin  from "./icons/Linkedin";
                                   variants={mobileLinkVars}
                                   whileHover={{ scale: 1.1 }}
                                   whileTap={{ scale: 0.95 }}
-                                  className='py-4 text-2xl font-poppins uppercase font-semibold text-[#404040] hover:text-gray-500'
+                                  className='py-4 text-2xl font-roboto uppercase font-semibold text-[#404040] hover:text-gray-500'
                               >
                                   <a 
                                       href={link.href} 
@@ -106,7 +106,7 @@ import Linkedin  from "./icons/Linkedin";
                                   </a>
                               </motion.li>
                           ))}
-                          <div className="mt-20">
+                          <div className="mt-40">
                             <div className="flex w-[150px] justify-around mx-auto ">
                                 <div className="transition duration-200 hover:scale-110"><Facebook/></div>
                                 <div className="transition duration-200 hover:scale-110"><Instagram/></div>
