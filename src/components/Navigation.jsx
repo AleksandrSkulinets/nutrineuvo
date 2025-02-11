@@ -57,7 +57,7 @@ import Linkedin  from "./icons/Linkedin";
       };
   
       return (
-          <div className='w-full max-w-[1920px] h-[65px] mx-auto flex justify-between items-center backdrop-blur-sm bg-white/30 z-10'>
+          <div className='w-full h-[65px] mx-auto flex justify-between items-center backdrop-blur-sm bg-white/30 z-10'>
               <div className='flex m-1 z-50 size-[75px]'>
               <a className="flex" href="/"><img src={logo} alt="Nutri Neuvo Logo" /></a>
               </div>
