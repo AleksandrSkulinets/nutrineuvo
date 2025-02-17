@@ -2,7 +2,7 @@ import Video_bg from "../assets/Video_bg.mp4";
 
 export default function Hero() {
   return (
-    <section>
+    <div>
       <div className='relative flex flex-col w-full h-screen'>
         <video 
           src={Video_bg} 
@@ -10,6 +10,7 @@ export default function Hero() {
           autoPlay 
           loop 
           muted 
+          controls="false"
           className='absolute inset-0 w-full h-full object-cover'
         />
         <div className='relative w-full h-screen flex flex-col justify-center items-center text-center mt-24'>
@@ -32,6 +33,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

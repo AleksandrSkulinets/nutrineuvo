@@ -1,6 +1,6 @@
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
-
+import Footer from "./components/Footer";
 function App() {
   return (
     <>
@@ -8,6 +8,7 @@ function App() {
        <Navigation />
       </header>
       <Home />
+      <Footer />
     </>
   );
 }
