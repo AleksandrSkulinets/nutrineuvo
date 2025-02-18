@@ -24,7 +24,7 @@ export default function FooterContent() {
         {/* Legal Section */}
         <div className='pt-4 text-gray-400 text-sm mx-10'>
           <p className='text-center'>
-            &copy; 2024 YourCompany. All Rights Reserved. | 
+            &copy; 2025 Nutrineuvo.fi. All Rights Reserved. | 
             <a href='/privacy-policy' className='text-gray-200 hover:underline'> Privacy Policy</a> | 
             <a href='/terms' className='text-gray-200 hover:underline'> Terms of Service</a>
           </p>

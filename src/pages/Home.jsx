@@ -1,11 +1,14 @@
 import Hero from "../components/Hero"
 import LastBlogPosts from "../components/LastBlog"
-export default function 
-() {
+import About from "../components/About"
+
+export default function Home() {
   return (
     <div>
       <section><Hero /></section>
-        <section><LastBlogPosts /></section>
+      <section><About /></section>
+      <section><LastBlogPosts /></section>
     </div>
   )
 }
+
