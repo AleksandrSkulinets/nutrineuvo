@@ -17,7 +17,7 @@ const LastBlogPosts = () => {
   ];
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-48 text-white">
+    <section className="mx-auto max-w-5xl px-4 py-20 text-white">
       <motion.h1
         initial={{ y: 48, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}

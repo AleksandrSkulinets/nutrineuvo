@@ -57,6 +57,7 @@ import Linkedin  from "./icons/Linkedin";
       };
   
       return (
+        <header className="z-50 fixed w-full">
           <div className='w-full h-[65px] mx-auto flex justify-between items-center backdrop-blur-sm bg-white/30 z-10'>
               <div className='flex m-1 z-50 size-[75px]'>
               <a className="flex" href="/"><img src={logo} alt="Nutri Neuvo Logo" /></a>
@@ -117,6 +118,7 @@ import Linkedin  from "./icons/Linkedin";
                   )}
               </AnimatePresence>
           </div>
+          </header>
       )
   }
   
