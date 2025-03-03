@@ -5,10 +5,13 @@
   "dependencies": {
     "cra-template": "1.2.0",
     "framer-motion": "^12.4.1",
+    "i18next": "^23.10.0",
+    "i18next-browser-languagedetector": "^7.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^14.0.5",
     "react-router-dom": "^7.1.5",
-    "react-scripts": "5.0.1"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
