@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const BlogPost = () => {
-  const { slug } = useParams(); // Get the slug from the URL
-  const { i18n } = useTranslation(); // Get current language
+  const { slug } = useParams();
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [translations, setTranslations] = useState({});
@@ -15,7 +15,7 @@ const BlogPost = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    
+
     const apiUrl = `https://nutrineuvo.fi/wp-json/wp/v2/posts?slug=${slug}&_embed`;
 
     fetch(apiUrl)
@@ -23,7 +23,7 @@ const BlogPost = () => {
       .then((data) => {
         if (data.length > 0) {
           setPost(data[0]);
-          setTranslations(data[0].translations || {}); // Store linked translations
+          setTranslations(data[0].translations || {});
         } else {
           setError('Post not found');
         }
@@ -36,34 +36,50 @@ const BlogPost = () => {
       });
   }, [slug]);
 
-  // Automatically switch post when language changes
   useEffect(() => {
-    const translatedSlug = translations[i18n.language]?.slug; // Get the slug for the current language
-    if (translatedSlug) {
-      navigate(`/blog/${translatedSlug}`); // Redirect to translated post
-    }
-  }, [i18n.language, translations, navigate]);
+    if (!post) return;
 
-  if (loading) return <p className="text-center text-white">Loading...</p>;
-  if (error) return <p className="text-center text-red-500">{error}</p>;
+    const translatedSlug = translations[i18n.language]?.slug;
+    if (translatedSlug && translatedSlug !== slug) {
+      navigate(`/blog/${translatedSlug}`);
+    }
+  }, [i18n.language, translations, navigate, post, slug]);
+
+  if (loading) {
+    return (
+      <div className="flex space-x-2 justify-center bg-white h-screen">
+        <div className="h-1.5 w-1.5 bg-zinc-700 rounded-full animate-bounce [animation-delay:-0.3s]" />
+        <div className="h-1.5 w-1.5 bg-zinc-700 rounded-full animate-bounce [animation-delay:-0.15s]" />
+        <div className="h-1.5 w-1.5 bg-zinc-700 rounded-full animate-bounce" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-20 text-white min-h-screen">
-      <motion.h1
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ ease: 'easeInOut', duration: 0.75 }}
-        className="mb-6 text-3xl md:text-4xl font-black uppercase text-zinc-400"
-      >
-        {post.title.rendered}
-      </motion.h1>
-      <p className="text-sm uppercase text-zinc-700 mb-4">
-        {new Date(post.date).toLocaleDateString()}
-      </p>
-      <div
-        className="text-lg text-zinc-500"
-        dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-      />
+      {post && (
+        <>
+          <motion.h1
+            initial={{ y: 48, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ ease: 'easeInOut', duration: 0.75 }}
+            className="mb-6 text-3xl md:text-4xl font-black uppercase text-zinc-400"
+          >
+            {post.title.rendered}
+          </motion.h1>
+          <p className="text-sm uppercase text-zinc-700 mb-4">
+            {new Date(post.date).toLocaleDateString()}
+          </p>
+          <div
+            className="text-lg text-zinc-500"
+            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+          />
+        </>
+      )}
     </section>
   );
 };

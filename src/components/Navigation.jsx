@@ -6,8 +6,10 @@ import IconClose from "./icons/IconClose";
 import Facebook from "./icons/Facebook";
 import Instagram from "./icons/Instagram";
 import Linkedin from "./icons/Linkedin";
+import UserIcon from "./icons/UserIcon";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 
 const Navigation = () => {
   const [open, setOpen] = useState(false);
@@ -48,12 +50,12 @@ const Navigation = () => {
       <div className="w-full h-[65px] mx-auto flex justify-between items-center backdrop-blur-sm bg-white/30 z-10">
         <div className="flex m-1 z-50 size-[75px]">
           <Link className="flex" to="/">
-            <img src={logo} alt="Nutri Neuvo Logo" />
+            <img src={logo} alt="Nutri Neuvo" />
           </Link>
         </div>
 
         {/* Menu for larger screens */}
-        <nav className="md:flex hidden mr-4 space-x-8">
+        <nav className="md:flex items-center hidden mr-4 space-x-8">
           <ul className="md:flex hidden">
             {links.map((link, index) => (
               <li key={index} className="mx-4 font-semibold text-[#404040]">
@@ -67,21 +69,35 @@ const Navigation = () => {
               </li>
             ))}
           </ul>
+
+
           <div className="flex gap-4 ml-4">
             {["fi", "sv", "en"].map((lng) => (
               <button
                 key={lng}
                 onClick={() => changeLanguage(lng)}
-                className={`text-gray-600 hover:text-black font-semibold transition ${
-                  i18n.language === lng ? "text-black font-bold" : ""
-                }`}
+                className={`text-gray-600 hover:text-black font-semibold transition ${i18n.language === lng ? "text-black font-bold" : ""
+                  }`}
               >
                 {lng.toUpperCase()}
               </button>
             ))}
           </div>
+          <Link
+            to="/login"
+            className="hidden md:flex items-center ml-4 px-2 space-x-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
+          >
+            <UserIcon className="w-6 h-6" /> {/* Icon will inherit text color */}
+            {t("login") || "Login"}
+          </Link>
         </nav>
-
+        <Link
+          to="/login"
+          className="md:hidden flex items-center ml-4 px-2 space-x-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
+        >
+          <UserIcon className="w-6 h-6" /> {/* Icon will inherit text color */}
+          {t("login") || "Login"}
+        </Link>
         {/* Hamburger icon */}
         <div onClick={handleClick} className="md:hidden z-50 text-2xl px-4">
           {!open ? <IconMenu /> : <IconClose />}
@@ -117,19 +133,19 @@ const Navigation = () => {
                   <button
                     key={lng}
                     onClick={() => changeLanguage(lng)}
-                    className={`text-lg mx-2 text-gray-600 hover:text-black font-semibold transition ${
-                      i18n.language === lng ? "text-black font-bold" : ""
-                    }`}
+                    className={`text-lg mx-2 text-gray-600 hover:text-black font-semibold transition ${i18n.language === lng ? "text-black font-bold" : ""
+                      }`}
                   >
                     {lng.toUpperCase()}
                   </button>
                 ))}
               </div>
+
               <div className="mt-20">
                 <div className="flex w-[150px] justify-around mx-auto">
-                  <div className="transition duration-200 hover:scale-110"><Facebook /></div>
-                  <div className="transition duration-200 hover:scale-110"><Instagram /></div>
-                  <div className="transition duration-200 hover:scale-110"><Linkedin /></div>
+                  <div className="transition duration-200 hover:scale-110"><Link to="https://www.facebook.com/profile.php?id=61573966495207"><Facebook /></Link></div>
+                  <div className="transition duration-200 hover:scale-110"><Link to="https://instagram.com/nutrineuvo"><Instagram /></Link></div>
+                  <div className="transition duration-200 hover:scale-110"><Link to="https://linkedin.com/company/nutrineuvo/"><Linkedin /></Link></div>
                 </div>
               </div>
             </motion.ul>

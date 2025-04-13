@@ -1,9 +1,16 @@
+
+
 const enTranslations = {
   home: "Home",
   about: "About",
   blog: "Blog",
   contacts: "Contacts",
   language: "Language",
+  homePage: {
+    title:  "Nutrineuvo - your reliable partner on your journey towards a healthier life.",
+    description: "Nutrineuvo is an online service that helps you achieve a healthier lifestyle with personalized nutrition plans, expert advice, and easy-to-use meal planning tools. Whether you're following a specific diet or looking for healthier eating options, Nutrineuvo provides everything you need to succeed."
+
+  },
   hero: {
     title: "Nutrineuvo",
     description: "Nutrineuvo is not just a service – it is a reliable partner on your journey towards a healthier life.",
@@ -129,6 +136,79 @@ const enTranslations = {
   blogSection: {
     lastBlogPosts: "Last Blog Posts"
   },
+  blogPage: {
+    "title": "Latest Blog Posts",
+    "readMore": "Read More",
+    "loadMore": "Load More"
+  },
+  underConstruction: {
+    "title": "Under Construction",
+    "message": "This page is partially completed and may still change. Stay tuned and come back soon to explore the full content!",
+    "close": "Close"
+  },
+  terms: {
+    title: "Terms of Service",
+    description: "Welcome to Nutrineuvo! By using our service, you accept the following terms and conditions.",
+    section1: {
+      title: "General",
+      content: "Nutrineuvo is an online platform provided by Chefboksi Finland Oy that connects users with professional nutritionists."
+    },
+    section2: {
+      title: "Service Description",
+      content: "The service provides a platform where users can book consultations, receive personalized recipes, and communicate with experts."
+    },
+    section3: {
+      title: "Registration and User Account",
+      content: "Using the service requires account creation. Users must provide accurate and up-to-date information."
+    },
+    section4: {
+      title: "Use of Service",
+      content: "The service is available for individuals aged 18 and above. Users agree to use the service lawfully."
+    },
+    section5: {
+      title: "Payments and Cancellations",
+      content: "Nutrition consultations and other paid services are charged according to agreed prices."
+    },
+    section6: {
+      title: "Liability Limitations",
+      content: "The service provider is not responsible for the accuracy of nutritionists' advice or its impact on users' health."
+    },
+    section7: {
+      title: "Privacy and Personal Data",
+      content: "User data is processed in accordance with the privacy policy."
+    },
+    section8: {
+      title: "Intellectual Property Rights",
+      content: "The content of the service is owned by the provider unless otherwise stated."
+    },
+    section9: {
+      title: "Applicable Law and Dispute Resolution",
+      content: "These terms are governed by Finnish commercial law. Disputes will be primarily resolved through negotiation."
+    },
+    section10: {
+      title: "Contact Information",
+      content: "If you have any questions, please contact us at info@nutrineuvo.fi."
+    }
+  },
+  privacyPolicy: {
+    title: "Privacy Policy",
+    general: {
+      title: "General Information",
+      content: "We collect and process personal data of our customers and nutritionists. We need this data to provide nutrition advice services and personalized recipes in accordance with the Terms of Service and Agreement. Privacy is important to us, and we consider it in our daily operations. If you have any questions regarding the processing of personal data, you can contact: Chefboksi Finland Oy, info@nutrineuvo.fi"
+    },
+    customerRegistry: {
+      title: "Customer Registry",
+      content: "Our customer registry contains the following personal data of the customers and their employees using the service: First and last name, Phone numbers, Email addresses, Payment information, User accounts."
+    },
+    nutritionistRegistry: {
+      title: "Nutritionist Registry",
+      content: "Our nutritionist registry contains the following personal data of nutritionists using the service: First and last name, Phone numbers, Email addresses, Postal addresses, Personal identity number, Bank account number."
+    },
+    dataProcessing: {
+      title: "Processing of Personal Data in the Nutrineuvo Service",
+      content: "These privacy principles apply to the processing of data in the Nutrineuvo web service. Currently, the service is available on an online platform, where users can benefit from nutrition advice and personalized recipes. Logging into and using the service requires the user's consent for processing of email, phone number, and/or username under the nutrineuvo.fi domain. The user must give consent for the processing of data required in the customer registry before using the service."
+    }
+  }
 };
 
 

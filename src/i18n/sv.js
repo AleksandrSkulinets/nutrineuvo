@@ -4,6 +4,10 @@ const svTranslations = {
   blog: "Blogg",
   contacts: "Kontakter",
   language: "Språk",
+  homePage: {
+    title: "Nutrineuvo - din pålitliga partner på din resa mot ett hälsosammare liv.",
+    description: "Nutrineuvo är en online-tjänst som hjälper dig att uppnå en hälsosammare livsstil med personliga kostplaner, expertvägledning och användarvänliga måltidsplaneringsverktyg. Oavsett om du följer en speciell diet eller söker hälsosammare matalternativ, erbjuder Nutrineuvo allt du behöver för att lyckas."
+  },
   hero: {
     title: "Nutrineuvo",
     description: "Nutrineuvo är inte bara en tjänst – det är en pålitlig partner på din resa mot ett hälsosammare liv.",
@@ -129,6 +133,79 @@ const svTranslations = {
   blogSection: {
     lastBlogPosts: "Senaste blogginlägg"
   },
+  blogPage:  {
+    "title": "Senaste blogginlägg",
+    "readMore": "Läs mer",
+    "loadMore": "Ladda mer"
+  },
+  underConstruction: {
+    "title": "Under konstruktion",
+    "message": "Den här sidan är delvis färdig och kan fortfarande ändras. Håll dig uppdaterad och kom snart tillbaka för att utforska det fullständiga innehållet!",
+    "close": "Stäng"
+  },
+  terms: {
+    title: "Användarvillkor",
+    description: "Välkommen till Nutrineuvo! Genom att använda vår tjänst godkänner du följande användarvillkor.",
+    section1: {
+      title: "Allmänt",
+      content: "Nutrineuvo är en onlineplattform som tillhandahålls av Chefboksi Finland Oy och kopplar samman användare med professionella dietister."
+    },
+    section2: {
+      title: "Tjänstebeskrivning",
+      content: "Tjänsten tillhandahåller en plattform där användare kan boka konsultationer, få personliga recept och kommunicera med experter."
+    },
+    section3: {
+      title: "Registrering och användarkonto",
+      content: "För att använda tjänsten krävs att ett konto skapas. Användaren måste tillhandahålla korrekta och aktuella uppgifter."
+    },
+    section4: {
+      title: "Användning av tjänsten",
+      content: "Tjänsten är tillgänglig för personer över 18 år. Användare förbinder sig att använda tjänsten lagligt."
+    },
+    section5: {
+      title: "Betalningar och avbokningar",
+      content: "Näringsrådgivning och andra betalda tjänster debiteras enligt överenskomna priser."
+    },
+    section6: {
+      title: "Ansvarsbegränsningar",
+      content: "Tjänsteleverantören ansvarar inte för riktigheten av dietisternas råd eller deras inverkan på användarens hälsa."
+    },
+    section7: {
+      title: "Integritet och personuppgifter",
+      content: "Användarnas personuppgifter behandlas i enlighet med sekretesspolicyn."
+    },
+    section8: {
+      title: "Immateriella rättigheter",
+      content: "Tjänstens innehåll tillhör leverantören om inte annat anges."
+    },
+    section9: {
+      title: "Tillämplig lag och tvistlösning",
+      content: "Dessa villkor regleras av finsk handelslag. Tvister löses i första hand genom förhandling."
+    },
+    section10: {
+      title: "Kontaktinformation",
+      content: "Om du har några frågor, vänligen kontakta oss på info@nutrineuvo.fi."
+    }
+  },
+  privacyPolicy: {
+    title: "Integritetspolicy",
+    general: {
+      title: "Allmänt",
+      content: "Vi samlar in och behandlar personuppgifter om våra kunder och nutritionister. Vi behöver dessa uppgifter för att erbjuda näringsrådgivning och personliga recept enligt tjänstens användarvillkor och avtal. Integritet är viktigt för oss, och vi beaktar det i vår dagliga verksamhet. Vid frågor om behandling av personuppgifter kan du kontakta: Chefboksi Finland Oy, info@nutrineuvo.fi"
+    },
+    customerRegistry: {
+      title: "Kundregister",
+      content: "Vårt kundregister innehåller följande personuppgifter om kunder och deras anställda som använder tjänsten: För- och efternamn, Telefonnummer, E-postadresser, Betalningsinformation, Användarkonton."
+    },
+    nutritionistRegistry: {
+      title: "Näringsspecialistregister",
+      content: "Vårt register för näringsspecialister innehåller följande personuppgifter om näringsspecialister som använder tjänsten: För- och efternamn, Telefonnummer, E-postadresser, Postadresser, Personnummer, Bankkontonummer."
+    },
+    dataProcessing: {
+      title: "Behandling av personuppgifter i Nutrineuvo-tjänsten",
+      content: "Dessa integritetsprinciper gäller för behandling av data i Nutrineuvo-webbtjänsten. För närvarande är tjänsten tillgänglig på en onlineplattform där användare kan dra nytta av näringsrådgivning och personliga recept. Inloggning och användning av tjänsten kräver användarens samtycke för behandling av e-post, telefonnummer och/eller användarnamn under nutrineuvo.fi-domänen. Användaren måste ge samtycke till behandling av de uppgifter som krävs i kundregistret innan tjänsten används."
+    }
+  }
 };
 
 
