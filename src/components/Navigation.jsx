@@ -93,7 +93,7 @@ const Navigation = () => {
         </nav>
         <Link
           to="/login"
-          className="md:hidden flex items-center ml-4 px-2 space-x-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
+          className="md:hidden flex items-center px-2 space-x-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
         >
           <UserIcon className="w-6 h-6" /> {/* Icon will inherit text color */}
           {t("login") || "Login"}

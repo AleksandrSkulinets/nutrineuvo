@@ -10,6 +10,7 @@ import BlogPost from './components/BlogPost';
 import TermsOfService from './pages/Terms-of-service';
 import PrivacyPolicy from './pages/Privancy-policy';
 import UnderConstruction from './components/UnderConstruction';
+import Login from './pages/Login';
 import { useState } from "react";
 function App() {
   const [modalOpen, setModalOpen] = useState(true);
@@ -25,6 +26,7 @@ function App() {
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} /> 
       </Routes>
       <Footer />
