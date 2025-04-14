@@ -1,47 +1,50 @@
-import logo from "../assets/nutri-neuvo-logo.svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext"; // Import AuthContext
+import { useTranslation } from "react-i18next";
+import logo from "../assets/nutri-neuvo-logo.svg";
 import IconMenu from "./icons/IconMenu";
 import IconClose from "./icons/IconClose";
 import Facebook from "./icons/Facebook";
 import Instagram from "./icons/Instagram";
 import Linkedin from "./icons/Linkedin";
 import UserIcon from "./icons/UserIcon";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-
 
 const Navigation = () => {
   const [open, setOpen] = useState(false);
-  const { t, i18n } = useTranslation(); // translation and i18n instance
+  const { isLoggedIn, user, logout } = useContext(AuthContext); // Access auth state from context
+  const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+
   const handleClick = () => setOpen(!open);
   const handleLinkClick = () => setOpen(false);
 
-  // Change language function
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-    localStorage.setItem("i18nextLng", lng); // Store selected language in localStorage
+    localStorage.setItem("i18nextLng", lng);
   };
 
-  // Links (translated)
+  const handleLogout = () => {
+    logout(); // Call logout from context
+    setOpen(false);
+    navigate("/");
+  };
+
   const links = [
     { title: t("home"), to: "/" },
     { title: t("about"), to: "/about" },
     { title: t("blog"), to: "/blog" },
-    { title: t("contacts"), to: "/contacts" }
+    { title: t("contacts"), to: "/contacts" },
   ];
 
   useEffect(() => {
-    // Ensure language is set on page load, checking `localStorage`
     const storedLanguage = localStorage.getItem("i18nextLng");
-
     if (storedLanguage) {
-      // Set language from localStorage
       i18n.changeLanguage(storedLanguage);
     } else {
-      // If no language stored, check browser's language setting
-      const browserLanguage = navigator.language.split('-')[0]; // Get base language code (en, fi, sv)
-      i18n.changeLanguage(browserLanguage); // Set browser language if no stored language
+      const browserLanguage = navigator.language.split('-')[0];
+      i18n.changeLanguage(browserLanguage);
     }
   }, [i18n]);
 
@@ -54,7 +57,7 @@ const Navigation = () => {
           </Link>
         </div>
 
-        {/* Menu for larger screens */}
+        {/* Desktop Nav */}
         <nav className="md:flex items-center hidden mr-4 space-x-8">
           <ul className="md:flex hidden">
             {links.map((link, index) => (
@@ -70,40 +73,66 @@ const Navigation = () => {
             ))}
           </ul>
 
-
           <div className="flex gap-4 ml-4">
             {["fi", "sv", "en"].map((lng) => (
               <button
                 key={lng}
                 onClick={() => changeLanguage(lng)}
-                className={`text-gray-600 hover:text-black font-semibold transition ${i18n.language === lng ? "text-black font-bold" : ""
-                  }`}
+                className={`text-gray-600 hover:text-black font-semibold transition ${i18n.language === lng ? "text-black font-bold" : ""}`}
               >
                 {lng.toUpperCase()}
               </button>
             ))}
           </div>
+
+          {isLoggedIn ? (
+            <>
+              {user && (
+                <span className="text-sm text-gray-600 ml-2">Hi, {user.user_nicename}</span>
+              )}
+              <button
+                onClick={handleLogout}
+                className="ml-4 px-3 py-2 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg font-semibold transition"
+              >
+                {t("logout") || "Logout"}
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="hidden md:flex items-center ml-4 px-2 space-x-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
+            >
+              <UserIcon className="w-6 h-6" />
+              {t("login") || "Login"}
+            </Link>
+          )}
+        </nav>
+
+        {/* Mobile login/logout */}
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogout}
+            className="md:hidden flex items-center px-2 py-2 text-red-500 border border-red-500 rounded-lg font-semibold hover:bg-red-500 hover:text-white transition"
+          >
+            <UserIcon className="w-6 h-6 mr-1" />
+            {t("logout") || "Logout"}
+          </button>
+        ) : (
           <Link
             to="/login"
-            className="hidden md:flex items-center ml-4 px-2 space-x-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
+            className="md:hidden flex items-center px-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
           >
-            <UserIcon className="w-6 h-6" /> {/* Icon will inherit text color */}
+            <UserIcon className="w-6 h-6" />
             {t("login") || "Login"}
           </Link>
-        </nav>
-        <Link
-          to="/login"
-          className="md:hidden flex items-center px-2 space-x-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
-        >
-          <UserIcon className="w-6 h-6" /> {/* Icon will inherit text color */}
-          {t("login") || "Login"}
-        </Link>
+        )}
+
         {/* Hamburger icon */}
         <div onClick={handleClick} className="md:hidden z-50 text-2xl px-4">
           {!open ? <IconMenu /> : <IconClose />}
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile Menu */}
         <AnimatePresence>
           {open && (
             <motion.ul
@@ -128,17 +157,36 @@ const Navigation = () => {
                   </Link>
                 </motion.li>
               ))}
+
               <div className="mt-20">
                 {["fi", "sv", "en"].map((lng) => (
                   <button
                     key={lng}
                     onClick={() => changeLanguage(lng)}
-                    className={`text-lg mx-2 text-gray-600 hover:text-black font-semibold transition ${i18n.language === lng ? "text-black font-bold" : ""
-                      }`}
+                    className={`text-lg mx-2 text-gray-600 hover:text-black font-semibold transition ${i18n.language === lng ? "text-black font-bold" : ""}`}
                   >
                     {lng.toUpperCase()}
                   </button>
                 ))}
+              </div>
+
+              <div className="mt-10">
+                {isLoggedIn ? (
+                  <button
+                    onClick={handleLogout}
+                    className="px-6 py-3 bg-red-500 text-white rounded-lg font-semibold transition hover:bg-red-600"
+                  >
+                    {t("logout") || "Logout"}
+                  </button>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={handleLinkClick}
+                    className="px-6 py-3 bg-[#07be61] text-white rounded-lg font-semibold transition hover:bg-[#06a652]"
+                  >
+                    {t("login") || "Login"}
+                  </Link>
+                )}
               </div>
 
               <div className="mt-20">
