@@ -144,68 +144,107 @@ const fiTranslations = {
     "close": "Sulje"
   },
   terms: {
-    title: "Käyttöehdot",
-    description: "Tervetuloa käyttämään Nutrineuvo-palvelua! Käyttämällä palveluamme hyväksyt seuraavat käyttöehdot.",
-    section1: {
-      title: "Yleistä",
-      content: "Nutrineuvo on Chefboksi Finland Oy:n tarjoama verkkopalvelu, joka yhdistää erityisruokavalioita noudattavat käyttäjät päteviin ravitsemusterapeutteihin."
-    },
-    section2: {
-      title: "Palvelun kuvaus",
-      content: "Palvelu tarjoaa alustan, jossa käyttäjä voi varata neuvonta-aikoja, saada yksilöllisiä reseptejä ja kommunikoida asiantuntijoiden kanssa."
-    },
-    section3: {
-      title: "Rekisteröityminen ja käyttäjätili",
-      content: "Palvelun käyttö edellyttää tilin luomista. Käyttäjän tulee antaa oikeat ja ajantasaiset tiedot."
-    },
-    section4: {
-      title: "Palvelun käyttö",
-      content: "Palvelua voivat käyttää kaikki 18 vuotta täyttäneet henkilöt. Käyttäjä sitoutuu käyttämään palvelua lainmukaisesti."
-    },
-    section5: {
-      title: "Maksut ja peruutukset",
-      content: "Ravitsemusneuvonta ja muut maksulliset palvelut veloitetaan sovittujen hintojen mukaisesti."
-    },
-    section6: {
-      title: "Vastuunrajoitukset",
-      content: "Palveluntarjoaja ei vastaa ravitsemusterapeuttien antamien neuvojen oikeellisuudesta tai niiden vaikutuksista käyttäjän terveyteen."
-    },
-    section7: {
-      title: "Tietosuoja ja henkilötiedot",
-      content: "Käyttäjän henkilötietoja käsitellään tietosuojaselosteen mukaisesti."
-    },
-    section8: {
-      title: "Immateriaalioikeudet",
-      content: "Palvelun sisältö on palveluntarjoajan omaisuutta, ellei toisin mainita."
-    },
-    section9: {
-      title: "Sovellettava laki ja riitojen ratkaisu",
-      content: "Näihin ehtoihin sovelletaan Suomen kauppalakia. Mahdolliset erimielisyydet pyritään ratkaisemaan ensisijaisesti neuvottelemalla."
-    },
-    section10: {
-      title: "Yhteystiedot",
-      content: "Jos sinulla on kysyttävää, voit ottaa meihin yhteyttä osoitteessa info@nutrineuvo.fi."
+    title: "Käyttöehdot – Nutrineuvo",
+    description: "Käyttöehdot Nutrineuvolle",
+    content: {
+      introduction: `Tervetuloa käyttämään Nutrineuvo-palvelua! Palvelumme tarjoaa monipuolisia ravitsemukseen liittyviä neuvoja ja suosituksia, jotka tukevat hyvinvointiasi ja terveellisiä elämäntapojasi. Käyttämällä palveluamme hyväksyt seuraavat käyttöehdot.`,
+  
+      general: `1. Yleistä
+  1.1. Nutrineuvo on Chefboksi Finland Oy:n ("Palveluntarjoaja") tarjoama verkkopalvelu, joka yhdistää erityisruokavalioita noudattavat käyttäjät päteviin ravitsemusterapeutteihin tarjoten yksilöllisiä reseptejä ja ravitsemusneuvontaa heidän tarpeidensa mukaan.
+  1.2. Palvelua voi käyttää vain rekisteröitynyt käyttäjä ("Käyttäjä"). Rekisteröitymällä ja käyttämällä palvelua käyttäjä hyväksyy nämä käyttöehdot ("Ehdot").
+  1.3. Palveluntarjoajalla on oikeus muuttaa palvelun sisältöä ja ehtoja tarpeen mukaan. Käyttäjälle ilmoitetaan merkittävistä muutoksista.
+  1.4. Sopimuskumppanisi kaikissa Verkkokaupassa toteutetuissa ostotapahtumissa on:
+  Chefboksi Finland Oy
+  Y-tunnus: 3387358-8
+  Kotipaikka: Kuopio
+  Osoite: Inkiläntie 6, 70340 Kuopio`,
+  
+      serviceDescription: `2. Palvelun kuvaus
+  2.1. Palvelu tarjoaa alustan, jossa käyttäjä voi:
+  - löytää ravitsemusterapeutteja ja varata neuvonta-aikoja
+  - saada yksilöllisiä reseptejä ja ravitsemusohjeita
+  - kommunikoida ravitsemusterapeutin kanssa sovelluksen kautta
+  2.2. Palveluntarjoaja ei itse tarjoa ravitsemusneuvontaa vaan toimii alustana, joka yhdistää käyttäjät ja ammattilaiset.
+  2.3. Palveluntarjoaja tarjoaa etävälityspalvelun verkkosivustojen ja digitaalisten palvelujen kautta, mahdollistaen asiakkaille pääsyn ravitsemusneuvontaan ja siihen liittyviin palveluihin.`,
+  
+      registration: `3. Rekisteröityminen ja käyttäjätili
+  3.1. Palvelun käyttö edellyttää tilin luomista. Käyttäjän tulee antaa oikeat ja ajantasaiset tiedot.
+  3.2. Tilin käyttö on henkilökohtaista, eikä sitä saa siirtää toiselle.
+  3.3. Käyttäjä on vastuussa tilinsä turvallisuudesta ja salasanan luottamuksellisuudesta.`,
+  
+      usage: `4. Palvelun käyttö
+  4.1. Palvelua voivat käyttää kaikki 18 vuotta täyttäneet henkilöt. Käyttö voi edellyttää rekisteröitymistä ja käyttäjätilin luomista.
+  4.2. Käyttäjä sitoutuu käyttämään palvelua lainmukaisesti ja hyvien tapojen mukaisesti.
+  4.3. Käyttäjä ei saa tuottaa palveluun loukkaavaa, harhaanjohtavaa tai epäasiallista sisältöä.`,
+  
+      paymentsAndCancellations: `5. Maksut ja peruutukset
+  5.1. Ravitsemusneuvonta ja muut maksulliset palvelut veloitetaan sovittujen hintojen mukaisesti. Maksut suoritetaan verkkopalvelun kautta.
+  5.2. Käyttäjä voi peruuttaa varatun ajan palvelussa määriteltyjen ehtojen mukaisesti.`,
+  
+      liability: `6. Vastuunrajoitukset
+  6.1. Palveluntarjoaja ei vastaa ravitsemusterapeuttien antamien neuvojen oikeellisuudesta tai niiden vaikutuksista käyttäjän terveyteen. Käyttäjän tulee itse varmistaa neuvojen sopivuus ja käyttäjän tulee aina varmistaa ruokavalioon tai terveydentilaan liittyvät muutokset ammattilaisen kanssa.
+  6.2. Palveluntarjoaja ei vastaa palvelun keskeytyksistä tai teknisistä ongelmista aiheutuneista vahingoista.`,
+  
+      privacy: `7. Tietosuoja ja henkilötiedot
+  7.1. Käyttäjän henkilötietoja käsitellään tietosuojaselosteen mukaisesti.
+  7.2. Palveluntarjoaja voi kerätä anonyymejä käyttötilastoja palvelun kehittämiseksi.`,
+  
+      ip: `8. Immateriaalioikeudet
+  8.1. Palvelun sisältö (ml. reseptit ja sovelluksen ulkoasu) on palveluntarjoajan omaisuutta, ellei toisin mainita. Käyttäjä ei saa kopioida tai jakaa palvelun sisältöä ilman lupaa.`,
+  
+      legal: `9. Sovellettava laki ja riitojen ratkaisu
+  9.1. Näihin ehtoihin sovelletaan Suomen kauppalakia.
+  9.2. Mahdolliset erimielisyydet pyritään ratkaisemaan ensisijaisesti neuvottelemalla. Jos sopuun ei päästä, riita käsitellään Helsingin käräjäoikeudessa.`,
+  
+      contact: `10. Yhteystiedot
+  Jos sinulla on kysyttävää näistä käyttöehdoista, voit ottaa meihin yhteyttä osoitteessa info@nutrineuvo.fi.`
     }
   },
   privacyPolicy: {
-    title: "Tietosuojaseloste",
-    general: {
-      title: "Yleistä",
-      content: "Keräämme ja käsittelemme asiakkaidemme ja ravitsemusterapeuttien henkilötietoja. Tarvitsemme näitä tietoja tarjotaksemme ravitsemusneuvontapalvelua ja yksilöllisiä reseptejä palvelun Käyttöehtojen ja Sopimuksen mukaisesti. Yksityisyys on meille tärkeää, ja otamme sen huomioon päivittäisessä toiminnassamme. Henkilötietojen käsittelyä koskevissa kysymyksissä voit ottaa yhteyttä: Chefboksi Finland Oy, info@nutrineuvo.fi"
-    },
-    customerRegistry: {
-      title: "Asiakasrekisteri",
-      content: "Asiakasrekisterimme sisältää seuraavat henkilötiedot palvelua käyttävistä asiakkaista ja heidän työntekijöistään: Etu- ja sukunimi, Puhelinnumerot, Sähköpostiosoitteet, Maksutiedot, Käyttäjätilit."
-    },
-    nutritionistRegistry: {
-      title: "Ravitsemusterapeuttirekisteri",
-      content: "Ravitsemusterapeuttien rekisterimme sisältää seuraavat henkilötiedot palvelua käyttävistä ravitsemusterapeuteista: Etu- ja sukunimi, Puhelinnumerot, Sähköpostiosoitteet, Postiosoitteet, Henkilötunnus, Pankkitilin numero."
-    },
-    dataProcessing: {
-      title: "Henkilötietojen käsittely Nutrineuvo-palvelussa",
-      content: "Näitä tietosuojaperiaatteita sovelletaan Nutrineuvo-verkkopalvelun tietojen käsittelyyn. Tällä hetkellä palvelu on saatavilla verkkopohjaisella alustalla, jossa käyttäjät voivat hyödyntää ravitsemusneuvontaa ja yksilöllisiä reseptejä. Palveluun kirjautuminen ja sen käyttö edellyttävät käyttäjän suostumusta sähköpostin, puhelinnumeron ja/tai käyttäjänimen käsittelyyn nutrineuvo.fi-verkkotunnuksen alla. Käyttäjän tulee antaa suostumus asiakasrekisterissä vaadittujen tietojen käsittelyyn ennen palvelun käyttöä."
-    }
+  title: "Tietosuojaseloste – Nutrineuvo",
+  description: "Tietosuojaseloste Nutrineuvolle",
+  content: {
+    general: `1. Yleistä
+Keräämme ja käsittelemme asiakkaidemme ja ravitsemusterapeuttien henkilötietoja. Tarvitsemme näitä tietoja tarjotaksemme ravitsemusneuvontapalvelua ja yksilöllisiä reseptejä palvelun Käyttöehtojen ja Sopimuksen mukaisesti. Yksityisyys on meille tärkeää, ja otamme sen huomioon päivittäisessä toiminnassamme.
+Henkilötietojen käsittelyä koskevissa kysymyksissä voit ottaa yhteyttä: Chefboksi Finland Oy, info@nutrineuvo.fi`,
+
+    customerRegistry: `2. Asiakasrekisteri
+Asiakasrekisterimme sisältää seuraavat henkilötiedot palvelua käyttävistä asiakkaista ja heidän työntekijöistään:
+- Etu- ja sukunimi
+- Puhelinnumerot
+- Sähköpostiosoitteet
+- Maksutiedot
+- Käyttäjätilit`,
+
+    therapistRegistry: `3. Ravitsemusterapeuttirekisteri
+Ravitsemusterapeuttien rekisterimme sisältää seuraavat henkilötiedot:
+- Etu- ja sukunimi
+- Puhelinnumerot
+- Sähköpostiosoitteet
+- Postiosoitteet
+- Henkilötunnus
+- Pankkitilin numero`,
+
+    dataProcessing: `4. Henkilötietojen käsittely Nutrineuvo-palvelussa
+Tietosuojaperiaatteita sovelletaan Nutrineuvo-verkkopalveluun. Käyttäjien tulee antaa suostumus tietojen käsittelyyn ennen palvelun käyttöä. Kirjautuminen ja käyttö edellyttää sähköpostin, puhelinnumeron ja/tai käyttäjänimen käsittelyä.`,
+
+    retention: `5. Tietojen säilytys ja luovutus
+Säilytämme henkilötietoja niin kauan kuin henkilö on palvelun käyttäjä. Tietoja voidaan luovuttaa viranomaisille, Nutrineuvon työntekijöille, edustajille ja palveluntarjoajille laillisten tarpeiden mukaan.`,
+
+    security: `6. Tietoturva
+Henkilötiedot säilytetään turvallisesti ja niihin pääsee vain työntekijät henkilökohtaisilla käyttäjätunnuksilla. Suojaamme oikeudet tietosuojalainsäädännön mukaisesti.`,
+
+    updates: `7. Päivitykset
+Päivitämme selostetta tarvittaessa. Tarkista verkkosivuiltamme ajantasaiset versiot säännöllisesti.`,
+
+    controller: `8. Rekisterinpitäjä
+Chefboksi Finland Oy
+Y-tunnus: 3387358-8
+Kotipaikka: Kuopio
+Osoite: Inkiläntie 6, 70340 Kuopio`
   }
+
+}
 };
 
 

@@ -146,68 +146,76 @@ const enTranslations = {
     "message": "This page is partially completed and may still change. Stay tuned and come back soon to explore the full content!",
     "close": "Close"
   },
-  terms: {
-    title: "Terms of Service",
-    description: "Welcome to Nutrineuvo! By using our service, you accept the following terms and conditions.",
-    section1: {
-      title: "General",
-      content: "Nutrineuvo is an online platform provided by Chefboksi Finland Oy that connects users with professional nutritionists."
-    },
-    section2: {
-      title: "Service Description",
-      content: "The service provides a platform where users can book consultations, receive personalized recipes, and communicate with experts."
-    },
-    section3: {
-      title: "Registration and User Account",
-      content: "Using the service requires account creation. Users must provide accurate and up-to-date information."
-    },
-    section4: {
-      title: "Use of Service",
-      content: "The service is available for individuals aged 18 and above. Users agree to use the service lawfully."
-    },
-    section5: {
-      title: "Payments and Cancellations",
-      content: "Nutrition consultations and other paid services are charged according to agreed prices."
-    },
-    section6: {
-      title: "Liability Limitations",
-      content: "The service provider is not responsible for the accuracy of nutritionists' advice or its impact on users' health."
-    },
-    section7: {
-      title: "Privacy and Personal Data",
-      content: "User data is processed in accordance with the privacy policy."
-    },
-    section8: {
-      title: "Intellectual Property Rights",
-      content: "The content of the service is owned by the provider unless otherwise stated."
-    },
-    section9: {
-      title: "Applicable Law and Dispute Resolution",
-      content: "These terms are governed by Finnish commercial law. Disputes will be primarily resolved through negotiation."
-    },
-    section10: {
-      title: "Contact Information",
-      content: "If you have any questions, please contact us at info@nutrineuvo.fi."
+  "terms": {
+    "title": "Terms of Service – Nutrineuvo",
+    "description": "Terms and conditions for using Nutrineuvo",
+    "content": {
+      "introduction": "Welcome to Nutrineuvo! Our service provides versatile nutrition advice and recommendations that support your well-being and healthy lifestyle. By using our service, you accept the following terms of use.",
+
+      "general": "1. General\n1.1. Nutrineuvo is an online service provided by Chefboksi Finland Oy (\"Service Provider\"), connecting users with special dietary needs to qualified nutritionists, offering personalized recipes and nutritional advice.\n1.2. The service is only available to registered users (\"User\"). By registering and using the service, the user accepts these terms of use (\"Terms\").\n1.3. The Service Provider has the right to modify the content and terms of the service as needed. Users will be informed of significant changes.\n1.4. Your contractual party for all purchases made in the Online Store is:\nChefboksi Finland Oy\nBusiness ID: 3387358-8\nDomicile: Kuopio\nAddress: Inkiläntie 6, 70340 Kuopio",
+
+      "serviceDescription": "2. Service Description\n2.1. The service provides a platform where users can:\n- find nutritionists and book consultations\n- receive personalized recipes and nutritional advice\n- communicate with nutritionists through the app\n2.2. The Service Provider does not itself offer nutritional advice but acts as a platform connecting users and professionals.\n2.3. The Service Provider offers a remote service platform via websites and digital services, enabling clients to access nutritional advice and related services.",
+
+      "registration": "3. Registration and User Account\n3.1. To use the service, a user account must be created. The user must provide accurate and up-to-date information.\n3.2. The account is personal and may not be transferred to another person.\n3.3. The user is responsible for account security and keeping the password confidential.",
+
+      "usage": "4. Use of the Service\n4.1. The service is available to individuals aged 18 and over. Usage may require registration and account creation.\n4.2. The user agrees to use the service lawfully and respectfully.\n4.3. The user may not submit offensive, misleading, or inappropriate content to the service.",
+
+      "paymentsAndCancellations": "5. Payments and Cancellations\n5.1. Nutritional consultations and other paid services are charged according to the agreed prices. Payments are made through the online service.\n5.2. The user can cancel a booked appointment under the conditions specified in the service.",
+
+      "liability": "6. Limitations of Liability\n6.1. The Service Provider is not responsible for the accuracy or health impact of advice given by nutritionists. Users must verify the suitability of the advice and consult a professional before making dietary or health-related changes.\n6.2. The Service Provider is not liable for damages caused by service interruptions or technical issues.",
+
+      "privacy": "7. Privacy and Personal Data\n7.1. User data is processed according to the privacy policy.\n7.2. The Service Provider may collect anonymous usage statistics to improve the service.",
+
+      "ip": "8. Intellectual Property\n8.1. The content of the service (including recipes and app design) is the property of the Service Provider unless otherwise stated. Users may not copy or share the content without permission.",
+
+      "legal": "9. Governing Law and Dispute Resolution\n9.1. These terms are governed by Finnish commercial law.\n9.2. Any disputes will be resolved primarily through negotiation. If no agreement is reached, the dispute will be handled by the District Court of Helsinki.",
+
+      "contact": "10. Contact\nIf you have any questions regarding these terms, you can contact us at info@nutrineuvo.fi."
     }
   },
   privacyPolicy: {
-    title: "Privacy Policy",
-    general: {
-      title: "General Information",
-      content: "We collect and process personal data of our customers and nutritionists. We need this data to provide nutrition advice services and personalized recipes in accordance with the Terms of Service and Agreement. Privacy is important to us, and we consider it in our daily operations. If you have any questions regarding the processing of personal data, you can contact: Chefboksi Finland Oy, info@nutrineuvo.fi"
-    },
-    customerRegistry: {
-      title: "Customer Registry",
-      content: "Our customer registry contains the following personal data of the customers and their employees using the service: First and last name, Phone numbers, Email addresses, Payment information, User accounts."
-    },
-    nutritionistRegistry: {
-      title: "Nutritionist Registry",
-      content: "Our nutritionist registry contains the following personal data of nutritionists using the service: First and last name, Phone numbers, Email addresses, Postal addresses, Personal identity number, Bank account number."
-    },
-    dataProcessing: {
-      title: "Processing of Personal Data in the Nutrineuvo Service",
-      content: "These privacy principles apply to the processing of data in the Nutrineuvo web service. Currently, the service is available on an online platform, where users can benefit from nutrition advice and personalized recipes. Logging into and using the service requires the user's consent for processing of email, phone number, and/or username under the nutrineuvo.fi domain. The user must give consent for the processing of data required in the customer registry before using the service."
-    }
+    title: "Privacy Policy – Nutrineuvo",
+  description: "Privacy statement for Nutrineuvo",
+  content: {
+    general: `1. General
+We collect and process personal data of our customers and nutritionists. This is necessary to provide nutritional services and personalized recipes according to our Terms of Use and Agreement. We take privacy seriously in our daily operations.
+For questions about personal data processing, contact: Chefboksi Finland Oy, info@nutrineuvo.fi`,
+
+    customerRegistry: `2. Customer Registry
+We collect the following data from customers and their employees:
+- First and last name
+- Phone numbers
+- Email addresses
+- Payment information
+- User accounts`,
+
+    therapistRegistry: `3. Nutritionist Registry
+We collect the following personal data from nutritionists:
+- First and last name
+- Phone numbers
+- Email addresses
+- Postal addresses
+- Personal identity number
+- Bank account number`,
+
+    dataProcessing: `4. Data Processing in Nutrineuvo
+These principles apply to data processing within the Nutrineuvo web service. Consent to process email, phone number, and/or username is required to log in and use the service. Consent must be given prior to usage.`,
+
+    retention: `5. Data Retention and Disclosure
+We retain data as long as the user is active. After that, data may be kept as needed for billing, collection, or legal purposes. Data may be disclosed to authorities, Nutrineuvo employees, representatives, and service providers.`,
+
+    security: `6. Data Security
+Personal data is stored securely and accessed only by authorized employees using protected devices. We safeguard user rights according to data protection legislation.`,
+
+    updates: `7. Updates
+We update this policy as necessary. Please check our website regularly for the latest version.`,
+
+    controller: `8. Data Controller
+Chefboksi Finland Oy
+Business ID: 3387358-8
+Domicile: Kuopio
+Address: Inkiläntie 6, 70340 Kuopio`
+  }
   }
 };
 

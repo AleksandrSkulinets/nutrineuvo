@@ -16,14 +16,17 @@ export default function PrivacyPolicy() {
         {t("privacyPolicy.title")}
       </motion.h1>
 
-      <motion.p
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ ease: "easeInOut", duration: 0.75 }}
-        className="text-lg text-zinc-500"
-      >
-        {t("privacyPolicy.general.content")}
-      </motion.p>
+      <motion.div
+          initial={{ y: 24, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: "easeInOut", duration: 0.5 }}
+          className="p-6 bg-zinc-50 m-1"
+        >
+          <h2 className="text-lg font-medium text-zinc-400"> 
+            {t("privacyPolicy.content.general")}
+          </h2>
+        
+      </motion.div>
 
       <div className="mt-10 space-y-6">
         <motion.div
@@ -33,11 +36,8 @@ export default function PrivacyPolicy() {
           className="p-6 bg-zinc-50 m-1"
         >
           <h2 className="text-lg font-medium text-zinc-400">
-            {t("privacyPolicy.customerRegistry.title")}
+            {t("privacyPolicy.content.customerRegistry")}
           </h2>
-          <p className="mt-2 text-zinc-400">
-            {t("privacyPolicy.customerRegistry.content")}
-          </p>
         </motion.div>
 
         <motion.div
@@ -47,11 +47,8 @@ export default function PrivacyPolicy() {
           className="p-6 bg-zinc-50 m-1"
         >
           <h2 className="text-lg font-medium text-zinc-400">
-            {t("privacyPolicy.nutritionistRegistry.title")}
+            {t("privacyPolicy.content.therapistRegistry")}
           </h2>
-          <p className="mt-2 text-zinc-400">
-            {t("privacyPolicy.nutritionistRegistry.content")}
-          </p>
         </motion.div>
 
         <motion.div
@@ -61,11 +58,52 @@ export default function PrivacyPolicy() {
           className="p-6 bg-zinc-50 m-1"
         >
           <h2 className="text-lg font-medium text-zinc-400">
-            {t("privacyPolicy.dataProcessing.title")}
+            {t("privacyPolicy.content.dataProcessing")}
           </h2>
-          <p className="mt-2 text-zinc-400">
-            {t("privacyPolicy.dataProcessing.content")}
-          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 24, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: "easeInOut", duration: 0.5 }}
+          className="p-6 bg-zinc-50 m-1"
+        >
+          <h2 className="text-lg font-medium text-zinc-400">
+            {t("privacyPolicy.content.retention")}
+          </h2>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 24, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: "easeInOut", duration: 0.5 }}
+          className="p-6 bg-zinc-50 m-1"
+        >
+          <h2 className="text-lg font-medium text-zinc-400">
+            {t("privacyPolicy.content.security")}
+          </h2>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 24, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: "easeInOut", duration: 0.5 }}
+          className="p-6 bg-zinc-50 m-1"
+        >
+          <h2 className="text-lg font-medium text-zinc-400">
+            {t("privacyPolicy.content.updates")}
+          </h2>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 24, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: "easeInOut", duration: 0.5 }}
+          className="p-6 bg-zinc-50 m-1"
+        >
+          <h2 className="text-lg font-medium text-zinc-400">
+            {t("privacyPolicy.content.controller")}
+          </h2>
         </motion.div>
       </div>
     </div>
