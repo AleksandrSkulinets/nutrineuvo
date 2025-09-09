@@ -33,7 +33,7 @@ i18n
       caches: ['localStorage', 'cookie'],
     },
     debug: true,
-    fallbackLng: "en",
+    fallbackLng: "fi",
     interpolation: {
       escapeValue: false // React already escapes values
     }

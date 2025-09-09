@@ -2,11 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet'; 
 import { useTranslation } from 'react-i18next'; 
 import Hero from "../components/Hero";
-import LastBlogPosts from "../components/LastBlog";
 import About from "../components/About";
-import Products from "../components/Products";
-import Faq from "../components/Faq";
-
+import WhyNutrineuvo from '../components/WhyNutrineuvo';
+import MitenToimi from '../components/MitenToimi';
 export default function Home() {
  const { t } = useTranslation(); // Hook to use i18n translations
 
@@ -25,10 +23,8 @@ export default function Home() {
 
       {/* Content Sections */}
       <section><Hero /></section>
-      <section><About /></section>
-      <section><Products /></section>
-      <section><Faq /></section>
-      <section><LastBlogPosts /></section>
+      <section><WhyNutrineuvo /></section>
+      <section><MitenToimi /></section>
     </div>
   );
 }

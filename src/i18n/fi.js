@@ -4,15 +4,40 @@ const fiTranslations = {
   blog: "Blogi",
   contacts: "Yhteystiedot",
   language: "Kieli",
+  services: "Palvelut",
+  nutrition_therapy: "Ravitsemusterapia",
+  individual_clients: "Henkilöasiakkaille",
+  professionals: "Ravitsemusterapeuteille",
+  omanutrineuvo: "OmaNutrineuvo",
+  nutrineuvo: "Nutrineuvo",
+  about_us: "Tietoa meistä",
+  appointment: "Ajanvaraus",
+  login: "OmaNutrineuvo",
+  logout: "Kirjaudu ulos",
   homePage: {
     title: "Nutrineuvo - luotettava kumppanisi matkalla kohti terveellisempää elämää.",
     description: "Nutrineuvo on verkkoalusta, joka auttaa sinua saavuttamaan terveellisemmän elämäntavan räätälöityjen ravitsemussuunnitelmien, asiantuntijaneuvonnan ja helppokäyttöisten ateriasuunnittelutyökalujen avulla. Olitpa sitten noudattamassa erityisruokavaliota tai etsit vain terveellisempiä ruokailuvaihtoehtoja, Nutrineuvo tarjoaa kaiken, mitä tarvitset onnistumiseen."
   },
   hero: {
     title: "Nutrineuvo",
-    description: "Nutrineuvo ei ole vain palvelu – se on luotettava kumppani matkallasi kohti terveellisempää elämää.",
-    contact: "Ota yhteyttä",
-    faq: "Lue UKK",
+    description: "Henkilökohtaista ravitsemusneuvontaa ja asiantuntijatukea erityisruokavalioihin.",
+    appointment: "Varaa aika",
+    service: "Tutustu palveluun",
+    
+  },
+  why: {
+    "title": "Miksi Nutrineuvo?",
+    "description": "Nutrineuvo on suomalainen alusta, joka yhdistää sinut päteviin ravitsemusterapeutteihin – helposti ja turvallisesti. Palvelumme on suunniteltu erityisruokavalioita varten ja tarjoaa luotettavaa ravitsemusohjausta ilman lääkärin lähetettä.",
+    "support_special_diets": "Tukea erityisruokavalioihin",
+    "no_diagnosis": "Emme diagnosoi – vaan ohjaamme ruokavalion hallinnassa",
+    "no_referral": "Ei tarvita lääkärin lähetettä",
+    "data_secure": "Tietosi turvassa",
+    "no_commitment": "Ei sitoutumista"},
+    howitworks: {
+    "title": "Miten se toimii?",
+    "register": "Rekisteröidy ja tunnistaudu",
+    "choose_therapist": "Valitse ravitsemusterapeutti ja varaa aika",
+    "get_guidance": "Saat henkilökohtaista ohjausta ja reseptit digitaalisesti"
   },
   aboutsection: {
     title: "Tietoa meistä",
@@ -201,50 +226,76 @@ const fiTranslations = {
     }
   },
   privacyPolicy: {
-  title: "Tietosuojaseloste – Nutrineuvo",
-  description: "Tietosuojaseloste Nutrineuvolle",
-  content: {
-    general: `1. Yleistä
-Keräämme ja käsittelemme asiakkaidemme ja ravitsemusterapeuttien henkilötietoja. Tarvitsemme näitä tietoja tarjotaksemme ravitsemusneuvontapalvelua ja yksilöllisiä reseptejä palvelun Käyttöehtojen ja Sopimuksen mukaisesti. Yksityisyys on meille tärkeää, ja otamme sen huomioon päivittäisessä toiminnassamme.
-Henkilötietojen käsittelyä koskevissa kysymyksissä voit ottaa yhteyttä: Chefboksi Finland Oy, info@nutrineuvo.fi`,
+    "title": "Tietosuojaseloste – Nutrineuvo",
+    "description": "Tietosuojaseloste Nutrineuvolle",
+    "content": {
+      "general": "1. Yleistä\nTässä tietosuojaselosteessa kerromme, miten Chefboksi Finland Oy (\"Palveluntarjoaja\") käsittelee Nutrineuvo-palvelun käyttäjien ja yhteistyökumppaneiden henkilötietoja. Henkilötietojen suoja on meille ensiarvoisen tärkeää, ja käsittelemme tietoja EU:n yleisen tietosuoja-asetuksen (GDPR) ja muun soveltuvan lainsäädännön mukaisesti.",
+      "controller": "2. Rekisterinpitäjä\nChefboksi Finland Oy\nY-tunnus: 3387358-8\nOsoite: Inkiläntie 6, 70340 Kuopio\nSähköposti: info@nutrineuvo.fi",
+      "whoseData": "3. Kenen tietoja käsittelemme\n- Nutrineuvo-palvelun käyttäjien (asiakkaat)\n- Ravitsemusterapeuttien\n- Palvelun teknisten ja hallinnollisten yhteyshenkilöiden\nPalvelua saavat käyttää vain vähintään 18 vuotta täyttäneet henkilöt. Käyttäjä vakuuttaa rekisteröityessään täyttävänsä tämän ikävaatimuksen.",
+      "collectedData": "4. Mitä tietoja keräämme\nAsiakasrekisteri:\n- Etu- ja sukunimi\n- Sähköpostiosoite\n- Puhelinnumero\n- Käyttäjätilitiedot (käyttäjänimi, salasana)\n- Maksutiedot ja ostohistoria\n- Viestintätiedot (esim. asiakaspalveluviestit)\n\nRavitsemusterapeuttirekisteri:\n- Etu- ja sukunimi\n- Yhteystiedot (sähköposti, puhelin, osoite)\n- Henkilötunnus (laskutuksen ja sopimuksen hallinnan vuoksi)\n- Pankkitilin numero\n- Ammattitiedot ja palvelutarjonta",
+      "purposes": "5. Mihin tarkoituksiin tietoja käytetään\n- Palvelun tarjoaminen ja hallinta\n- Ajanvarausten käsittely\n- Asiakaspalvelu ja viestintä\n- Laskutus ja maksujen käsittely\n- Sopimusvelvoitteiden täyttäminen\n- Lakisääteisten velvoitteiden noudattaminen\n- Palvelun kehittäminen (anonymisoidut tiedot)",
+      "legalBasis": "6. Oikeusperusteet henkilötietojen käsittelylle\n- Käyttäjän suostumukseen (esim. markkinointiviestintä)\n- Sopimuksen täyttämiseen (esim. ajanvaraus, neuvontapalvelut)\n- Lakisääteisten velvoitteiden täyttämiseen (esim. kirjanpitolaki)\n- Oikeutettuun etuun (esim. palvelun turvallisuuden varmistaminen)",
+      "disclosure": "7. Tietojen luovutus ja siirto\nTietoja voidaan luovuttaa seuraaville tahoille:\n- Ravitsemusterapeuteille (asiakkaan valinnan mukaisesti)\n- Palveluntarjoajan työntekijöille ja alihankkijoille (esim. tekninen tuki, kirjanpitäjä)\n- Viranomaisille lain edellyttämissä tapauksissa\n- Maksupalveluntarjoajille (maksujen käsittely)\nEmme siirrä henkilötietoja EU/ETA-alueen ulkopuolelle.",
+      "storage": "8. Tietojen säilytys\nHenkilötietoja säilytetään niin kauan kuin se on tarpeen palvelun tarjoamiseksi tai lakisääteisten velvoitteiden täyttämiseksi.\nAsiakastietoja säilytetään enintään 24 kuukautta palvelun käytön päättymisestä, ellei pidempi säilytys ole tarpeen esimerkiksi kirjanpidon tai riitatilanteiden vuoksi.",
+      "rights": "9. Rekisteröidyn oikeudet\n- Oikeus tarkastaa itseään koskevat tiedot\n- Oikeus vaatia tietojen oikaisemista tai poistamista\n- Oikeus käsittelyn rajoittamiseen\n- Oikeus vastustaa käsittelyä\n- Oikeus siirtää tiedot järjestelmästä toiseen\n- Oikeus peruuttaa suostumus (esim. markkinointiviestintä)\n- Oikeus tehdä valitus Tietosuojavaltuutetulle\n\nTietopyynnöt: info@nutrineuvo.fi",
+      "automated": "10. Automatisoitu päätöksenteko\nEmme käytä henkilötietoja automatisoituun päätöksentekoon tai profilointiin.",
+      "security": "11. Tietoturva\nTietoja säilytetään suojatuissa järjestelmissä ja niihin on pääsy vain siihen oikeutetulla henkilöstöllä. Käytämme salattuja yhteyksiä ja turvallisuusprotokollia. Kaikki sopimuskumppanit ovat sitoutuneet noudattamaan tietoturva- ja salassapitovaatimuksia.",
+      "updates": "12. Päivitykset\nPidätämme oikeuden päivittää tätä tietosuojaselostetta. Uusin versio on aina saatavilla verkkosivustollamme nutrineuvo.fi."
+    },
+    cookiesPolicy: {
+      title: "Tietoa sivuston evästeistä",
+      description: "Tämä sivu kertoo, miten Nutrineuvo (Chefboksi Finland Oy) käyttää evästeitä ja vastaavia teknologioita verkkopalvelussaan.",
+      legalBasis: "Evästeiden käyttö perustuu lakiin sähköisen viestinnän palveluista (917/2014) sekä EU:n yleiseen tietosuoja-asetukseen (GDPR).",
+      sections: {
+        whatIsCookie: {
+          title: "1. Mikä on eväste?",
+          content: `Eväste (cookie) on pieni tekstitiedosto, joka tallennetaan käyttäjän laitteelle verkkosivustoa käytettäessä. Evästeet voivat olla:
+- Välttämättömiä: tarpeellisia sivuston teknisen toiminnan kannalta.
+- Tilastollisia: anonyymiä kävijäseurantaa ja palvelun kehittämistä varten.
+- Markkinointiin liittyviä: käytetään mainonnan kohdentamiseen.
+- Kolmannen osapuolen: esim. analytiikka- tai sosiaalisen median palveluista.`
+        },
+        purposes: {
+          title: "2. Evästeiden käyttötarkoitukset Nutrineuvossa",
+          content: `Välttämättömät evästeet:
+Näitä evästeitä tarvitaan Nutrineuvo-palvelun tekniseen toimintaan ja turvallisuuteen. Niitä ei voi poistaa käytöstä.
+- nutrineuvo_session: Tallentaa istunnon tunnuksen käyttäjän todennusta varten.
+- csrf_token: Suojaa palvelua tietoturvauhkia vastaan (esim. CSRF-hyökkäyksiä).
 
-    customerRegistry: `2. Asiakasrekisteri
-Asiakasrekisterimme sisältää seuraavat henkilötiedot palvelua käyttävistä asiakkaista ja heidän työntekijöistään:
-- Etu- ja sukunimi
-- Puhelinnumerot
-- Sähköpostiosoitteet
-- Maksutiedot
-- Käyttäjätilit`,
+Tilastolliset evästeet (käyttäjän suostumuksella):
+Keräämme anonyymejä tietoja kävijämääristä, käyttäytymisestä ja teknisestä ympäristöstä palvelun kehittämiseksi.
+- _ga: Google Analyticsin eväste, joka tunnistaa yksittäisen käyttäjän anonyymisti.
+- _gid: Erottaa käyttäjiä tilastollista analyysiä varten.
+- gat_gtag*: Rajoittaa tietojen lähetysfrekvenssiä Analyticsiin.
+Kerättäviä tietoja ovat mm.:
+- Käyntien määrä ja ajankohta
+- Selaimet ja käyttöjärjestelmät
+- Saapumissivut ja sivustolla siirtymiset
 
-    therapistRegistry: `3. Ravitsemusterapeuttirekisteri
-Ravitsemusterapeuttien rekisterimme sisältää seuraavat henkilötiedot:
-- Etu- ja sukunimi
-- Puhelinnumerot
-- Sähköpostiosoitteet
-- Postiosoitteet
-- Henkilötunnus
-- Pankkitilin numero`,
+Markkinointievästeet (käyttäjän suostumuksella):
+Käytämme markkinointievästeitä kampanjoiden seurantaan ja kohdentamiseen esimerkiksi sosiaalisessa mediassa.
+- _fbp: Facebook Pixel -eväste seuraa mainonnan tehokkuutta Facebookissa ja Instagramissa.`
+        }
+      }
+    }
+  },
+footer: {
+    individual_clients: "Henkilöasiakkaille",
+    my_nutrineuvo: "Oma Nutrineuvo",
+    for_teurapevt: "Ravitsemusterapeutille",
+    about_us: "Tietoa meistä",
+    support: "Tuki",
+    instructions: "Tietoa ja ohjeita",
+    cancel_appointment: "Ajan peruminen",
+    feedback: "Ota yhteyttä",
+    newsletter: "Tilaa uutiskirje",
+    email_placeholder: "Sähköpostiosoite",
+    subscribe: "Tilaa",
+    privacy: "Tietosuoja",
+    terms: "Käyttöehdot",
+    cookies: "Evästeet",
+  },
 
-    dataProcessing: `4. Henkilötietojen käsittely Nutrineuvo-palvelussa
-Tietosuojaperiaatteita sovelletaan Nutrineuvo-verkkopalveluun. Käyttäjien tulee antaa suostumus tietojen käsittelyyn ennen palvelun käyttöä. Kirjautuminen ja käyttö edellyttää sähköpostin, puhelinnumeron ja/tai käyttäjänimen käsittelyä.`,
-
-    retention: `5. Tietojen säilytys ja luovutus
-Säilytämme henkilötietoja niin kauan kuin henkilö on palvelun käyttäjä. Tietoja voidaan luovuttaa viranomaisille, Nutrineuvon työntekijöille, edustajille ja palveluntarjoajille laillisten tarpeiden mukaan.`,
-
-    security: `6. Tietoturva
-Henkilötiedot säilytetään turvallisesti ja niihin pääsee vain työntekijät henkilökohtaisilla käyttäjätunnuksilla. Suojaamme oikeudet tietosuojalainsäädännön mukaisesti.`,
-
-    updates: `7. Päivitykset
-Päivitämme selostetta tarvittaessa. Tarkista verkkosivuiltamme ajantasaiset versiot säännöllisesti.`,
-
-    controller: `8. Rekisterinpitäjä
-Chefboksi Finland Oy
-Y-tunnus: 3387358-8
-Kotipaikka: Kuopio
-Osoite: Inkiläntie 6, 70340 Kuopio`
-  }
-
-}
 };
 
 

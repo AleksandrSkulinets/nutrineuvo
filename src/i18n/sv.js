@@ -4,15 +4,40 @@ const svTranslations = {
   blog: "Blogg",
   contacts: "Kontakter",
   language: "Språk",
+  services: "Tjänster",
+  nutrition_therapy: "Näringsterapi",
+  individual_clients: "För privatpersoner",
+  professionals: "För näringsexperter",
+  omanutrineuvo: "Min Nutrineuvo",
+  nutrineuvo: "Nutrineuvo",
+  about_us: "Om oss",
+  appointment: "Boka tid",
+  login: "OmaNutrineuvo",
+  logout: "Logga ut",
   homePage: {
     title: "Nutrineuvo - din pålitliga partner på din resa mot ett hälsosammare liv.",
     description: "Nutrineuvo är en online-tjänst som hjälper dig att uppnå en hälsosammare livsstil med personliga kostplaner, expertvägledning och användarvänliga måltidsplaneringsverktyg. Oavsett om du följer en speciell diet eller söker hälsosammare matalternativ, erbjuder Nutrineuvo allt du behöver för att lyckas."
   },
   hero: {
     title: "Nutrineuvo",
-    description: "Nutrineuvo är inte bara en tjänst – det är en pålitlig partner på din resa mot ett hälsosammare liv.",
-    contact: "Kontakta oss",
-    faq: "Läs FAQ",
+    description: "Personlig näringsrådgivning och experthjälp för specialkost.",
+     appointment: "Boka tid",
+    service: "Utforska tjänsten",
+  },
+   why: {
+    "title": "Varför Nutrineuvo?",
+    "description": "Nutrineuvo är en finsk plattform som kopplar dig till legitimerade dietister – enkelt och säkert. Tjänsten är utformad för specialkost och ger tillgång till pålitligt koststöd utan behov av läkarremiss.",
+    "support_special_diets": "Stöd för specialkost",
+    "no_diagnosis": "Vi ställer ingen diagnos – vi vägleder i kosthållning",
+    "no_referral": "Ingen läkarremiss behövs",
+    "data_secure": "Din data är säker",
+    "no_commitment": "Inget åtagande"
+  },
+  howitworks: {
+    "title": "Hur fungerar det?",
+    "register": "Registrera dig och identifiera",
+    "choose_therapist": "Välj dietist och boka tid",
+    "get_guidance": "Få personlig vägledning och digitala recept"
   },
   aboutsection: {
     title: "Om oss",
@@ -213,7 +238,21 @@ const svTranslations = {
   Hemort: Kuopio
   Adress: Inkiläntie 6, 70340 Kuopio`
     }
-  }  
+  },
+  footer: {
+    my_nutrineuvo: "My Nutrineuvo",
+    for_teurapevt: "For teraupeuts",
+    about_us: "Om oss",
+    faq: "Vanliga frågor",
+    support: "Support",
+    feedback: "Feedback",
+    newsletter: "Prenumerera på vårt nyhetsbrev",
+    email_placeholder: "E-postadress",
+    subscribe: "Prenumerera",
+    privacy: "Integritetspolicy",
+    terms: "Användarvillkor",
+    cookies: "Cookies",
+  },  
 };
 
 

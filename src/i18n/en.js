@@ -1,11 +1,19 @@
 
 
 const enTranslations = {
-  home: "Home",
-  about: "About",
-  blog: "Blog",
-  contacts: "Contacts",
-  language: "Language",
+ "home": "Home",
+  "services": "Services",
+  "nutrition_therapy": "Nutrition Therapy",
+  "individual_clients": "For Individuals",
+  "professionals": "For Nutritionists",
+  "omanutrineuvo": "My Nutrineuvo",
+  "nutrineuvo": "Nutrineuvo",
+  "about_us": "About Us",
+  "contacts": "Contacts",
+  "appointment": "Appointment",
+  "blog": "Blog",
+  "login": "OmaNutrineuvo",
+  "logout": "Logout",
   homePage: {
     title:  "Nutrineuvo - your reliable partner on your journey towards a healthier life.",
     description: "Nutrineuvo is an online service that helps you achieve a healthier lifestyle with personalized nutrition plans, expert advice, and easy-to-use meal planning tools. Whether you're following a specific diet or looking for healthier eating options, Nutrineuvo provides everything you need to succeed."
@@ -13,9 +21,23 @@ const enTranslations = {
   },
   hero: {
     title: "Nutrineuvo",
-    description: "Nutrineuvo is not just a service – it is a reliable partner on your journey towards a healthier life.",
-    contact: "Contact us",
-    faq: "Read FAQ",
+    description: "Personalized nutrition counseling and expert support for special diets.",
+    appointment: "Book an appointment",
+    service: "Explore our services",
+  },
+   why: {
+    "title": "Why Nutrineuvo?",
+    "description": "Nutrineuvo is a Finnish platform that connects you with certified dietitians – easily and securely. Our service is tailored for special diets and provides access to reliable nutrition support without requiring a doctor’s referral.",
+    "support_special_diets": "Support for special diets",
+    "no_diagnosis": "We don’t diagnose – we guide dietary management",
+    "no_referral": "No doctor’s referral needed",
+    "data_secure": "Your data is safe",
+    "no_commitment": "No commitment"},
+    howitworks: {
+    "title": "How it works?",
+    "register": "Register and authenticate",
+    "choose_therapist": "Choose a nutritionist and book an appointment",
+    "get_guidance": "Receive personal guidance and digital recipes"
   },
   aboutsection: {
     title: "About Us",
@@ -216,7 +238,24 @@ Business ID: 3387358-8
 Domicile: Kuopio
 Address: Inkiläntie 6, 70340 Kuopio`
   }
-  }
+  },
+  footer: {
+    individual_clients: "For individual clients",
+    my_nutrineuvo: "My Nutrineuvo",
+    for_teurapevt: "For teapeuts",
+    about_us: "About us",
+    instructions: "Instructions",
+    support: "Support",
+    pricing: "Pricing",
+    cancel_appointment: "Cancel appointment",
+    feedback: "Feedback",
+    newsletter: "Subscribe to our newsletter",
+    email_placeholder: "Email address",
+    subscribe: "Subscribe",
+    privacy: "Privacy Policy",
+    terms: "Terms of Service",
+    cookies: "Cookies",
+  },
 };
 
 

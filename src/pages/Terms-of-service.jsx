@@ -26,29 +26,29 @@ export default function TermsOfService() {
         initial={{ y: 48, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ ease: 'easeInOut', duration: 0.75 }}
-        className="mb-20 text-4xl font-black uppercase text-zinc-400"
+        className="text-2xl font-bold text-zinc-700 mb-4"
       >
         {t('terms.title')}
       </motion.h1>
 
       
 
-      <div className="mt-10 space-y-6">
+      <div className="mt-10 space-y-6 p-6 bg-zinc-50 rounded-2xl shadow-md m-1">
         {sections.map((key, index) => (
-          <motion.div
+          <div
             key={key}
             initial={{ y: 24, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ ease: 'easeInOut', duration: 0.5 }}
-            className="p-6 bg-zinc-50 m-1"
+            className="p-6 m-1"
           >
-            <h2 className="text-lg font-medium text-zinc-400">
+            <h2 className="text-lg font-medium text-zinc-600 whitespace-pre-line">
               {t(`terms.content.${key}`).split('\n')[0]}
             </h2>
-            <p className="mt-2 whitespace-pre-line text-zinc-400">
+            <p className="text-lg font-medium text-zinc-600 whitespace-pre-line">
               {t(`terms.content.${key}`).split('\n').slice(1).join('\n')}
             </p>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

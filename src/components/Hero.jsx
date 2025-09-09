@@ -5,7 +5,7 @@ export default function Hero() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const scrollToFaq = () => {
-    const faqSection = document.getElementById('faq');
+    const faqSection = document.getElementById();
     if (faqSection) {
       faqSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -34,16 +34,21 @@ export default function Hero() {
             <p className='text-neutral-200 font-semibold text-xl font-sans mt-10 drop-shadow-lg'>
               {t('hero.description')}
             </p>
-            <div className='w-64 sm:w-96 flex flex-col justify-around m-auto mt-16 text-sm sm:text-lg'>
-            <button onClick={goToContacts} className='shadow-[inset_0_0_0_2px_#fff] px-6 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-black hover:text-white text-neutral-200 transition duration-200 m-2'>
-               {t('hero.contact')} 
-              </button>
-              <button 
-              onClick={scrollToFaq} 
-              className='shadow-[inset_0_0_0_2px_#fff] px-6 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-black hover:text-white text-neutral-200 transition duration-200 m-2'>
-                {t('hero.faq')}
-              </button>
-            </div>
+            <div className='w-64 sm:w-[550px] flex flex-col sm:flex-row justify-around m-auto mt-16 text-sm sm:text-lg gap-4'>
+  <button
+    onClick={goToContacts}
+    className='flex-1 shadow-[inset_0_0_0_2px_#fff] px-6 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-black hover:text-white text-neutral-200 transition duration-200'
+  >
+    {t('hero.appointment')}
+  </button>
+  <button
+    onClick={scrollToFaq}
+    className='flex-1 shadow-[inset_0_0_0_2px_#fff] px-6 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-black hover:text-white text-neutral-200 transition duration-200'
+  >
+    {t('hero.service')}
+  </button>
+</div>
+
           </div>
         </div>
       </div>
