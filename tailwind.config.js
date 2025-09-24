@@ -1,27 +1,54 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
+  darkMode: ["class"],
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", 
+    "./index.html",
+    "./src/**/*.{js,jsx}"
   ],
   theme: {
     extend: {
-      fontFamily: {
-        roboto: ['Roboto', 'serif'], 
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+          hover: "var(--primary-hover)",
+          muted: "var(--primary-muted)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
+          hover: "var(--secondary-hover)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
       },
-      backdropFilter: {
-        'blur-3': 'blur(3px)', 
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: "var(--font-sans)",
+        serif: "var(--font-serif)",
+        mono: "var(--font-mono)",
       },
     },
   },
-  plugins: [
-   
-    function ({ addUtilities }) {
-      const newUtilities = {
-        '.webkit-backdrop-blur-3': {
-          '-webkit-backdrop-filter': 'blur(3px)', 
-        },
-      };
-      addUtilities(newUtilities, ['responsive', 'hover']);
-    },
-  ],
-};
+  plugins: [require("tailwindcss-animate")],
+}

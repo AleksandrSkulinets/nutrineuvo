@@ -1,55 +1,95 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { PhoneCheck } from './icons/PhoneCheck';
-import { HeartPlus } from './icons/HeartPlus';
-import { User } from './icons/User';
-
-export default function MitenToimi() {
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { User } from "./icons/User";
+import { HeartPlus } from "./icons/HeartPlus";
+import { PhoneCheck } from "./icons/PhoneCheck";
+import { Button } from "../components/ui/button";
+import { ArrowRight } from "lucide-react";
+export default function WhyChooseUs() {
   const { t } = useTranslation();
 
-  const steps = [
-  {
-    icon: <div className="text-zinc-500 text-2xl"><User /></div>,
-    text: t('howitworks.register'),
-  },
-  {
-    icon: <div className="text-zinc-500 text-2xl"><HeartPlus /></div>,
-    text: t('howitworks.choose_therapist'),
-  },
-  {
-    icon: <div className="text-zinc-500 text-2xl"><PhoneCheck /></div>,
-    text: t('howitworks.get_guidance'),
-  },
-];
-
-
+  const reasons = [
+    {
+      icon: <User className="shrink-0" />,
+      title: t("why.support_special_diets"),
+      desc: t("why.support_special_diets_desc"),
+      bg: "bg-zinc-50 dark:bg-zinc-950",
+      border: "border-zinc-200 dark:border-zinc-700/50",
+      textColor: "text-foreground", // ✅ forces theme-aware text
+    },
+    {
+      icon: <HeartPlus className="shrink-0" />,
+      title: t("why.no_diagnosis"),
+      desc: t("why.no_diagnosis_desc"),
+      bg: "bg-primary",
+      border: "border-white/20 dark:border-white/10",
+      textColor: "text-white", // ✅ white text always
+    },
+    {
+      icon: <PhoneCheck className="shrink-0" />,
+      title: t("why.no_referral"),
+      desc: t("why.no_referral_desc"),
+      bg: "bg-zinc-50 dark:bg-zinc-950",
+      border: "border-zinc-200 dark:border-zinc-700/50",
+      textColor: "text-foreground", // ✅ forces theme-aware text
+    },
+  ];
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-20 text-white mt-10">
-      <motion.h2
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ ease: 'easeInOut', duration: 0.75 }}
-        className="mb-20 text-3xl md:text-4xl font-black uppercase text-zinc-400 text-center"
-      >
-        {t('howitworks.title')}
-      </motion.h2>
+    <section className="min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-6xl mx-auto py-20 px-6">
+        {/* Title & Description */}
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:items-end">
+          <div className="lg:col-span-2">
+            <p className="text-sm font-bold uppercase text-primary">
+              {t("howitworks.tagline")}
+            </p>
+            <h2 className="mt-4 text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground lg:text-balance">
+              {t("howitworks.title")}
+            </h2>
+          </div>
+          <p className="text-base font-medium text-muted-foreground">
+            {t("howitworks.description")}
+          </p>
+        </div>
 
-      <div className="grid gap-10 sm:grid-cols-3 max-w-4xl mx-auto text-center">
-        {steps.map((step, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            className="flex flex-col items-center space-y-4"
-          >
-            {step.icon}
-            <p className="text-zinc-500 font-medium leading-relaxed text-lg">{step.text}</p>
-          </motion.div>
-        ))}
+        {/* Grid of reasons */}
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {reasons.map((reason, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -4, scale: 1.02 }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              className={`rounded-xl p-6 flex flex-col justify-between h-full shadow ${reason.bg} ${reason.border}`}
+            >
+              <div>
+                <div className="flex items-center gap-3">
+                  <div className="p-3 ">{reason.icon}</div>
+                  <span
+                    className={`text-xl font-semibold tracking-tight ${reason.textColor}`}
+                  >
+                    {reason.title}
+                  </span>
+                </div>
+                <p
+                  className={`mt-4 ${
+                    reason.textColor || "text-muted-foreground"
+                  }`}
+                >
+                  {reason.desc}
+                </p>
+              </div>
+
+              <Button variant="ghost" className="mt-6 w-fit">
+                {t("learn_more")} <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

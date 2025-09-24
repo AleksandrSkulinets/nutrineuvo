@@ -12,29 +12,44 @@ const enTranslations = {
   "contacts": "Contacts",
   "appointment": "Appointment",
   "blog": "Blog",
-  "login": "OmaNutrineuvo",
+  "login": "Oma Nutrineuvo",
   "logout": "Logout",
   homePage: {
     title:  "Nutrineuvo - your reliable partner on your journey towards a healthier life.",
     description: "Nutrineuvo is an online service that helps you achieve a healthier lifestyle with personalized nutrition plans, expert advice, and easy-to-use meal planning tools. Whether you're following a specific diet or looking for healthier eating options, Nutrineuvo provides everything you need to succeed."
 
   },
-  hero: {
-    title: "Nutrineuvo",
-    description: "Personalized nutrition counseling and expert support for special diets.",
-    appointment: "Book an appointment",
-    service: "Explore our services",
+   hero: {
+    "badge": "✨ Nutrineuvo",
+    "title": "Nutrineuvo",
+    "description": "Personalized nutrition counseling and expert support for special diets.",
+    "appointment": "Book an appointment",
+    "service": "Explore services"
   },
-   why: {
+    "why": {
     "title": "Why Nutrineuvo?",
     "description": "Nutrineuvo is a Finnish platform that connects you with certified dietitians – easily and securely. Our service is tailored for special diets and provides access to reliable nutrition support without requiring a doctor’s referral.",
+    
     "support_special_diets": "Support for special diets",
+    "support_special_diets_desc": "Get expert help with gluten-free, lactose-free, vegan, FODMAP and other special diets.",
+
     "no_diagnosis": "We don’t diagnose – we guide dietary management",
+    "no_diagnosis_desc": "Focus on practical nutrition guidance and everyday food choices – not medical diagnoses.",
+
     "no_referral": "No doctor’s referral needed",
+    "no_referral_desc": "Book a dietitian directly without waiting for healthcare system referrals.",
+
     "data_secure": "Your data is safe",
-    "no_commitment": "No commitment"},
+    "data_secure_desc": "We use Finnish-level data protection and secure systems to protect your information.",
+
+    "no_commitment": "No commitment",
+    "no_commitment_desc": "Start with a single session – no subscriptions or long-term contracts."
+  },
+  "learn_more": "Learn more",
     howitworks: {
     "title": "How it works?",
+    "tagline": " Choose a service,Register, select a therapist, and get personal guidance.",
+    "description": " Choose a service,Register, select a therapist, and get personal guidance.",
     "register": "Register and authenticate",
     "choose_therapist": "Choose a nutritionist and book an appointment",
     "get_guidance": "Receive personal guidance and digital recipes"
@@ -104,7 +119,8 @@ const enTranslations = {
           { duration: "6 months", price: "€59/month" },
         ],
         buttonText: "Start Coaching",
-      }
+      },
+      most_popular: "Most Popular",
     },
   },
   faq: {

@@ -1,81 +1,90 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-
-const CheckIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="flex-shrink-0 w-6 h-6 text-[#07be61]"
-  >
-    <polyline points="20 6 9 17 4 12"></polyline>
-  </svg>
-);
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import { ArrowRight, Settings2, Blocks } from "lucide-react";
+import { Button } from "../components/ui/button";
 
 export default function WhyNutrineuvo() {
   const { t } = useTranslation();
 
   const features = [
-    t('why.support_special_diets'),
-    t('why.no_diagnosis'),
-    t('why.no_referral'),
-    t('why.data_secure'),
-    t('why.no_commitment'),
+    {
+      title: t("why.support_special_diets"),
+      desc: t("why.support_special_diets_desc"),
+      icon: <Settings2 className="shrink-0" />,
+    },
+    {
+      title: t("why.no_diagnosis"),
+      desc: t("why.no_diagnosis_desc"),
+      icon: <Blocks className="shrink-0" />,
+    },
+    {
+      title: t("why.no_referral"),
+      desc: t("why.no_referral_desc"),
+      icon: <Settings2 className="shrink-0" />,
+    },
+    {
+      title: t("why.data_secure"),
+      desc: t("why.data_secure_desc"),
+      icon: <Blocks className="shrink-0" />,
+    },
+    {
+      title: t("why.no_commitment"),
+      desc: t("why.no_commitment_desc"),
+      icon: <Settings2 className="shrink-0" />,
+    },
   ];
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-20 text-white">
-      <motion.h2
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ ease: 'easeInOut', duration: 0.75 }}
-        className="mb-6 text-3xl md:text-4xl font-black uppercase text-zinc-400 text-center"
-      >
-        {t('why.title')}
-      </motion.h2>
+    <section className="min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-6xl mx-auto py-20 px-6">
+        {/* Title */}
+        <motion.h2
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center text-3xl sm:text-4xl md:text-[40px] font-bold tracking-tight text-foreground"
+        >
+          {t("why.title")}
+        </motion.h2>
 
-      <motion.p
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ ease: 'easeInOut', duration: 0.75 }}
-        className="mb-10 text-lg text-zinc-500 text-center font-semibold"
-      >
-        {t('why.description')}
-      </motion.p>
+        {/* Description */}
+        <motion.p
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mt-4 text-center text-lg text-muted-foreground max-w-2xl mx-auto"
+        >
+          {t("why.description")}
+        </motion.p>
 
-   <ul className="grid gap-10 sm:grid-cols-2 max-w-2xl mx-auto list-none p-0 m-0">
-  {features.map((feature, index) => {
-    const isLast = index === features.length - 1;
+        {/* Features grid */}
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              className="bg-muted rounded-xl p-6 flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center gap-3">
+                  {feature.icon}
+                  <span className="text-xl font-semibold tracking-tight">
+                    {feature.title}
+                  </span>
+                </div>
+                <p className="mt-4 text-muted-foreground">{feature.desc}</p>
+              </div>
 
-    return (
-      <motion.li
-        key={index}
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.1, duration: 0.5 }}
-        className={`${
-          isLast ? 'sm:col-span-2 sm:flex sm:justify-center' : ''
-        }`}
-      >
-        <div className="flex items-start space-x-3">
-          <CheckIcon />
-          <span className="text-zinc-500 font-semibold text-left">{feature}</span>
+              <Button variant="ghost" className="mt-6 w-fit">
+                {t("learn_more")} <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </motion.div>
+          ))}
         </div>
-      </motion.li>
-    );
-  })}
-</ul>
-
-
-
-
-    </div>
+      </div>
+    </section>
   );
 }

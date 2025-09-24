@@ -1,57 +1,61 @@
-import { useTranslation } from 'react-i18next';  
-import Video_bg from "../assets/Video_bg.mp4";
-import { useNavigate } from 'react-router-dom'; 
-export default function Hero() {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const scrollToFaq = () => {
-    const faqSection = document.getElementById();
-    if (faqSection) {
-      faqSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-  const goToContacts = () => {
-    navigate('/contacts');
-  };
+import { Badge } from "../components/ui/badge"
+import { Button } from "../components/ui/button"
+import { ArrowUpRight, CirclePlay } from "lucide-react"
+import { useTranslation } from "react-i18next"
+import VideoBg from "../assets/Video_bg.mp4"
+
+const Hero06 = () => {
+  const { t } = useTranslation()
 
   return (
-    <div>
-      <div className='relative flex flex-col w-full h-screen'>
-        <video 
-          key="hero-video"
-          src={Video_bg} 
-          playsInline 
-          autoPlay 
-          loop 
-          muted 
-          className='absolute inset-0 w-full h-full object-cover'
-        />
-        <div className='relative w-full h-screen flex flex-col justify-center items-center text-center mt-18'>
-          <div className='sm:w-[600px] m-6'>
-            <h1 className='text-neutral-200 font-bold text-5xl font-sans drop-shadow-lg'>
-              {t('hero.title')}
-            </h1>
-            <p className='text-neutral-200 font-semibold text-xl font-sans mt-10 drop-shadow-lg'>
-              {t('hero.description')}
-            </p>
-            <div className='w-64 sm:w-[550px] flex flex-col sm:flex-row justify-around m-auto mt-16 text-sm sm:text-lg gap-4'>
-  <button
-    onClick={goToContacts}
-    className='flex-1 shadow-[inset_0_0_0_2px_#fff] px-6 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-black hover:text-white text-neutral-200 transition duration-200'
-  >
-    {t('hero.appointment')}
-  </button>
-  <button
-    onClick={scrollToFaq}
-    className='flex-1 shadow-[inset_0_0_0_2px_#fff] px-6 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-black hover:text-white text-neutral-200 transition duration-200'
-  >
-    {t('hero.service')}
-  </button>
-</div>
+    <div className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+      {/* Background video */}
+      <video
+        src={VideoBg}
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+      />
 
-          </div>
+      {/* Overlay to make text readable */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* Content */}
+      <div className="relative z-10 text-center max-w-3xl text-white">
+        <Badge
+          variant="secondary"
+          className="rounded-full py-1  bg-white/20 backdrop-blur-sm"
+        >
+          {t("hero.badge")} <ArrowUpRight className="ml-1 size-4" />
+        </Badge>
+
+        <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl md:leading-[1.2] font-semibold tracking-tighter">
+          {t("hero.title")}
+        </h1>
+
+        <p className="mt-6 md:text-lg text-gray-200">
+          {t("hero.description")}
+        </p>
+
+        <div className="mt-12 flex items-center justify-center gap-4">
+          <Button size="lg" variant="default" className="rounded-full text-base">
+            {t("hero.appointment")} <ArrowUpRight className="ml-2 h-5 w-5" />
+          </Button>
+
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full text-base "
+          >
+            <CirclePlay className="mr-2 h-5 w-5" />
+            {t("hero.service")}
+          </Button>
         </div>
       </div>
     </div>
-  );
+  )
 }
+
+export default Hero06

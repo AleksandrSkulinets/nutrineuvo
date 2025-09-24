@@ -1,46 +1,134 @@
-import { useState, useEffect, useContext } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/nutri-neuvo-logo.svg";
-import IconMenu from "./icons/IconMenu";
-import IconClose from "./icons/IconClose";
-import Facebook from "./icons/Facebook";
-import Instagram from "./icons/Instagram";
-import Linkedin from "./icons/Linkedin";
-import UserIcon from "./icons/UserIcon";
-import ArrowDownIcon from "./icons/ArrowDownIcon";
-import ArrowUpIcon from "./icons/ArrowUpIcon";
+import { Menu, MessageCircle, User, CalendarDays } from "lucide-react";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Separator } from "../components/ui/separator";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+} from "../components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "../components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+} from "../components/ui/navigation-menu";
+import { ThemeToggle } from "./theme-toggle";
 
-const Navigation = () => {
-  const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(null);
-  const { isLoggedIn, user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+// Top bar actions
+const TopBarActions = ({ t, i18n, languages, changeLanguage, loginUrl }) => (
+  <div className="hidden h-5 my-5 lg:flex items-center space-x-4 text-sm">
+    <Button
+      asChild
+      variant="ghost"
+      className="gap-1 text-foreground font-semibold"
+    >
+      <Link to="/ajanvaraus">
+        <CalendarDays className="h-4 w-4" />
+        {t("appointment")}
+      </Link>
+    </Button>
+
+    <Separator orientation="vertical" />
+
+    <Button
+      asChild
+      variant="ghost"
+      className="gap-1 text-foreground font-semibold"
+    >
+      {/* external link, not react-router */}
+      <a href={loginUrl} target="_blank" rel="noopener noreferrer">
+        <User className="h-4 w-4" />
+        {t("login")}
+      </a>
+    </Button>
+
+    <Separator orientation="vertical" />
+
+    <Button
+      asChild
+      variant="ghost"
+      className="gap-1 text-foreground font-semibold"
+    >
+      <Link to="/chat">
+        <MessageCircle className="h-4 w-4" />
+        Chat
+      </Link>
+    </Button>
+
+    <Separator orientation="vertical" />
+
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-foreground font-semibold"
+        >
+          {i18n.language.toUpperCase()}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56 bg-background">
+        <DropdownMenuLabel>Select language</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {languages.map((lng) => (
+          <DropdownMenuItem key={lng} onClick={() => changeLanguage(lng)}>
+            {lng.toUpperCase()}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </div>
+);
+
+const Navbar = () => {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
+  const [open, setOpen] = useState(false);
+  const languages = ["fi", "sv", "en"];
 
-  const handleClick = () => setOpen(!open);
-  const handleLinkClick = () => {
-    setOpen(false);
-    setDropdown(null);
-  };
+  const isDev = process.env.NODE_ENV === "development";
 
-  const toggleDropdown = (key) => {
-    setDropdown(dropdown === key ? null : key);
-  };
+  // Dynamic loginUrl with current language
+  const loginUrl = isDev
+    ? `http://localhost:5173/login?lng=${i18n.language}`
+    : `https://oma.nutrineuvo.fi/login?lng=${i18n.language}`;
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     localStorage.setItem("i18nextLng", lng);
   };
 
-  const handleLogout = () => {
-    logout();
+  // Close mobile menu on route change
+  useEffect(() => {
     setOpen(false);
-    navigate("/");
-  };
+  }, [location.pathname]);
 
+  // Close mobile menu if resizing to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Navigation structure
   const links = [
     { title: t("home"), to: "/" },
     {
@@ -50,7 +138,6 @@ const Navigation = () => {
         { title: t("nutrition_therapy"), to: "/nutrition" },
         { title: t("individual_clients"), to: "/henkiloasiakkaille" },
         { title: t("professionals"), to: "/nutritionists" },
-       
       ],
     },
     {
@@ -65,218 +152,272 @@ const Navigation = () => {
     { title: t("blog"), to: "/blog" },
   ];
 
-  useEffect(() => {
-    const storedLanguage = localStorage.getItem("i18nextLng");
-    if (storedLanguage) {
-      i18n.changeLanguage(storedLanguage);
-    } else {
-      const browserLanguage = navigator.language.split("-")[0];
-      i18n.changeLanguage(browserLanguage);
-    }
-  }, [i18n]);
-
   return (
-    <header className="z-50 fixed w-full">
-      <div className="w-full h-[65px] mx-auto flex justify-between items-center backdrop-blur-sm bg-white/30 z-10">
-        <div className="flex m-1 z-50 size-[75px]">
-          <Link className="flex" to="/">
-            <img src={logo} alt="Nutri Neuvo" />
-          </Link>
-        </div>
+    <header className="fixed w-full  z-50 bg-background">
+      {/* Top bar desktop only */}
+      <div className="w-full bg-muted flex justify-end ms-auto items-center gap-2 px-4 sm:px-6 lg:px-8">
+        <TopBarActions
+          t={t}
+          i18n={i18n}
+          languages={languages}
+          changeLanguage={changeLanguage}
+          loginUrl={loginUrl}
+        />
+      </div>
 
-        {/* Desktop Navigation */}
-        <nav className="md:flex items-center hidden mr-4 space-x-8">
-          <ul className="md:flex hidden">
-            {links.map((link, index) => (
-              <li key={index} className="relative mx-4 font-semibold text-black group">
-                {!link.items ? (
-                  <Link
-                    className="transition duration-300 cursor-pointer hover:text-[#404040]"
-                    to={link.to}
-                    onClick={handleLinkClick}
-                  >
-                    {link.title}
+      {/* Main navbar */}
+      <nav className="mx-auto w-full border-b border-muted">
+        <div className="py-3">
+          {/* Mobile layout */}
+          <div className="flex w-full items-center gap-3 lg:hidden px-3">
+            <Link to="/" className="flex-shrink-0">
+              <img
+                src={logo}
+                alt="Nutri Neuvo Logo"
+                className="h-auto max-h-20 w-auto"
+              />
+            </Link>
+
+            <Input
+              type="text"
+              placeholder={t("search") || "Search..."}
+              className="h-auto border flex-grow"
+            />
+
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button size="lg" variant="outline">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+
+              <SheetContent side="right" className="w-full p-0 flex flex-col">
+                <SheetHeader className="p-2">
+                  <Link to="/" className="flex-shrink-0 mx-auto">
+                    <img
+                      src={logo}
+                      alt="Nutri Neuvo Logo"
+                      className="h-auto max-h-20 w-auto"
+                    />
                   </Link>
-                ) : (
-                  <div
-                    className="cursor-pointer flex items-center gap-1 hover:text-gray-500"
-                    onClick={() => toggleDropdown(link.dropdownKey)}
-                  >
-                    {link.title}
-                    {dropdown === link.dropdownKey ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                </SheetHeader>
+
+                {/* Actions */}
+                <div className="border-b flex flex-col gap-2 p-4">
+                  <TopBarActions
+                    t={t}
+                    i18n={i18n}
+                    languages={languages}
+                    changeLanguage={changeLanguage}
+                    loginUrl={loginUrl}
+                  />
+                </div>
+
+                {/* Nav links */}
+                <nav className="flex flex-col p-4 gap-2 text-base">
+                  {links.map((link) =>
+                    link.items ? (
+                      <div key={link.dropdownKey} className="flex flex-col">
+                        <span className="font-semibold">{link.title}</span>
+                        {link.items.map((item) => (
+                          <Button
+                            key={item.to}
+                            asChild
+                            variant="ghost"
+                            className={`justify-start text-base ${
+                              location.pathname === item.to
+                                ? "text-primary font-semibold"
+                                : "text-muted-foreground"
+                            }`}
+                          >
+                            <Link to={item.to}>{item.title}</Link>
+                          </Button>
+                        ))}
+                      </div>
+                    ) : (
+                      <Button
+                        key={link.to}
+                        asChild
+                        variant="ghost"
+                        className={`justify-start text-base ${
+                          location.pathname === link.to
+                            ? "text-primary font-semibold"
+                            : "text-muted-foreground"
+                        }`}
+                      >
+                        <Link to={link.to}>{link.title}</Link>
+                      </Button>
+                    )
+                  )}
+                  <Separator className="my-2" />
+                  <div>
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="gap-1 text-foreground font-semibold"
+                    >
+                      <Link to="/ajanvaraus">
+                        <CalendarDays className="h-4 w-4" />
+                        {t("appointment")}
+                      </Link>
+                    </Button>
+
+                    <Separator className="my-2" />
+
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="gap-1 text-foreground font-semibold"
+                    >
+                      {/* external link, not react-router */}
+                      <a
+                        href={loginUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <User className="h-4 w-4" />
+                        {t("login")}
+                      </a>
+                    </Button>
+
+
+                    <Separator className="my-2" />
+
+                    <div className="flex justify-between items-center">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-foreground font-semibold"
+                          >
+                            {i18n.language.toUpperCase()}
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56 bg-background">
+                          <DropdownMenuLabel>Select language</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          {languages.map((lng) => (
+                            <DropdownMenuItem
+                              key={lng}
+                              onClick={() => changeLanguage(lng)}
+                            >
+                              {lng.toUpperCase()}
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+
+
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="gap-1 text-foreground font-semibold"
+                    >
+                      <Link to="/chat">
+                        <MessageCircle className="h-4 w-4" />
+                        Chat
+                      </Link>
+                    </Button>
+                      <ThemeToggle />
+                    </div>
                   </div>
-                )}
-
-                {link.items && dropdown === link.dropdownKey && (
-                  <ul className="absolute top-full left-0 bg-white border rounded shadow-md mt-2 w-52 z-40">
-                    {link.items.map((item, subIndex) => (
-                      <li key={subIndex} className="px-4 py-2 hover:bg-gray-100">
-                        <Link to={item.to} onClick={handleLinkClick}>
-                          {item.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          <div className="ml-4">
-            <select
-              onChange={(e) => changeLanguage(e.target.value)}
-              className="text-gray-600 font-semibold transition border border-gray-300 rounded px-2 py-1 backdrop-blur-sm bg-white/30"
-            >
-              <option value={i18n.language}>{i18n.language.toUpperCase()}</option>
-              {["fi", "sv", "en"]
-                .filter((lng) => lng !== i18n.language)
-                .map((lng) => (
-                  <option key={lng} value={lng}>
-                    {lng.toUpperCase()}
-                  </option>
-                ))}
-            </select>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
 
-          {isLoggedIn ? (
-            <>
-              {user && (
-                <span className="text-sm text-gray-600 ml-2">Hi, {user.user_nicename}</span>
-              )}
-              <button
-                onClick={handleLogout}
-                className="ml-4 px-3 py-2 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg font-semibold transition"
-              >
-                {t("logout")}
-              </button>
-            </>
-          ) : (
-            <Link
-              to="/login"
-              className="hidden md:flex items-center ml-4 px-2 space-x-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
-            >
-              <UserIcon className="w-6 h-6" />
-              {t("login")}
-            </Link>
-          )}
-        </nav>
+          {/* Desktop layout */}
+          <div className="hidden lg:grid w-full grid-cols-[auto_1fr_auto] items-center">
+            <div className="ms-3">
+              <Link to="/" className="flex items-center flex-shrink-0">
+                <img
+                  src={logo}
+                  alt="Nutri Neuvo Logo"
+                  className="h-auto max-h-20 w-auto"
+                />
+              </Link>
+            </div>
 
-        {/* Mobile Login/Logout */}
-        {isLoggedIn ? (
-          <button
-            onClick={handleLogout}
-            className="md:hidden flex items-center px-2 py-2 text-red-500 border border-red-500 rounded-lg font-semibold hover:bg-red-500 hover:text-white transition"
-          >
-            <UserIcon className="w-6 h-6 mr-1" />
-            {t("logout")}
-          </button>
-        ) : (
-          <Link
-            to="/login"
-            className="md:hidden flex items-center px-2 py-2 border border-[#07be61] rounded-lg font-semibold text-[#404040] hover:bg-[#07be61] hover:text-white transition"
-          >
-            <UserIcon className="w-6 h-6" />
-            {t("login")}
-          </Link>
-        )}
-
-        {/* Hamburger Icon */}
-        <div onClick={handleClick} className="md:hidden z-50 text-2xl px-4">
-          {!open ? <IconMenu /> : <IconClose />}
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {open && (
-            <motion.ul
-              key="mobile-menu"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="absolute top-0 right-0 w-full h-screen bg-gray-100 z-40 flex flex-col justify-center items-center overflow-y-auto"
-            >
-              {links.map((link, index) => (
-                <div key={index} className="w-full text-center">
-                  {!link.items ? (
-                    <motion.li className="py-4 text-2xl font-roboto uppercase font-semibold text-black hover:text-[#404040]">
-                      <Link to={link.to} onClick={handleLinkClick}>
-                        {link.title}
-                      </Link>
-                    </motion.li>
-                  ) : (
-                    <>
-                      <div
-                        className="py-4 text-2xl font-roboto uppercase font-semibold text-[#404040] flex justify-center items-center gap-2 cursor-pointer hover:text-gray-500"
-                        onClick={() => toggleDropdown(link.dropdownKey)}
+            <NavigationMenu viewport={false} className="mx-auto justify-center">
+              <NavigationMenuList className="space-x-6 xl:space-x-8">
+                {links.map((link) =>
+                  link.items ? (
+                    <NavigationMenuItem key={link.dropdownKey}>
+                      <NavigationMenuTrigger
+                        className={`text-md font-semibold bg-transparent hover:bg-transparent 
+                          focus:bg-transparent active:bg-transparent
+                          data-[state=open]:bg-transparent 
+                          data-[state=open]:text-primary
+                          ${
+                            location.pathname.startsWith("/" + link.dropdownKey)
+                              ? "text-primary"
+                              : "text-foreground hover:text-primary"
+                          }`}
                       >
                         {link.title}
-                        {dropdown === link.dropdownKey ? <ArrowUpIcon /> : <ArrowDownIcon />}
-                      </div>
-                      {dropdown === link.dropdownKey && (
-                        <div className="mb-4">
-                          {link.items.map((item, subIndex) => (
-                            <Link
-                              key={subIndex}
-                              to={item.to}
-                              onClick={handleLinkClick}
-                              className="block text-lg font-medium text-gray-700 hover:text-black"
-                            >
-                              {item.title}
-                            </Link>
+                      </NavigationMenuTrigger>
+
+                      <NavigationMenuContent className="bg-white">
+                        <ul className="grid gap-2 p-4 w-56">
+                          {link.items.map((item) => (
+                            <li key={item.to}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  to={item.to}
+                                  className={`block px-2 py-1 rounded text-md font-semibold bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent
+                                    ${
+                                      location.pathname === item.to
+                                        ? "text-primary"
+                                        : "text-foreground hover:text-primary"
+                                    }`}
+                                >
+                                  {item.title}
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
                           ))}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
-              ))}
-
-              {/* Language Switcher */}
-              <div className="mt-10">
-                {["fi", "sv", "en"].map((lng) => (
-                  <button
-                    key={lng}
-                    onClick={() => changeLanguage(lng)}
-                    className={`text-lg mx-2 text-gray-600 hover:text-black font-semibold transition ${i18n.language === lng ? "text-black font-bold" : ""}`}
-                  >
-                    {lng.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-
-              {/* Auth Actions */}
-              <div className="mt-10">
-                {isLoggedIn ? (
-                  <button
-                    onClick={handleLogout}
-                    className="px-6 py-3 bg-red-500 text-white rounded-lg font-semibold transition hover:bg-red-600"
-                  >
-                    {t("logout")}
-                  </button>
-                ) : (
-                  <Link
-                    to="/login"
-                    onClick={handleLinkClick}
-                    className="px-6 py-3 bg-[#07be61] text-white rounded-lg font-semibold transition hover:bg-[#06a652]"
-                  >
-                    {t("login")}
-                  </Link>
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  ) : (
+                    <NavigationMenuItem key={link.to}>
+                      <NavigationMenuLink
+                        asChild
+                        className={`text-md font-semibold bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent
+                          ${
+                            location.pathname === link.to
+                              ? "text-primary"
+                              : "text-foreground hover:text-primary"
+                          }`}
+                      >
+                        <Link to={link.to}>{link.title}</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )
                 )}
-              </div>
+              </NavigationMenuList>
+            </NavigationMenu>
 
-              {/* Social Links */}
-              <div className="mt-10 flex justify-center gap-4">
-                <Link to="https://www.facebook.com/profile.php?id=61573966495207"><Facebook /></Link>
-                <Link to="https://instagram.com/nutrineuvo"><Instagram /></Link>
-                <Link to="https://linkedin.com/company/nutrineuvo/"><Linkedin /></Link>
-              </div>
-            </motion.ul>
-          )}
-        </AnimatePresence>
-      </div>
+            
+            <div className="flex items-center gap-2 me-3 justify-self-end w-full">
+              <ThemeToggle />
+
+              <Input
+                type="text"
+                placeholder={t("search") || "Search..."}
+                className="flex-grow h-9 border focus:ring-2 focus:ring-primary"
+              />
+              <Button size="sm" variant="default">
+                {t("search")}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </nav>
     </header>
   );
 };
 
-export default Navigation;
+export default Navbar;

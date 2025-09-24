@@ -12,29 +12,42 @@ const svTranslations = {
   nutrineuvo: "Nutrineuvo",
   about_us: "Om oss",
   appointment: "Boka tid",
-  login: "OmaNutrineuvo",
+  login: "Oma Nutrineuvo",
   logout: "Logga ut",
   homePage: {
     title: "Nutrineuvo - din pålitliga partner på din resa mot ett hälsosammare liv.",
     description: "Nutrineuvo är en online-tjänst som hjälper dig att uppnå en hälsosammare livsstil med personliga kostplaner, expertvägledning och användarvänliga måltidsplaneringsverktyg. Oavsett om du följer en speciell diet eller söker hälsosammare matalternativ, erbjuder Nutrineuvo allt du behöver för att lyckas."
   },
-  hero: {
-    title: "Nutrineuvo",
-    description: "Personlig näringsrådgivning och experthjälp för specialkost.",
-     appointment: "Boka tid",
-    service: "Utforska tjänsten",
+  "hero": {
+    "badge": "✨ Nutrineuvo",
+    "title": "Nutrineuvo",
+    "description": "Personlig näringsrådgivning och experthjälp för specialkost.",
+    "appointment": "Boka tid",
+    "service": "Utforska tjänster"
   },
    why: {
     "title": "Varför Nutrineuvo?",
     "description": "Nutrineuvo är en finsk plattform som kopplar dig till legitimerade dietister – enkelt och säkert. Tjänsten är utformad för specialkost och ger tillgång till pålitligt koststöd utan behov av läkarremiss.",
-    "support_special_diets": "Stöd för specialkost",
-    "no_diagnosis": "Vi ställer ingen diagnos – vi vägleder i kosthållning",
+   "support_special_diets": "Stöd för specialdieter",
+    "support_special_diets_desc": "Få professionell hjälp med glutenfri, laktosfri, vegansk, FODMAP och andra dieter.",
+
+    "no_diagnosis": "Vi ställer inga diagnoser – vi vägleder kosthantering",
+    "no_diagnosis_desc": "Vi fokuserar på praktisk näringsrådgivning och vardagliga matval – inte medicinska diagnoser.",
+
     "no_referral": "Ingen läkarremiss behövs",
-    "data_secure": "Din data är säker",
-    "no_commitment": "Inget åtagande"
+    "no_referral_desc": "Boka tid hos en dietist direkt – utan att gå via vården.",
+
+    "data_secure": "Dina uppgifter är säkra",
+    "data_secure_desc": "Vi använder finsk nivå av dataskydd och säkra system för att skydda din information.",
+
+    "no_commitment": "Inget åtagande",
+    "no_commitment_desc": "Börja med ett enda besök – inga prenumerationer eller långvariga avtal.",
+    "learn_more": "Läs mer"
   },
   howitworks: {
     "title": "Hur fungerar det?",
+    "description": " Välj en tjänst",
+    "tagline": " Välj en tjänst,",
     "register": "Registrera dig och identifiera",
     "choose_therapist": "Välj dietist och boka tid",
     "get_guidance": "Få personlig vägledning och digitala recept"

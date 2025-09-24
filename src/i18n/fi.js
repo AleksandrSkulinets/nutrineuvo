@@ -11,33 +11,49 @@ const fiTranslations = {
   omanutrineuvo: "OmaNutrineuvo",
   nutrineuvo: "Nutrineuvo",
   about_us: "Tietoa meistä",
-  appointment: "Ajanvaraus",
+  appointment: "Varaa aika",
   login: "OmaNutrineuvo",
   logout: "Kirjaudu ulos",
   homePage: {
     title: "Nutrineuvo - luotettava kumppanisi matkalla kohti terveellisempää elämää.",
     description: "Nutrineuvo on verkkoalusta, joka auttaa sinua saavuttamaan terveellisemmän elämäntavan räätälöityjen ravitsemussuunnitelmien, asiantuntijaneuvonnan ja helppokäyttöisten ateriasuunnittelutyökalujen avulla. Olitpa sitten noudattamassa erityisruokavaliota tai etsit vain terveellisempiä ruokailuvaihtoehtoja, Nutrineuvo tarjoaa kaiken, mitä tarvitset onnistumiseen."
   },
-  hero: {
-    title: "Nutrineuvo",
-    description: "Henkilökohtaista ravitsemusneuvontaa ja asiantuntijatukea erityisruokavalioihin.",
-    appointment: "Varaa aika",
-    service: "Tutustu palveluun",
-    
+   "hero": {
+    "badge": "✨ Nutrineuvo",
+    "title": "Nutrineuvo",
+    "description": "Henkilökohtaista ravitsemusneuvontaa ja asiantuntijatukea erityisruokavalioihin.",
+    "appointment": "Varaa aika",
+    "service": "Tutustu palveluihin"
   },
   why: {
     "title": "Miksi Nutrineuvo?",
     "description": "Nutrineuvo on suomalainen alusta, joka yhdistää sinut päteviin ravitsemusterapeutteihin – helposti ja turvallisesti. Palvelumme on suunniteltu erityisruokavalioita varten ja tarjoaa luotettavaa ravitsemusohjausta ilman lääkärin lähetettä.",
-    "support_special_diets": "Tukea erityisruokavalioihin",
-    "no_diagnosis": "Emme diagnosoi – vaan ohjaamme ruokavalion hallinnassa",
-    "no_referral": "Ei tarvita lääkärin lähetettä",
-    "data_secure": "Tietosi turvassa",
-    "no_commitment": "Ei sitoutumista"},
+       "support_special_diets": "Tukea erityisruokavalioihin",
+    "support_special_diets_desc": "Saat asiantuntevaa apua gluteenittomaan, laktoosittomaan, vegaaniseen, FODMAP- ja muihin ruokavalioihin.",
+
+    "no_diagnosis": "Emme diagnosoi – ohjaamme ruokavalion hallintaa",
+    "no_diagnosis_desc": "Keskitymme käytännön ravitsemusneuvontaan ja arjen ruokavalintoihin – emme lääketieteellisiin diagnooseihin.",
+
+    "no_referral": "Ei lääkärin lähetettä",
+    "no_referral_desc": "Varaa aika ravitsemusterapeutille suoraan – ilman terveydenhuollon lähetettä.",
+
+    "data_secure": "Tietosi ovat turvassa",
+    "data_secure_desc": "Hyödynnämme suomalaisen tietosuojan tasoa ja turvallisia järjestelmiä tietojesi suojaamiseen.",
+
+    "no_commitment": "Ei sitoutumista",
+    "no_commitment_desc": "Aloita yhdellä käynnillä – ilman tilauksia tai pitkäaikaisia sopimuksia.",
+    
+  }
+,
+"learn_more": "Lue lisää",
     howitworks: {
     "title": "Miten se toimii?",
+    "description": "  Valitse palvelu, rekisteröidy, valitse terapeutti ja saat henkilökohtaista ohjausta.",
+    "tagline": " Valitse palvelu,",
     "register": "Rekisteröidy ja tunnistaudu",
     "choose_therapist": "Valitse ravitsemusterapeutti ja varaa aika",
-    "get_guidance": "Saat henkilökohtaista ohjausta ja reseptit digitaalisesti"
+    "get_guidance": "Saat henkilökohtaista ohjausta ja reseptit digitaalisesti",
+
   },
   aboutsection: {
     title: "Tietoa meistä",
@@ -104,7 +120,8 @@ const fiTranslations = {
           { duration: "6 kuukautta", price: "€59/kk" },
         ],
         buttonText: "Aloita valmennus",
-      }
+      },
+      most_popular: "Suosituin",
     },
   },
   faq: {

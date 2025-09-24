@@ -11,11 +11,10 @@ import BlogPost from './components/BlogPost';
 import TermsOfService from './pages/Terms-of-service';
 import PrivacyPolicy from './pages/Privancy-policy';
 import UnderConstruction from './components/UnderConstruction';
-import Login from './pages/Login';
 import Cookies from './pages/Cookies';
-import Signup from './pages/Signup';
 import Nutrition from './pages/Nutrition';
 import Nutritionists from './pages/Nutritionists';
+import BookAppointmentPage from './pages/BookAppointmentPage';
 
 // 👇 Scroll reset component
 function ScrollToTop() {
@@ -55,10 +54,9 @@ function App() {
         <Route path="/nutritionists" element={<Nutritionists />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/cookies" element={<Cookies />} />
         <Route path="*" element={<NotFound />} /> 
+        <Route path="ajanvaraus" element={<BookAppointmentPage/>} /> 
       </Routes>
 
       <Footer />
