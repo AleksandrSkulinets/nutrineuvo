@@ -167,7 +167,7 @@ const Navbar = () => {
 
       {/* Main navbar */}
       <nav className="mx-auto w-full border-b border-muted">
-        <div className="py-3">
+        <div className="">
           {/* Mobile layout */}
           <div className="flex w-full items-center gap-3 lg:hidden px-3">
             <Link to="/" className="flex-shrink-0">
@@ -192,99 +192,16 @@ const Navbar = () => {
                 </Button>
               </SheetTrigger>
 
-              <SheetContent side="right" className="w-full p-0 flex flex-col">
-                <SheetHeader className="p-2">
+              <SheetContent side="right" className="w-full flex flex-col">
+                <SheetHeader className=" border-b ">
                   <Link to="/" className="flex-shrink-0 mx-auto">
                     <img
                       src={logo}
                       alt="Nutri Neuvo Logo"
-                      className="h-auto max-h-20 w-auto"
+                        className="h-[80px] sm:h-[80px] md:h-[80px] "
                     />
                   </Link>
-                </SheetHeader>
-
-                {/* Actions */}
-                <div className="border-b flex flex-col gap-2 p-4">
-                  <TopBarActions
-                    t={t}
-                    i18n={i18n}
-                    languages={languages}
-                    changeLanguage={changeLanguage}
-                    loginUrl={loginUrl}
-                  />
-                </div>
-
-                {/* Nav links */}
-                <nav className="flex flex-col p-4 gap-2 text-base">
-                  {links.map((link) =>
-                    link.items ? (
-                      <div key={link.dropdownKey} className="flex flex-col">
-                        <span className="font-semibold">{link.title}</span>
-                        {link.items.map((item) => (
-                          <Button
-                            key={item.to}
-                            asChild
-                            variant="ghost"
-                            className={`justify-start text-base ${
-                              location.pathname === item.to
-                                ? "text-primary font-semibold"
-                                : "text-muted-foreground"
-                            }`}
-                          >
-                            <Link to={item.to}>{item.title}</Link>
-                          </Button>
-                        ))}
-                      </div>
-                    ) : (
-                      <Button
-                        key={link.to}
-                        asChild
-                        variant="ghost"
-                        className={`justify-start text-base ${
-                          location.pathname === link.to
-                            ? "text-primary font-semibold"
-                            : "text-muted-foreground"
-                        }`}
-                      >
-                        <Link to={link.to}>{link.title}</Link>
-                      </Button>
-                    )
-                  )}
-                  <Separator className="my-2" />
-                  <div>
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="gap-1 text-foreground font-semibold"
-                    >
-                      <Link to="/ajanvaraus">
-                        <CalendarDays className="h-4 w-4" />
-                        {t("appointment")}
-                      </Link>
-                    </Button>
-
-                    <Separator className="my-2" />
-
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="gap-1 text-foreground font-semibold"
-                    >
-                      {/* external link, not react-router */}
-                      <a
-                        href={loginUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <User className="h-4 w-4" />
-                        {t("login")}
-                      </a>
-                    </Button>
-
-
-                    <Separator className="my-2" />
-
-                    <div className="flex justify-between items-center">
+                   <div className="flex justify-between items-center  mx-2 ">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
@@ -320,10 +237,88 @@ const Navbar = () => {
                         Chat
                       </Link>
                     </Button>
-                      <ThemeToggle />
-                    </div>
+                    <ThemeToggle />
+
+                    
                   </div>
+                </SheetHeader>
+
+              
+
+                {/* Nav links */}
+                <nav className="flex flex-col gap-2 text-base">
+                 
+
+                   <div className="justify-center items-center gap-2 flex">
+                    <Button
+                      asChild
+                      variant="default"
+                      className="gap-1 text-foreground w-full text-base font-semibold"
+                    >
+                      <Link to="/ajanvaraus">
+                        <CalendarDays className="h-4 w-4" />
+                        {t("appointment")}
+                      </Link>
+                    </Button>
+
+
+                    <Button
+                      asChild
+                      variant="default"
+                      className="gap-1 text-foreground w-full text-base  font-semibold"
+                    >
+                      {/* external link, not react-router */}
+                      <a
+                        href={loginUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <User className="h-4 w-4" />
+                        {t("login")}
+                      </a>
+                    </Button>
+
+
+
+                    
+                  </div>
+                  {links.map((link) =>
+                    link.items ? (
+                      <div key={link.dropdownKey} className="flex flex-col">
+                        <span className="font-semibold">{link.title}</span>
+                        {link.items.map((item) => (
+                          <Button
+                            key={item.to}
+                            asChild
+                            variant="ghost"
+                            className={`justify-start text-base ${
+                              location.pathname === item.to
+                                ? "text-primary font-semibold"
+                                : "text-muted-foreground"
+                            }`}
+                          >
+                            <Link to={item.to}>{item.title}</Link>
+                          </Button>
+                        ))}
+                      </div>
+                    ) : (
+                      <Button
+                        key={link.to}
+                        asChild
+                        variant="ghost"
+                        className={`justify-start text-base ${
+                          location.pathname === link.to
+                            ? "text-primary font-semibold"
+                            : "text-muted-foreground"
+                        }`}
+                      >
+                        <Link to={link.to}>{link.title}</Link>
+                      </Button>
+                    )
+                  )}
+                 
                 </nav>
+              
               </SheetContent>
             </Sheet>
           </div>
