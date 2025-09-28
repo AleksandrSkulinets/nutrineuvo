@@ -192,40 +192,39 @@ const Navbar = () => {
                 </Button>
               </SheetTrigger>
 
-              <SheetContent side="right" className="w-full flex flex-col">
-                <SheetHeader className=" border-b ">
+              <SheetContent side="right" className="w-full p-2 flex flex-col ">
+                <SheetHeader className=" border-b  ">
                   <Link to="/" className="flex-shrink-0 mx-auto">
                     <img
                       src={logo}
                       alt="Nutri Neuvo Logo"
-                        className="h-[80px] sm:h-[80px] md:h-[80px] "
+                      className="h-[80px] sm:h-[80px] md:h-[80px] "
                     />
                   </Link>
-                   <div className="flex justify-between items-center  mx-2 ">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-foreground font-semibold"
+                  <div className="flex justify-between items-center  mx-2 ">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-foreground font-semibold"
+                        >
+                          {i18n.language.toUpperCase()}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56 bg-background">
+                        <DropdownMenuLabel>Select language</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {languages.map((lng) => (
+                          <DropdownMenuItem
+                            key={lng}
+                            onClick={() => changeLanguage(lng)}
                           >
-                            {i18n.language.toUpperCase()}
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 bg-background">
-                          <DropdownMenuLabel>Select language</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          {languages.map((lng) => (
-                            <DropdownMenuItem
-                              key={lng}
-                              onClick={() => changeLanguage(lng)}
-                            >
-                              {lng.toUpperCase()}
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-
+                            {lng.toUpperCase()}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
 
                     <Button
                       asChild
@@ -238,18 +237,12 @@ const Navbar = () => {
                       </Link>
                     </Button>
                     <ThemeToggle />
-
-                    
                   </div>
                 </SheetHeader>
 
-              
-
                 {/* Nav links */}
                 <nav className="flex flex-col gap-2 text-base">
-                 
-
-                   <div className="justify-center items-center gap-2 flex">
+                  <div className="items-center gap-2 flex">
                     <Button
                       asChild
                       variant="default"
@@ -260,7 +253,6 @@ const Navbar = () => {
                         {t("appointment")}
                       </Link>
                     </Button>
-
 
                     <Button
                       asChild
@@ -277,48 +269,50 @@ const Navbar = () => {
                         {t("login")}
                       </a>
                     </Button>
-
-
-
-                    
                   </div>
                   {links.map((link) =>
                     link.items ? (
                       <div key={link.dropdownKey} className="flex flex-col">
-                        <span className="font-semibold">{link.title}</span>
-                        {link.items.map((item) => (
+                        <span className="font-semibold px-2">{link.title}</span>
+                        {link.items.map((item) => {
+                          const isActive = location.pathname === item.to;
+                          return (
+                            <Button
+                              key={item.to}
+                              asChild
+                              variant="ghost"
+                              className={`justify-start text-base ${
+                                isActive
+                                  ? "text-primary font-semibold"
+                                  : "text-muted-foreground"
+                              }`}
+                            >
+                              <Link to={item.to}>{item.title}</Link>
+                            </Button>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      (() => {
+                        const isActive = location.pathname === link.to;
+                        return (
                           <Button
-                            key={item.to}
+                            key={link.to}
                             asChild
                             variant="ghost"
                             className={`justify-start text-base ${
-                              location.pathname === item.to
+                              isActive
                                 ? "text-primary font-semibold"
                                 : "text-muted-foreground"
                             }`}
                           >
-                            <Link to={item.to}>{item.title}</Link>
+                            <Link to={link.to}>{link.title}</Link>
                           </Button>
-                        ))}
-                      </div>
-                    ) : (
-                      <Button
-                        key={link.to}
-                        asChild
-                        variant="ghost"
-                        className={`justify-start text-base ${
-                          location.pathname === link.to
-                            ? "text-primary font-semibold"
-                            : "text-muted-foreground"
-                        }`}
-                      >
-                        <Link to={link.to}>{link.title}</Link>
-                      </Button>
+                        );
+                      })()
                     )
                   )}
-                 
                 </nav>
-              
               </SheetContent>
             </Sheet>
           </div>
@@ -395,7 +389,6 @@ const Navbar = () => {
               </NavigationMenuList>
             </NavigationMenu>
 
-            
             <div className="flex items-center gap-2 me-3 justify-self-end w-full">
               <ThemeToggle />
 
