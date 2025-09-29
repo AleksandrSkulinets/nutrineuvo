@@ -15,45 +15,52 @@ const fiTranslations = {
   login: "OmaNutrineuvo",
   logout: "Kirjaudu ulos",
   homePage: {
-    title: "Nutrineuvo - luotettava kumppanisi matkalla kohti terveellisempää elämää.",
-    description: "Nutrineuvo on verkkoalusta, joka auttaa sinua saavuttamaan terveellisemmän elämäntavan räätälöityjen ravitsemussuunnitelmien, asiantuntijaneuvonnan ja helppokäyttöisten ateriasuunnittelutyökalujen avulla. Olitpa sitten noudattamassa erityisruokavaliota tai etsit vain terveellisempiä ruokailuvaihtoehtoja, Nutrineuvo tarjoaa kaiken, mitä tarvitset onnistumiseen."
+    title:
+      "Nutrineuvo - luotettava kumppanisi matkalla kohti terveellisempää elämää.",
+    description:
+      "Nutrineuvo on verkkoalusta, joka auttaa sinua saavuttamaan terveellisemmän elämäntavan räätälöityjen ravitsemussuunnitelmien, asiantuntijaneuvonnan ja helppokäyttöisten ateriasuunnittelutyökalujen avulla. Olitpa sitten noudattamassa erityisruokavaliota tai etsit vain terveellisempiä ruokailuvaihtoehtoja, Nutrineuvo tarjoaa kaiken, mitä tarvitset onnistumiseen.",
   },
-   "hero": {
-    "badge": "✨ Nutrineuvo",
-    "title": "Nutrineuvo",
-    "description": "Henkilökohtaista ravitsemusneuvontaa ja asiantuntijatukea erityisruokavalioihin.",
-    "appointment": "Varaa aika",
-    "service": "Tutustu palveluihin"
+  hero: {
+    badge: "✨ Nutrineuvo",
+    title: "Nutrineuvo",
+    description:
+      "Henkilökohtaista ravitsemusneuvontaa ja asiantuntijatukea erityisruokavalioihin.",
+    appointment: "Varaa aika",
+    service: "Tutustu palveluihin",
   },
   why: {
-    "title": "Miksi Nutrineuvo?",
-    "description": "Nutrineuvo on suomalainen alusta, joka yhdistää sinut päteviin ravitsemusterapeutteihin – helposti ja turvallisesti. Palvelumme on suunniteltu erityisruokavalioita varten ja tarjoaa luotettavaa ravitsemusohjausta ilman lääkärin lähetettä.",
-       "support_special_diets": "Tukea erityisruokavalioihin",
-    "support_special_diets_desc": "Saat asiantuntevaa apua gluteenittomaan, laktoosittomaan, vegaaniseen, FODMAP- ja muihin ruokavalioihin.",
+    title: "Miksi Nutrineuvo?",
+    description:
+      "Nutrineuvo on suomalainen alusta, joka yhdistää sinut päteviin ravitsemusterapeutteihin – helposti ja turvallisesti. Palvelumme on suunniteltu erityisruokavalioita varten ja tarjoaa luotettavaa ravitsemusohjausta ilman lääkärin lähetettä.",
+    support_special_diets: "Tukea erityisruokavalioihin",
+    support_special_diets_desc:
+      "Saat asiantuntevaa apua gluteenittomaan, laktoosittomaan, vegaaniseen, FODMAP- ja muihin ruokavalioihin.",
 
-    "no_diagnosis": "Emme diagnosoi – ohjaamme ruokavalion hallintaa",
-    "no_diagnosis_desc": "Keskitymme käytännön ravitsemusneuvontaan ja arjen ruokavalintoihin – emme lääketieteellisiin diagnooseihin.",
+    no_diagnosis: "Emme diagnosoi – ohjaamme ruokavalion hallintaa",
+    no_diagnosis_desc:
+      "Keskitymme käytännön ravitsemusneuvontaan ja arjen ruokavalintoihin – emme lääketieteellisiin diagnooseihin.",
 
-    "no_referral": "Ei lääkärin lähetettä",
-    "no_referral_desc": "Varaa aika ravitsemusterapeutille suoraan – ilman terveydenhuollon lähetettä.",
+    no_referral: "Ei lääkärin lähetettä",
+    no_referral_desc:
+      "Varaa aika ravitsemusterapeutille suoraan – ilman terveydenhuollon lähetettä.",
 
-    "data_secure": "Tietosi ovat turvassa",
-    "data_secure_desc": "Hyödynnämme suomalaisen tietosuojan tasoa ja turvallisia järjestelmiä tietojesi suojaamiseen.",
+    data_secure: "Tietosi ovat turvassa",
+    data_secure_desc:
+      "Hyödynnämme suomalaisen tietosuojan tasoa ja turvallisia järjestelmiä tietojesi suojaamiseen.",
 
-    "no_commitment": "Ei sitoutumista",
-    "no_commitment_desc": "Aloita yhdellä käynnillä – ilman tilauksia tai pitkäaikaisia sopimuksia.",
-    
-  }
-,
-"learn_more": "Lue lisää",
-    howitworks: {
-    "title": "Miten se toimii?",
-    "description": "  Valitse palvelu, rekisteröidy, valitse terapeutti ja saat henkilökohtaista ohjausta.",
-    "tagline": " Valitse palvelu,",
-    "register": "Rekisteröidy ja tunnistaudu",
-    "choose_therapist": "Valitse ravitsemusterapeutti ja varaa aika",
-    "get_guidance": "Saat henkilökohtaista ohjausta ja reseptit digitaalisesti",
-
+    no_commitment: "Ei sitoutumista",
+    no_commitment_desc:
+      "Aloita yhdellä käynnillä – ilman tilauksia tai pitkäaikaisia sopimuksia.",
+  },
+  learn_more: "Lue lisää",
+  howitworks: {
+    title: "Miten se toimii?",
+    description:
+      "  Valitse palvelu, rekisteröidy, valitse terapeutti ja saat henkilökohtaista ohjausta.",
+    tagline: " Valitse palvelu,",
+    register: "Rekisteröidy ja tunnistaudu",
+    choose_therapist: "Valitse ravitsemusterapeutti ja varaa aika",
+    get_guidance: "Saat henkilökohtaista ohjausta ja reseptit digitaalisesti",
   },
   aboutsection: {
     title: "Tietoa meistä",
@@ -62,12 +69,14 @@ const fiTranslations = {
   },
   productsection: {
     title: "Hinnasto",
-    description: "Valitse sinulle sopiva suunnitelma ja päivitä se tarvittaessa.",
+    description:
+      "Valitse sinulle sopiva suunnitelma ja päivitä se tarvittaessa.",
     plans: {
       consultation: {
         title: "Henkilökohtainen ravitsemusneuvonta",
         price: "€89",
-        description: "Kattava analyysi ruokavaliostasi asiantuntevien suositusten kanssa.",
+        description:
+          "Kattava analyysi ruokavaliostasi asiantuntevien suositusten kanssa.",
         features: [
           "Esikartoitus: Kysely ruokavaliostasi ja elämäntavoistasi",
           "Ravintoaineanalyysi ja henkilökohtaiset suositukset",
@@ -80,7 +89,8 @@ const fiTranslations = {
       express: {
         title: "Pikaneuvonta",
         price: "€49",
-        description: "Nopea asiantuntijaneuvonta ruokavalioosi ja ravitsemuskysymyksiisi.",
+        description:
+          "Nopea asiantuntijaneuvonta ruokavalioosi ja ravitsemuskysymyksiisi.",
         features: [
           "Lyhyt arvio ruokavaliostasi ja parannusehdotukset",
           "Asiantuntijavastaukset yleisiin kysymyksiin (väsymys, ruoansulatus, himot jne.)",
@@ -105,7 +115,8 @@ const fiTranslations = {
       coaching: {
         title: "Ravitsemusvalmennus kuukausitilauksena",
         price: "€79/kk",
-        description: "Jatkuva tuki ja räätälöity ateriasuunnittelu ravitsemusterapeutilta.",
+        description:
+          "Jatkuva tuki ja räätälöity ateriasuunnittelu ravitsemusterapeutilta.",
         features: [
           "1, 3 tai 6 kuukauden valmennusvaihtoehdot",
           "Alkuarviointi tavoitteiden määrittämiseksi",
@@ -137,12 +148,14 @@ const fiTranslations = {
         "Kaikki palvelumme toteutetaan verkossa – joko videopuheluna tai chatin kautta riippuen valitsemastasi palvelusta. Saat myös kirjalliset suositukset ja mahdolliset lisämateriaalit sähköpostiisi konsultaation jälkeen.",
     },
     consultationDifference: {
-      question: "Mikä on ero henkilökohtaisen konsultaation ja express-käynnin välillä?",
+      question:
+        "Mikä on ero henkilökohtaisen konsultaation ja express-käynnin välillä?",
       answer:
         "Henkilökohtainen konsultaation (60 min) sisältää kattavan ruokavalioanalyysin, yksilölliset suositukset ja ostoslistan. Express-käynti (30 min) on nopea tapa saada asiantuntijan vastauksia tiettyihin kysymyksiin ilman laajaa analyysiä.",
     },
     doctorNote: {
-      question: "Tarvitseeko minun toimittaa lääkärin lausunto ruokavaliosuunnitelmaa varten?",
+      question:
+        "Tarvitseeko minun toimittaa lääkärin lausunto ruokavaliosuunnitelmaa varten?",
       answer:
         "Kyllä, jos haluat lääkärin suosituksiin perustuvan räätälöidyn ruokavaliosuunnitelman, tarvitsemme lääkärin lausunnon tai ohjeistuksen. Voit toimittaa sen meille sähköpostitse ennen konsultaatiota.",
     },
@@ -152,7 +165,8 @@ const fiTranslations = {
         "Ravitsemusterapeutti laatii ruokavaliosuunnitelman 3 arkipäivän kuluessa konsultaation jälkeen. Saat sen sähköpostiisi yhdessä ostoslistan ja mahdollisten lisäsuositusten kanssa.",
     },
     dietChanges: {
-      question: "Mitä tapahtuu, jos tarvitsen muutoksia ruokavaliosuunnitelmaani?",
+      question:
+        "Mitä tapahtuu, jos tarvitsen muutoksia ruokavaliosuunnitelmaani?",
       answer:
         "Palveluumme sisältyy yksi pieni muutos ruokavaliosuunnitelmaan maksutta. Jos tarvitset suurempia muutoksia tai jatkoseurantaa, suosittelemme ravitsemusvalmennuksen jäsenyyttä.",
     },
@@ -173,24 +187,25 @@ const fiTranslations = {
     },
   },
   blogSection: {
-    lastBlogPosts: "Uusimmat blogikirjoitukset"
+    lastBlogPosts: "Uusimmat blogikirjoitukset",
   },
-  blogPage:  {
-    "title": "Viimeisimmät blogikirjoitukset",
-    "readMore": "Lue lisää",
-    "loadMore": "Lataa lisää"
+  blogPage: {
+    title: "Viimeisimmät blogikirjoitukset",
+    readMore: "Lue lisää",
+    loadMore: "Lataa lisää",
   },
   underConstruction: {
-    "title": "Rakenteilla",
-    "message": "Tämä sivu on osittain valmis ja saattaa vielä muuttua. Pysy kuulolla ja palaa pian tutustumaan täydellisiin sisältöihin!",
-    "close": "Sulje"
+    title: "Rakenteilla",
+    message:
+      "Tämä sivu on osittain valmis ja saattaa vielä muuttua. Pysy kuulolla ja palaa pian tutustumaan täydellisiin sisältöihin!",
+    close: "Sulje",
   },
   terms: {
     title: "Käyttöehdot – Nutrineuvo",
     description: "Käyttöehdot Nutrineuvolle",
     content: {
       introduction: `Tervetuloa käyttämään Nutrineuvo-palvelua! Palvelumme tarjoaa monipuolisia ravitsemukseen liittyviä neuvoja ja suosituksia, jotka tukevat hyvinvointiasi ja terveellisiä elämäntapojasi. Käyttämällä palveluamme hyväksyt seuraavat käyttöehdot.`,
-  
+
       general: `1. Yleistä
   1.1. Nutrineuvo on Chefboksi Finland Oy:n ("Palveluntarjoaja") tarjoama verkkopalvelu, joka yhdistää erityisruokavalioita noudattavat käyttäjät päteviin ravitsemusterapeutteihin tarjoten yksilöllisiä reseptejä ja ravitsemusneuvontaa heidän tarpeidensa mukaan.
   1.2. Palvelua voi käyttää vain rekisteröitynyt käyttäjä ("Käyttäjä"). Rekisteröitymällä ja käyttämällä palvelua käyttäjä hyväksyy nämä käyttöehdot ("Ehdot").
@@ -200,7 +215,7 @@ const fiTranslations = {
   Y-tunnus: 3387358-8
   Kotipaikka: Kuopio
   Osoite: Inkiläntie 6, 70340 Kuopio`,
-  
+
       serviceDescription: `2. Palvelun kuvaus
   2.1. Palvelu tarjoaa alustan, jossa käyttäjä voi:
   - löytää ravitsemusterapeutteja ja varata neuvonta-aikoja
@@ -208,61 +223,75 @@ const fiTranslations = {
   - kommunikoida ravitsemusterapeutin kanssa sovelluksen kautta
   2.2. Palveluntarjoaja ei itse tarjoa ravitsemusneuvontaa vaan toimii alustana, joka yhdistää käyttäjät ja ammattilaiset.
   2.3. Palveluntarjoaja tarjoaa etävälityspalvelun verkkosivustojen ja digitaalisten palvelujen kautta, mahdollistaen asiakkaille pääsyn ravitsemusneuvontaan ja siihen liittyviin palveluihin.`,
-  
+
       registration: `3. Rekisteröityminen ja käyttäjätili
   3.1. Palvelun käyttö edellyttää tilin luomista. Käyttäjän tulee antaa oikeat ja ajantasaiset tiedot.
   3.2. Tilin käyttö on henkilökohtaista, eikä sitä saa siirtää toiselle.
   3.3. Käyttäjä on vastuussa tilinsä turvallisuudesta ja salasanan luottamuksellisuudesta.`,
-  
+
       usage: `4. Palvelun käyttö
   4.1. Palvelua voivat käyttää kaikki 18 vuotta täyttäneet henkilöt. Käyttö voi edellyttää rekisteröitymistä ja käyttäjätilin luomista.
   4.2. Käyttäjä sitoutuu käyttämään palvelua lainmukaisesti ja hyvien tapojen mukaisesti.
   4.3. Käyttäjä ei saa tuottaa palveluun loukkaavaa, harhaanjohtavaa tai epäasiallista sisältöä.`,
-  
+
       paymentsAndCancellations: `5. Maksut ja peruutukset
   5.1. Ravitsemusneuvonta ja muut maksulliset palvelut veloitetaan sovittujen hintojen mukaisesti. Maksut suoritetaan verkkopalvelun kautta.
   5.2. Käyttäjä voi peruuttaa varatun ajan palvelussa määriteltyjen ehtojen mukaisesti.`,
-  
+
       liability: `6. Vastuunrajoitukset
   6.1. Palveluntarjoaja ei vastaa ravitsemusterapeuttien antamien neuvojen oikeellisuudesta tai niiden vaikutuksista käyttäjän terveyteen. Käyttäjän tulee itse varmistaa neuvojen sopivuus ja käyttäjän tulee aina varmistaa ruokavalioon tai terveydentilaan liittyvät muutokset ammattilaisen kanssa.
   6.2. Palveluntarjoaja ei vastaa palvelun keskeytyksistä tai teknisistä ongelmista aiheutuneista vahingoista.`,
-  
+
       privacy: `7. Tietosuoja ja henkilötiedot
   7.1. Käyttäjän henkilötietoja käsitellään tietosuojaselosteen mukaisesti.
   7.2. Palveluntarjoaja voi kerätä anonyymejä käyttötilastoja palvelun kehittämiseksi.`,
-  
+
       ip: `8. Immateriaalioikeudet
   8.1. Palvelun sisältö (ml. reseptit ja sovelluksen ulkoasu) on palveluntarjoajan omaisuutta, ellei toisin mainita. Käyttäjä ei saa kopioida tai jakaa palvelun sisältöä ilman lupaa.`,
-  
+
       legal: `9. Sovellettava laki ja riitojen ratkaisu
   9.1. Näihin ehtoihin sovelletaan Suomen kauppalakia.
   9.2. Mahdolliset erimielisyydet pyritään ratkaisemaan ensisijaisesti neuvottelemalla. Jos sopuun ei päästä, riita käsitellään Helsingin käräjäoikeudessa.`,
-  
+
       contact: `10. Yhteystiedot
-  Jos sinulla on kysyttävää näistä käyttöehdoista, voit ottaa meihin yhteyttä osoitteessa info@nutrineuvo.fi.`
-    }
+  Jos sinulla on kysyttävää näistä käyttöehdoista, voit ottaa meihin yhteyttä osoitteessa info@nutrineuvo.fi.`,
+    },
   },
   privacyPolicy: {
-    "title": "Tietosuojaseloste – Nutrineuvo",
-    "description": "Tietosuojaseloste Nutrineuvolle",
-    "content": {
-      "general": "1. Yleistä\nTässä tietosuojaselosteessa kerromme, miten Chefboksi Finland Oy (\"Palveluntarjoaja\") käsittelee Nutrineuvo-palvelun käyttäjien ja yhteistyökumppaneiden henkilötietoja. Henkilötietojen suoja on meille ensiarvoisen tärkeää, ja käsittelemme tietoja EU:n yleisen tietosuoja-asetuksen (GDPR) ja muun soveltuvan lainsäädännön mukaisesti.",
-      "controller": "2. Rekisterinpitäjä\nChefboksi Finland Oy\nY-tunnus: 3387358-8\nOsoite: Inkiläntie 6, 70340 Kuopio\nSähköposti: info@nutrineuvo.fi",
-      "whoseData": "3. Kenen tietoja käsittelemme\n- Nutrineuvo-palvelun käyttäjien (asiakkaat)\n- Ravitsemusterapeuttien\n- Palvelun teknisten ja hallinnollisten yhteyshenkilöiden\nPalvelua saavat käyttää vain vähintään 18 vuotta täyttäneet henkilöt. Käyttäjä vakuuttaa rekisteröityessään täyttävänsä tämän ikävaatimuksen.",
-      "collectedData": "4. Mitä tietoja keräämme\nAsiakasrekisteri:\n- Etu- ja sukunimi\n- Sähköpostiosoite\n- Puhelinnumero\n- Käyttäjätilitiedot (käyttäjänimi, salasana)\n- Maksutiedot ja ostohistoria\n- Viestintätiedot (esim. asiakaspalveluviestit)\n\nRavitsemusterapeuttirekisteri:\n- Etu- ja sukunimi\n- Yhteystiedot (sähköposti, puhelin, osoite)\n- Henkilötunnus (laskutuksen ja sopimuksen hallinnan vuoksi)\n- Pankkitilin numero\n- Ammattitiedot ja palvelutarjonta",
-      "purposes": "5. Mihin tarkoituksiin tietoja käytetään\n- Palvelun tarjoaminen ja hallinta\n- Ajanvarausten käsittely\n- Asiakaspalvelu ja viestintä\n- Laskutus ja maksujen käsittely\n- Sopimusvelvoitteiden täyttäminen\n- Lakisääteisten velvoitteiden noudattaminen\n- Palvelun kehittäminen (anonymisoidut tiedot)",
-      "legalBasis": "6. Oikeusperusteet henkilötietojen käsittelylle\n- Käyttäjän suostumukseen (esim. markkinointiviestintä)\n- Sopimuksen täyttämiseen (esim. ajanvaraus, neuvontapalvelut)\n- Lakisääteisten velvoitteiden täyttämiseen (esim. kirjanpitolaki)\n- Oikeutettuun etuun (esim. palvelun turvallisuuden varmistaminen)",
-      "disclosure": "7. Tietojen luovutus ja siirto\nTietoja voidaan luovuttaa seuraaville tahoille:\n- Ravitsemusterapeuteille (asiakkaan valinnan mukaisesti)\n- Palveluntarjoajan työntekijöille ja alihankkijoille (esim. tekninen tuki, kirjanpitäjä)\n- Viranomaisille lain edellyttämissä tapauksissa\n- Maksupalveluntarjoajille (maksujen käsittely)\nEmme siirrä henkilötietoja EU/ETA-alueen ulkopuolelle.",
-      "storage": "8. Tietojen säilytys\nHenkilötietoja säilytetään niin kauan kuin se on tarpeen palvelun tarjoamiseksi tai lakisääteisten velvoitteiden täyttämiseksi.\nAsiakastietoja säilytetään enintään 24 kuukautta palvelun käytön päättymisestä, ellei pidempi säilytys ole tarpeen esimerkiksi kirjanpidon tai riitatilanteiden vuoksi.",
-      "rights": "9. Rekisteröidyn oikeudet\n- Oikeus tarkastaa itseään koskevat tiedot\n- Oikeus vaatia tietojen oikaisemista tai poistamista\n- Oikeus käsittelyn rajoittamiseen\n- Oikeus vastustaa käsittelyä\n- Oikeus siirtää tiedot järjestelmästä toiseen\n- Oikeus peruuttaa suostumus (esim. markkinointiviestintä)\n- Oikeus tehdä valitus Tietosuojavaltuutetulle\n\nTietopyynnöt: info@nutrineuvo.fi",
-      "automated": "10. Automatisoitu päätöksenteko\nEmme käytä henkilötietoja automatisoituun päätöksentekoon tai profilointiin.",
-      "security": "11. Tietoturva\nTietoja säilytetään suojatuissa järjestelmissä ja niihin on pääsy vain siihen oikeutetulla henkilöstöllä. Käytämme salattuja yhteyksiä ja turvallisuusprotokollia. Kaikki sopimuskumppanit ovat sitoutuneet noudattamaan tietoturva- ja salassapitovaatimuksia.",
-      "updates": "12. Päivitykset\nPidätämme oikeuden päivittää tätä tietosuojaselostetta. Uusin versio on aina saatavilla verkkosivustollamme nutrineuvo.fi."
+    title: "Tietosuojaseloste – Nutrineuvo",
+    description: "Tietosuojaseloste Nutrineuvolle",
+    content: {
+      general:
+        '1. Yleistä\nTässä tietosuojaselosteessa kerromme, miten Chefboksi Finland Oy ("Palveluntarjoaja") käsittelee Nutrineuvo-palvelun käyttäjien ja yhteistyökumppaneiden henkilötietoja. Henkilötietojen suoja on meille ensiarvoisen tärkeää, ja käsittelemme tietoja EU:n yleisen tietosuoja-asetuksen (GDPR) ja muun soveltuvan lainsäädännön mukaisesti.',
+      controller:
+        "2. Rekisterinpitäjä\nChefboksi Finland Oy\nY-tunnus: 3387358-8\nOsoite: Inkiläntie 6, 70340 Kuopio\nSähköposti: info@nutrineuvo.fi",
+      whoseData:
+        "3. Kenen tietoja käsittelemme\n- Nutrineuvo-palvelun käyttäjien (asiakkaat)\n- Ravitsemusterapeuttien\n- Palvelun teknisten ja hallinnollisten yhteyshenkilöiden\nPalvelua saavat käyttää vain vähintään 18 vuotta täyttäneet henkilöt. Käyttäjä vakuuttaa rekisteröityessään täyttävänsä tämän ikävaatimuksen.",
+      collectedData:
+        "4. Mitä tietoja keräämme\nAsiakasrekisteri:\n- Etu- ja sukunimi\n- Sähköpostiosoite\n- Puhelinnumero\n- Käyttäjätilitiedot (käyttäjänimi, salasana)\n- Maksutiedot ja ostohistoria\n- Viestintätiedot (esim. asiakaspalveluviestit)\n\nRavitsemusterapeuttirekisteri:\n- Etu- ja sukunimi\n- Yhteystiedot (sähköposti, puhelin, osoite)\n- Henkilötunnus (laskutuksen ja sopimuksen hallinnan vuoksi)\n- Pankkitilin numero\n- Ammattitiedot ja palvelutarjonta",
+      purposes:
+        "5. Mihin tarkoituksiin tietoja käytetään\n- Palvelun tarjoaminen ja hallinta\n- Ajanvarausten käsittely\n- Asiakaspalvelu ja viestintä\n- Laskutus ja maksujen käsittely\n- Sopimusvelvoitteiden täyttäminen\n- Lakisääteisten velvoitteiden noudattaminen\n- Palvelun kehittäminen (anonymisoidut tiedot)",
+      legalBasis:
+        "6. Oikeusperusteet henkilötietojen käsittelylle\n- Käyttäjän suostumukseen (esim. markkinointiviestintä)\n- Sopimuksen täyttämiseen (esim. ajanvaraus, neuvontapalvelut)\n- Lakisääteisten velvoitteiden täyttämiseen (esim. kirjanpitolaki)\n- Oikeutettuun etuun (esim. palvelun turvallisuuden varmistaminen)",
+      disclosure:
+        "7. Tietojen luovutus ja siirto\nTietoja voidaan luovuttaa seuraaville tahoille:\n- Ravitsemusterapeuteille (asiakkaan valinnan mukaisesti)\n- Palveluntarjoajan työntekijöille ja alihankkijoille (esim. tekninen tuki, kirjanpitäjä)\n- Viranomaisille lain edellyttämissä tapauksissa\n- Maksupalveluntarjoajille (maksujen käsittely)\nEmme siirrä henkilötietoja EU/ETA-alueen ulkopuolelle.",
+      storage:
+        "8. Tietojen säilytys\nHenkilötietoja säilytetään niin kauan kuin se on tarpeen palvelun tarjoamiseksi tai lakisääteisten velvoitteiden täyttämiseksi.\nAsiakastietoja säilytetään enintään 24 kuukautta palvelun käytön päättymisestä, ellei pidempi säilytys ole tarpeen esimerkiksi kirjanpidon tai riitatilanteiden vuoksi.",
+      rights:
+        "9. Rekisteröidyn oikeudet\n- Oikeus tarkastaa itseään koskevat tiedot\n- Oikeus vaatia tietojen oikaisemista tai poistamista\n- Oikeus käsittelyn rajoittamiseen\n- Oikeus vastustaa käsittelyä\n- Oikeus siirtää tiedot järjestelmästä toiseen\n- Oikeus peruuttaa suostumus (esim. markkinointiviestintä)\n- Oikeus tehdä valitus Tietosuojavaltuutetulle\n\nTietopyynnöt: info@nutrineuvo.fi",
+      automated:
+        "10. Automatisoitu päätöksenteko\nEmme käytä henkilötietoja automatisoituun päätöksentekoon tai profilointiin.",
+      security:
+        "11. Tietoturva\nTietoja säilytetään suojatuissa järjestelmissä ja niihin on pääsy vain siihen oikeutetulla henkilöstöllä. Käytämme salattuja yhteyksiä ja turvallisuusprotokollia. Kaikki sopimuskumppanit ovat sitoutuneet noudattamaan tietoturva- ja salassapitovaatimuksia.",
+      updates:
+        "12. Päivitykset\nPidätämme oikeuden päivittää tätä tietosuojaselostetta. Uusin versio on aina saatavilla verkkosivustollamme nutrineuvo.fi.",
     },
     cookiesPolicy: {
       title: "Tietoa sivuston evästeistä",
-      description: "Tämä sivu kertoo, miten Nutrineuvo (Chefboksi Finland Oy) käyttää evästeitä ja vastaavia teknologioita verkkopalvelussaan.",
-      legalBasis: "Evästeiden käyttö perustuu lakiin sähköisen viestinnän palveluista (917/2014) sekä EU:n yleiseen tietosuoja-asetukseen (GDPR).",
+      description:
+        "Tämä sivu kertoo, miten Nutrineuvo (Chefboksi Finland Oy) käyttää evästeitä ja vastaavia teknologioita verkkopalvelussaan.",
+      legalBasis:
+        "Evästeiden käyttö perustuu lakiin sähköisen viestinnän palveluista (917/2014) sekä EU:n yleiseen tietosuoja-asetukseen (GDPR).",
       sections: {
         whatIsCookie: {
           title: "1. Mikä on eväste?",
@@ -270,7 +299,7 @@ const fiTranslations = {
 - Välttämättömiä: tarpeellisia sivuston teknisen toiminnan kannalta.
 - Tilastollisia: anonyymiä kävijäseurantaa ja palvelun kehittämistä varten.
 - Markkinointiin liittyviä: käytetään mainonnan kohdentamiseen.
-- Kolmannen osapuolen: esim. analytiikka- tai sosiaalisen median palveluista.`
+- Kolmannen osapuolen: esim. analytiikka- tai sosiaalisen median palveluista.`,
         },
         purposes: {
           title: "2. Evästeiden käyttötarkoitukset Nutrineuvossa",
@@ -291,12 +320,12 @@ Kerättäviä tietoja ovat mm.:
 
 Markkinointievästeet (käyttäjän suostumuksella):
 Käytämme markkinointievästeitä kampanjoiden seurantaan ja kohdentamiseen esimerkiksi sosiaalisessa mediassa.
-- _fbp: Facebook Pixel -eväste seuraa mainonnan tehokkuutta Facebookissa ja Instagramissa.`
-        }
-      }
-    }
+- _fbp: Facebook Pixel -eväste seuraa mainonnan tehokkuutta Facebookissa ja Instagramissa.`,
+        },
+      },
+    },
   },
-footer: {
+  footer: {
     individual_clients: "Henkilöasiakkaille",
     my_nutrineuvo: "Oma Nutrineuvo",
     for_teurapevt: "Ravitsemusterapeutille",
@@ -313,8 +342,76 @@ footer: {
     cookies: "Evästeet",
   },
 
+  nutritionist: {
+    nutritionist_heading: "Ravitsemusterapeutti – tule mukaan Nutrineuvoon!",
+    nutritionist_intro:
+      "Nutrineuvo on uusi suomalainen alusta, joka yhdistää asiakkaat ja ravitsemusterapeutit helposti ja turvallisesti. Haluamme tehdä ravitsemusneuvonnasta joustavaa, tehokasta ja kannattavaa myös ammattilaiselle. Uskomme, että jokaisella ihmisellä on oikeus saada henkilökohtaista ravitsemusohjausta, joka perustuu tutkittuun tietoon – ei trendeihin.",
+
+    freedom_flexibility: "Vapaus ja joustavuus",
+    freedom_flexibility_desc:
+      "Työskentele missä ja milloin haluat – verkossa tai vastaanotolla. Aseta omat aikasi ja keskity asiakastyöhön.",
+
+    visibility_growth: "Näkyvyys ja kasvu",
+    visibility_growth_desc:
+      "Kasvata tavoittavuuttasi jatkuvan näkyvyyden avulla. Hanki uusia asiakkaita ilman ylimääräistä markkinointia.",
+
+    blog_platform: "Ammattimainen blogialusta",
+    blog_platform_desc:
+      "Jaa asiantuntemustasi artikkeleilla, oppailla ja näkemyksillä. Rakenna mainettasi ja houkuttele uusia asiakkaita.",
+
+    support_community: "Tuki ja yhteisö",
+    support_community_desc:
+      "Et ole yksin. Saat tukea Nutrineuvo-tiimiltä ja voit liittyä kasvavaan ammattilaisten yhteisöön.",
+
+    learn_more: "Lue lisää",
+
+    nutritionist_cta_title:
+      "Haluatko liittyä Nutrineuvoon ravitsemusterapeuttina?",
+    nutritionist_cta_desc:
+      "Täytä hakemuslomake ja liity mukaan rakentamaan uuden sukupolven ravitsemusneuvontaa Suomessa – helposti, vastuullisesti ja kannattavasti.",
+    submit_application: "Lähetä hakemus",
+  },
+  nutrition: {
+  nutrition_heading: "Ravitsemusterapia",
+  nutrition_intro:
+    "Nutrineuvo on suomalainen alusta, joka yhdistää sinut laillistettujen ravitsemusterapeuttien kanssa – helposti ja turvallisesti. Palvelumme on suunniteltu erityisruokavalioiden tueksi ja tarjoaa luotettavaa ravitsemusohjausta ilman lääkärin lähetettä.",
+
+  section1_title: "Mikä on ravitsemusterapia?",
+  section1_desc:
+    "Ravitsemusterapia on laillistetun ravitsemusterapeutin tarjoamaa hoitoa ja ohjausta, joka perustuu ravitsemustieteeseen ja lääketieteelliseen tutkimukseen. Ohjauksessa huomioidaan asiakkaan terveydentila, elämäntilanne, ruokailutottumukset ja tavoitteet – niin sairauksien hoidossa kuin ennaltaehkäisyssä tai elämäntapamuutoksissa.",
+  section1_cta: "Lue lisää",
+
+  section2_title: "Kenelle ravitsemusterapia sopii?",
+  section2_list: [
+    "Pitkäaikaissairaudet: diabetes, keliakia, sydän- ja verisuonisairaudet",
+    "Ruoansulatusongelmat ja suolistosairaudet: IBS, närästys, ummetus",
+    "Syömishäiriöt tai erityisruokavaliot",
+    "Ylipaino, alipaino tai painonhallinta",
+    "Elämäntapamuutokset tai suorituskyvyn parantaminen (esim. urheilijoille)",
+  ],
+  section2_cta: "Tutustu",
+
+  section3_title: "Miten ravitsemusterapia etenee?",
+  section3_desc:
+    "Ensimmäisellä käynnillä ravitsemusterapeutti kartoittaa ruokavaliosi kokonaiskuvan – sen vahvuudet, kehityskohdat sekä mahdolliset sairaudet tai oireet. Yhdessä asetetaan realistiset tavoitteet ja sovitaan seurannasta. Ravitsemusterapia voi olla kertaluonteista ohjausta tai pidempää, vaiheittaista muutostyötä – juuri tarpeidesi mukaan.",
+  section3_cta: "Katso prosessi",
+
+  section4_title: "Vinkit vatsan hyvinvointiin",
+  section4_list: [
+    "Syö säännöllisesti 3–4 tunnin välein",
+    "Rauhoitu ruokahetkiin – syö pöydän ääressä",
+    "Pureskele hyvin, vältä hotkimista",
+    "Varmista riittävä ja monipuolinen ravinto",
+    "Käänny ammattilaisen puoleen, jos vatsavaivat jatkuvat",
+  ],
+  section4_cta: "Kokeile vinkkejä",
+  // CTA
+  cta_title: "Ota askel kohti parempaa vointia",
+  cta_desc:
+    "Varaa aika Nutrineuvon ravitsemusterapeutille jo tänään ja aloita hyvinvointiasi tukeva muutos.",
+  book_now: "Varaa aika",
+}
+
 };
-
-
 
 export default fiTranslations;

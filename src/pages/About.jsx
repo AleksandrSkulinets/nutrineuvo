@@ -10,7 +10,7 @@ export default function About() {
       transition={{ ease: "easeInOut", duration: 0.75 }}
       className="mb-20 text-4xl font-black uppercase text-zinc-400"
     >
-      About Us
+      About Us and something 
     </motion.h1>
     
     <motion.p
