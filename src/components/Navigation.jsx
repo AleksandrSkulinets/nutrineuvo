@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/nutri-neuvo-logo.svg";
-import { Menu, MessageCircle, User, CalendarDays } from "lucide-react";
+import { Menu, User, CalendarDays } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Separator } from "../components/ui/separator";
