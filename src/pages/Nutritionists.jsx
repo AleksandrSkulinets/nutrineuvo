@@ -84,7 +84,7 @@ const Nutritionists = () => {
           </p>
           <Button asChild size="lg" className="mt-4">
             <Link  target="_blank" 
-    rel="noopener noreferrer" to="http://localhost:5173/signup/nutritionist">{t("nutritionist.submit_application")}</Link>
+    rel="noopener noreferrer" to="https://oma.nutrineuvo.fi/signup/nutritionist">{t("nutritionist.submit_application")}</Link>
           </Button>
         </div>
       </motion.div>
