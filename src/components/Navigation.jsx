@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/nutri-neuvo-logo.svg";
@@ -32,7 +32,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 // Top bar actions
 const TopBarActions = ({ t, i18n, languages, changeLanguage, loginUrl }) => (
-  <div className="hidden h-5 my-5 lg:flex items-center space-x-4 text-sm">
+  <div className="hidden h-3 my-4 lg:flex items-center space-x-4 text-sm">
     <Button
       asChild
       variant="ghost"
@@ -105,9 +105,10 @@ const Navbar = () => {
     localStorage.setItem("i18nextLng", lng);
   };
 
-  // Close mobile menu on route change
+  // Close mobile menu on route change + make navbar visible
   useEffect(() => {
     setOpen(false);
+    setShowNavbar(true);
   }, [location.pathname]);
 
   // Close mobile menu if resizing to desktop
@@ -117,6 +118,34 @@ const Navbar = () => {
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // ✅ Hide navbar on scroll down, show on scroll up (no layout changes)
+  const [showNavbar, setShowNavbar] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    lastScrollY.current = window.scrollY;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+
+      // Ignore tiny jitters
+      if (Math.abs(currentY - lastScrollY.current) < 4) return;
+
+      if (currentY > lastScrollY.current && currentY > 80) {
+        // Scrolling down past 80px
+        setShowNavbar(false);
+      } else {
+        // Scrolling up or near top
+        setShowNavbar(true);
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Navigation structure
@@ -144,9 +173,13 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="fixed w-full  z-50 bg-background">
+    <header
+      className={`fixed top-0 w-full z-50 bg-background transition-transform duration-300 will-change-transform ${
+        showNavbar ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       {/* Top bar desktop only */}
-      <div className="w-full bg-muted flex justify-end ms-auto items-center gap-2 px-4 sm:px-6 lg:px-8">
+      <div className="w-full bg-muted flex justify-end ms-auto items-center gap-2 px-4 sm:px-6 ">
         <TopBarActions
           t={t}
           i18n={i18n}
@@ -165,7 +198,7 @@ const Navbar = () => {
               <img
                 src={logo}
                 alt="Nutri Neuvo Logo"
-                className="h-auto max-h-20 w-auto"
+                className="h-auto max-h-20 w-auto "
               />
             </Link>
 
@@ -299,13 +332,13 @@ const Navbar = () => {
           </div>
 
           {/* Desktop layout */}
-          <div className="hidden lg:grid w-full grid-cols-[auto_1fr_auto] items-center">
+          <div className="hidden lg:grid w-full grid-cols-[auto_1fr_auto] items-center p-2 ">
             <div className="ms-3">
               <Link to="/" className="flex items-center flex-shrink-0">
                 <img
                   src={logo}
                   alt="Nutri Neuvo Logo"
-                  className="h-auto max-h-20 w-auto"
+                  className="h-auto max-h-12 w-auto"
                 />
               </Link>
             </div>
