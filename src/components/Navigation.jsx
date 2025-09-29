@@ -60,19 +60,6 @@ const TopBarActions = ({ t, i18n, languages, changeLanguage, loginUrl }) => (
 
     <Separator orientation="vertical" />
 
-    <Button
-      asChild
-      variant="ghost"
-      className="gap-1 text-foreground font-semibold"
-    >
-      <Link to="/chat">
-        <MessageCircle className="h-4 w-4" />
-        Chat
-      </Link>
-    </Button>
-
-    <Separator orientation="vertical" />
-
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
@@ -83,7 +70,11 @@ const TopBarActions = ({ t, i18n, languages, changeLanguage, loginUrl }) => (
           {i18n.language.toUpperCase()}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-background">
+      <DropdownMenuContent
+        className="w-56 bg-background"
+        align="end"
+        sideOffset={8}
+      >
         <DropdownMenuLabel>Select language</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {languages.map((lng) => (
@@ -226,16 +217,6 @@ const Navbar = () => {
                       </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="gap-1 text-foreground font-semibold"
-                    >
-                      <Link to="/chat">
-                        <MessageCircle className="h-4 w-4" />
-                        Chat
-                      </Link>
-                    </Button>
                     <ThemeToggle />
                   </div>
                 </SheetHeader>
