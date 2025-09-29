@@ -272,6 +272,84 @@ Address: Inkiläntie 6, 70340 Kuopio`
     terms: "Terms of Service",
     cookies: "Cookies",
   },
+  nutritionist: { // Nutritionists page
+  nutritionist_heading: "Nutritionist – join Nutrineuvo!",
+  nutritionist_intro:
+    "Nutrineuvo is a new Finnish platform that connects clients and nutritionists easily and securely. We want to make nutritional counseling flexible, effective, and rewarding for professionals as well. We believe that everyone has the right to receive personal nutritional guidance based on science – not trends.",
+
+  freedom_flexibility: "Freedom & Flexibility",
+  freedom_flexibility_desc:
+    "Work where and when you want – online or at your clinic. Set your own schedule and focus on client work.",
+
+  visibility_growth: "Visibility & Growth",
+  visibility_growth_desc:
+    "Increase your reach with constant visibility on our platform. Gain new clients without extra marketing hassle.",
+
+  blog_platform: "Professional Blog Platform",
+  blog_platform_desc:
+    "Share your expertise through articles, guides, and insights. Build your reputation and attract new clients.",
+
+  support_community: "Support & Community",
+  support_community_desc:
+    "You are not alone. Get support from the Nutrineuvo team and join a growing professional community.",
+
+  learn_more: "Learn more",
+
+  nutritionist_cta_title:
+    "Want to join Nutrineuvo as a nutritionist?",
+  nutritionist_cta_desc:
+    "Fill out the application form and join us in building the next generation of nutritional counseling in Finland – simple, responsible, and rewarding.",
+  submit_application: "Submit application",
+  },
+nutrition: {
+  nutrition_heading: "Nutrition Therapy",
+  nutrition_intro:
+    "Nutrineuvo ravitsemusterapia on laillistetun ravitsemusterapeutin tarjoamaa hoitoa ja ohjausta, joka perustuu ravitsemustieteeseen ja lääketieteelliseen tutkimukseen. Ohjauksessa huomioidaan terveydentila, elämäntilanne ja tavoitteet – niin sairauksien hoidossa kuin ennaltaehkäisyssä.",
+
+  // Section 1
+  section1_title: "What is nutrition therapy?",
+  section1_desc:
+    "Nutrition therapy is care and guidance provided by a licensed dietitian, based on nutritional science and medical research. It takes into account the client’s health, lifestyle, eating habits, and goals – whether in disease management, prevention, or lifestyle changes.",
+  section1_cta: "Learn more",
+
+  // Section 2
+  section2_title: "Who is nutrition therapy for?",
+  section2_list: [
+    "Chronic diseases: diabetes, celiac disease, cardiovascular conditions",
+    "Digestive problems and gut disorders: IBS, heartburn, constipation",
+    "Eating disorders or special diets",
+    "Overweight, underweight, or weight management",
+    "Lifestyle changes or performance improvement (e.g. for athletes)",
+  ],
+  section2_cta: "Explore",
+
+  // Section 3
+  section3_title: "How does nutrition therapy proceed?",
+  section3_desc:
+    "In the first session, the dietitian reviews your overall diet – strengths, areas for improvement, and possible conditions or symptoms. Together, you set realistic goals and agree on follow-up. Nutrition therapy can be a one-time consultation or a longer-term step-by-step process – always tailored to your needs.",
+  section3_cta: "See process",
+
+  // Section 4
+  section4_title: "Tips for gut health",
+  section4_list: [
+    "Eat regularly every 3–4 hours",
+    "Take time for meals – sit at the table",
+    "Chew well, avoid rushing",
+    "Ensure sufficient and varied nutrition",
+    "Consult a professional if digestive issues persist",
+  ],
+  section4_cta: "Try tips",
+
+  // CTA block
+  cta_title: "Take the first step towards better health",
+  cta_desc:
+    "Book an appointment with a Nutrineuvo dietitian today and start your journey towards healthier, balanced eating habits.",
+  book_now: "Book now",
+}
+
+
+  
+  
 };
 
 

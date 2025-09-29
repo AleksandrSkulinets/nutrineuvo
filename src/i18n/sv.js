@@ -265,7 +265,79 @@ const svTranslations = {
     privacy: "Integritetspolicy",
     terms: "Användarvillkor",
     cookies: "Cookies",
-  },  
+  }, 
+   nutritionist: {
+// Nutritionists page
+  nutritionist_heading: "Näringsterapeut – gå med i Nutrineuvo!",
+  nutritionist_intro:
+    "Nutrineuvo är en ny finsk plattform som enkelt och säkert kopplar samman klienter och näringsterapeuter. Vi vill göra näringsrådgivning flexibel, effektiv och lönsam även för yrkesverksamma. Vi tror att alla har rätt till personlig näringsvägledning baserad på vetenskap – inte trender.",
+
+  freedom_flexibility: "Frihet och flexibilitet",
+  freedom_flexibility_desc:
+    "Arbeta var och när du vill – online eller på din mottagning. Bestäm ditt eget schema och fokusera på klienterna.",
+
+  visibility_growth: "Synlighet och tillväxt",
+  visibility_growth_desc:
+    "Öka din räckvidd med ständig synlighet på vår plattform. Få nya klienter utan extra marknadsföring.",
+
+  blog_platform: "Professionell bloggplattform",
+  blog_platform_desc:
+    "Dela din expertis genom artiklar, guider och insikter. Bygg ditt rykte och locka nya klienter.",
+
+  support_community: "Stöd och gemenskap",
+  support_community_desc:
+    "Du är inte ensam. Få stöd från Nutrineuvo-teamet och gå med i en växande professionell gemenskap.",
+
+  learn_more: "Läs mer",
+
+  nutritionist_cta_title:
+    "Vill du gå med i Nutrineuvo som näringsterapeut?",
+  nutritionist_cta_desc:
+    "Fyll i ansökningsformuläret och var med och bygg nästa generations näringsrådgivning i Finland – enkelt, ansvarsfullt och lönsamt.",
+  submit_application: "Skicka ansökan", 
+   },
+   nutrition: {
+  nutrition_heading: "Näringsterapi",
+  nutrition_intro:
+    "Nutrineuvo är en finsk plattform som kopplar dig samman med legitimerade dietister – enkelt och säkert. Vår tjänst är utformad för specialdieter och ger tillgång till pålitligt näringsstöd utan läkarremiss.",
+
+  section1_title: "Vad är näringsterapi?",
+  section1_desc:
+    "Näringsterapi är vård och vägledning som ges av en legitimerad dietist och bygger på näringsvetenskap och medicinsk forskning. I vägledningen beaktas klientens hälsotillstånd, livssituation, matvanor och mål – både vid sjukdomsbehandling, förebyggande och livsstilsförändringar.",
+  section1_cta: "Läs mer",
+
+  section2_title: "Vem passar näringsterapi för?",
+  section2_list: [
+    "Kroniska sjukdomar: diabetes, celiaki, hjärt- och kärlsjukdomar",
+    "Matsmältningsproblem och tarmsjukdomar: IBS, halsbränna, förstoppning",
+    "Ätstörningar eller specialdieter",
+    "Övervikt, undervikt eller viktkontroll",
+    "Livsstilsförändringar eller prestationsförbättring (t.ex. för idrottare)",
+  ],
+  section2_cta: "Utforska",
+
+  section3_title: "Hur fortskrider näringsterapi?",
+  section3_desc:
+    "Vid första besöket går dietisten igenom din kost som helhet – styrkor, utvecklingsområden och eventuella sjukdomar eller symtom. Tillsammans sätts realistiska mål och uppföljning planeras. Näringsterapi kan vara en engångskonsultation eller en längre, stegvis process – helt enligt dina behov.",
+  section3_cta: "Se processen",
+
+  section4_title: "Tips för maghälsa",
+  section4_list: [
+    "Ät regelbundet var 3–4 timme",
+    "Ta tid för måltider – ät vid bordet",
+    "Tugga väl, undvik att stressäta",
+    "Se till att kosten är tillräcklig och varierad",
+    "Kontakta en professionell om magbesvär fortsätter",
+  ],
+  section4_cta: "Prova tips",
+   // CTA
+  cta_title: "Ta steget mot bättre hälsa",
+  cta_desc:
+    "Boka tid hos en Nutrineuvo-dietist redan idag och börja din resa mot hälsosammare matvanor.",
+  book_now: "Boka tid",
+}
+
+  
 };
 
 
