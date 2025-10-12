@@ -1,15 +1,16 @@
 "use client";
-import { useTheme } from "next-themes"
-import { Toaster as Sonner } from "sonner"
+import { Toaster as Sonner, toast } from "sonner";
 
-const Toaster = ({
-  ...props
-}) => {
-  const { theme = "system" } = useTheme()
-
+/**
+ * ReactPress-compatible Shadcn-style toaster (no next-themes)
+ * Use: import { toast, Toaster } from "@/components/ui/sonner"
+ */
+export function Toaster(props) {
   return (
     <Sonner
-      theme={theme}
+      position="top-right"
+      richColors
+      closeButton
       className="toaster group"
       toastOptions={{
         classNames: {
@@ -22,8 +23,9 @@ const Toaster = ({
             "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
         },
       }}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-export { Toaster }
+export { toast };
