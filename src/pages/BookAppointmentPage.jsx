@@ -165,7 +165,7 @@ export default function BookingLayout() {
         {/* --- Calendar + Results Layout --- */}
         <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
           {/* Left: Smart Calendar */}
-          <div className="flex items-center min-w-0 flex-col gap-2">
+          <div className="flex items-center min-w-0 flex-col gap-2 ">
             <AvailabilityCalendar
               selectedDate={selectedDate}
               onDateSelect={(iso, date) => setSelectedDate(date)}

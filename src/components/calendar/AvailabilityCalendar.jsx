@@ -77,12 +77,13 @@ export function AvailabilityCalendar({
   );
 
   return (
-    <Calendar
+    <div className="relative">
+<Calendar
       mode="single"
       selected={selectedDate || internalSelected} // ✅ external takes priority
       onSelect={handleSelect}
       showOutsideDays
-      className={cn("w-full sm:w-full md:w-full   rounded-lg border bg-background p-3 shadow-sm", className)}
+      className={cn("  rounded-lg border bg-background p-3 shadow-sm", className)}
       disabled={(date) => {
         const iso = date.toISOString().slice(0, 10);
         return !availableDates.has(iso);
@@ -95,5 +96,7 @@ export function AvailabilityCalendar({
           "bg-green-100 text-green-900 hover:bg-green-200 rounded-md font-medium",
       }}
     />
+    </div>
+    
   );
 }
