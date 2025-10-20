@@ -35,18 +35,16 @@
     "react-hook-form": "^7.63.0",
     "react-i18next": "^14.0.5",
     "react-router-dom": "^7.1.5",
-    "react-scripts": "^5.0.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^3.1.1",
     "zod": "^4.1.11"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "cross-env PUBLIC_URL=/wp-content/reactpress/apps/nutrineuvo/build react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  },"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview"
+},
+
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -66,8 +64,14 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.1.14",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react-swc": "^4.1.0",
     "cross-env": "^7.0.3",
-    "tailwindcss": "^3.4.17",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss": "^4.1.14",
+    "tailwindcss-animate": "^1.0.7",
+    "vite": "^7.1.10"
   }
 }

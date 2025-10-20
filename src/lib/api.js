@@ -1,21 +1,9 @@
-// ✅ ReactPress-friendly API helper — works both locally and on production
-
-// Detect if we’re running locally or on WordPress domain
-const hostname = window?.location?.hostname;
-const isLocal =
-  hostname === "localhost" ||
-  hostname === "127.0.0.1" ||
-  hostname.endsWith(".local");
-
-const API_URL = isLocal
-  ? "http://localhost:3000" // 🧩 Local API for testing
-  : "https://api.nutrineuvo.fi"; // 🌐 Production API
-
-console.log("🌐 API_URL loaded:", API_URL);
+// src/lib/api.js
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 /**
- * 🔗 Universal API fetch helper
- * Always returns { ok, status, message?, data? }
+ * Unified fetch helper that NEVER throws.
+ * Always returns: { ok, status, ...data }
  */
 export async function api(endpoint, { method = "GET", body, token } = {}) {
   const url = `${API_URL}${endpoint}`;
@@ -35,11 +23,12 @@ export async function api(endpoint, { method = "GET", body, token } = {}) {
     try {
       data = await res.json();
     } catch {
-      // ignore empty bodies
+      // ignore if no JSON body
     }
 
-    if (!res.ok && !data.message)
+    if (!res.ok && !data.message) {
       data.message = `Request failed (${res.status})`;
+    }
 
     return { ok: res.ok, status: res.status, ...data };
   } catch (err) {
