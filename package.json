@@ -41,7 +41,7 @@
   },
   "scripts": {
   "dev": "vite",
-  "build": "cross-env PUBLIC_URL=/wp-content/reactpress/apps/nutrineuvo/build/ vite build",
+ "build": "vite build",
   "preview": "vite preview"
 }
 ,
