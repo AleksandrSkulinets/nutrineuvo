@@ -39,7 +39,7 @@ export default function WhyNutrineuvo() {
       desc: t("why.data_secure_desc"),
       bg: "bg-card dark:bg-zinc-900",
       border: "border border-border/50",
-      textColor: "text-white",
+      textColor: "text-white ",
     },
     {
       icon: <Settings2 className="shrink-0 text-primary dark:text-primary-foreground" />,
@@ -47,7 +47,7 @@ export default function WhyNutrineuvo() {
       desc: t("why.no_commitment_desc"),
       bg: "bg-primary text-primary-foreground",
       border: "border border-transparent",
-      textColor: "text-primary-foreground",
+      textColor: "text-primary-foreground ",
     },
   ];
 
@@ -101,13 +101,13 @@ export default function WhyNutrineuvo() {
               </div>
 
               <Button
-                variant="outline"
-                className="mt-6 w-fit text-sm "
-              >
-                
-                {t("learn_more")}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+  variant="link"
+  className={`mt-6 w-fit text-sm ${feature.textColor}`}
+>
+  {t("learn_more")}
+  <ArrowRight className="ml-2 h-4 w-4" />
+</Button>
+
             </motion.div>
           ))}
         </div>

@@ -27,7 +27,7 @@ export default function WhyChooseUs() {
       textColor: "text-primary-foreground",
     },
     {
-      icon: <PhoneCheck className="shrink-0" />,
+      icon: <PhoneCheck className="shrink-0 text-white" />,
       title: t("why.no_referral"),
       desc: t("why.no_referral_desc"),
       bg: "bg-card dark:bg-zinc-900",
@@ -84,14 +84,13 @@ export default function WhyChooseUs() {
               </div>
 
             
-                          <Button
-                            variant="outline"
-                            className="mt-6 w-fit text-sm "
-                          >
-                            
-                            {t("learn_more")}
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </Button>
+                                     <Button
+                           variant="link"
+                           className={`mt-6 w-fit text-sm ${reason.textColor}`}
+                         >
+                           {t("learn_more")}
+                           <ArrowRight className="ml-2 h-4 w-4" />
+                         </Button>
                         </motion.div>
           ))}
         </div>
