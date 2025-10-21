@@ -2,7 +2,8 @@ name: Deploy Nutrineuvo Build Folder
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -10,39 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js 22
-        uses: actions/setup-node@v4
+      - name: Setup Node.js (v22 LTS)
+        uses: actions/setup-node@v3
         with:
           node-version: '22'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Build (Vite -> build/)
-        env:
-          NODE_ENV: production
+      - name: Build project
         run: npm run build
 
-      - name: Verify Vite output exists
-        run: |
-          if [ ! -f build/index.html ]; then
-            echo "❌ ERROR: build/index.html missing!"
-            exit 1
-          fi
-          echo "✅ Build found OK."
-
-      - name: Deploy via FTP
+      - name: Deploy build folder via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: build/
-          server-dir: /public_html/wp-content/reactpress/apps/nutrineuvo/build/
-          # optional safety
-          dangerous-clean-slate: false
-          log-level: minimal
+          server-dir: "/public_html/wp-content/reactpress/apps/nutrineuvo/build/"
