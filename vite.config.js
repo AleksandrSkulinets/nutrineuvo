@@ -4,9 +4,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/wp-content/reactpress/apps/nutrineuvo/build/",
+  server: {
+    port: 5174, 
+  },
+  base: "/",
   build: {
-    outDir: "build",
+    outDir: "build", 
     emptyOutDir: true,
   },
 });

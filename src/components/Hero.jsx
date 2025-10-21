@@ -35,7 +35,7 @@ const Hero = () => {
         {/* Heading */}
         <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-tight">
           {t("hero.title")}
-          deploy working 
+         
         </h1>
 
         {/* Description */}
@@ -46,17 +46,18 @@ const Hero = () => {
         {/* Call to Action Buttons */}
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <Button
+          variant="default"
             size="lg"
-            className="flex items-center rounded-full text-base font-medium px-6 py-3 shadow-lg transition-transform hover:scale-105"
+            className="flex items-center  text-base font-medium px-6 py-3 shadow-lg transition-transform hover:scale-105"
           >
             {t("hero.appointment")}
             <ArrowUpRight className="ml-2 h-5 w-5" />
           </Button>
 
-          <Button
-            variant="outline"
+           <Button
+           variant="outline"
             size="lg"
-            className="flex items-center rounded-full text-base font-medium px-6 py-3 backdrop-blur-sm transition-colors hover:bg-white/20"
+            className="flex items-center  text-base font-medium px-6 py-3 shadow-lg transition-transform hover:scale-105"
           >
             <CirclePlay className="mr-2 h-5 w-5" />
             {t("hero.service")}
