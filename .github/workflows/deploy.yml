@@ -25,9 +25,7 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Rename dist → build
-        run: |
-          if [ -d dist ]; then mv dist build; fi
+  
 
       - name: Deploy build folder via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
