@@ -7,5 +7,6 @@ export default defineConfig({
   base: "/wp-content/reactpress/apps/nutrineuvo/build/",
   build: {
     outDir: "build",
+    emptyOutDir: true,
   },
 });
