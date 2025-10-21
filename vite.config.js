@@ -4,12 +4,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: {
-    port: 5174,
-  },
-  // 👇 this is the key fix for ReactPress
-  base: "./",
+  base: "./",                 // ✅ required for ReactPress
   build: {
-    outDir: "dist",
+    outDir: "build",          // ✅ emit directly to build/
+    emptyOutDir: true,
   },
 });
