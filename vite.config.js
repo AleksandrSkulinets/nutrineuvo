@@ -2,14 +2,14 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react(), tailwindcss()],
   server: {
-    port: 5174, 
+    port: 5174,
   },
-  base: "/",
+  base: process.env.VITE_PUBLIC_BASE || "/",
   build: {
-    outDir: "build", 
+    outDir: "build",
     emptyOutDir: true,
   },
-});
+}));
