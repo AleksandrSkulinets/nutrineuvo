@@ -11,20 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 🧩 Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # ⚙️ Setup Node.js
       - name: Setup Node.js (v22 LTS)
         uses: actions/setup-node@v3
         with:
           node-version: '22'
+          cache: 'npm'
 
+      # 📦 Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
+      # 🏗️ Build Vite project
       - name: Build project
         run: npm run build
 
+      # ✅ Guard: ensure build exists
+      - name: Verify build output
+        run: test -f build/index.html || (echo "❌ build/index.html missing!" && exit 1)
+
+      # 🚀 Deploy via FTP (clean & safe)
       - name: Deploy build folder via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
@@ -33,3 +43,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: build/
           server-dir: "/public_html/wp-content/reactpress/apps/nutrineuvo/build/"
+          dangerous-clean-slate: true       # 🧹 delete old build before upload
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
