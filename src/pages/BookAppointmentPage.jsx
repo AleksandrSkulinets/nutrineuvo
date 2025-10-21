@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -13,93 +15,12 @@ import { Badge } from "../components/ui/badge";
 import { Skeleton } from "../components/ui/skeleton";
 import { PublicAPI } from "../lib/endpoints/public";
 import { formatInTimeZone } from "date-fns-tz";
-import { Clock, Euro, Timer } from "lucide-react";
+import { Clock, Euro, Timer, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
+import { CalendarSkeleton, SlotCardSkeleton } from "../components/ui/skeletons";
 
-/**
- * 🧩 Safe polyfill for zonedTimeToUtc
- * Converts local date/time string in a given timezone to a UTC Date object
- * Works in all environments (no named export issues)
- */
-function safeZonedTimeToUtc(localDateTimeString, timeZone) {
-  const date = new Date(localDateTimeString);
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone,
-    hour12: false,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
 
-  // Extract the offset-corrected parts
-  const parts = formatter.formatToParts(date);
-  const lookup = Object.fromEntries(parts.map((p) => [p.type, p.value]));
-
-  const isoLocal = `${lookup.year}-${lookup.month}-${lookup.day}T${lookup.hour}:${lookup.minute}:${lookup.second}`;
-  return new Date(isoLocal + "Z"); // create as UTC
-}
-
-// ----------------- Error Boundary -----------------
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
-  static getDerivedStateFromError(error) {
-    return { hasError: true, error };
-  }
-  componentDidCatch(error, errorInfo) {
-    console.error("❌ Error caught by boundary:", error, errorInfo);
-  }
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 my-20 to-background">
-          <div className="container mx-auto px-6 py-12">
-            <Card className="max-w-md mx-auto shadow-lg border-0 bg-card/80 backdrop-blur-sm">
-              <CardContent className="p-8 text-center">
-                <div className="space-y-4">
-                  <div className="w-16 h-16 mx-auto bg-destructive/10 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-8 h-8 text-destructive"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground">
-                    Jotain meni pieleen
-                  </h3>
-                  <p className="text-muted-foreground">
-                    Kalenterissa tapahtui virhe. Yritä päivittää sivu.
-                  </p>
-                  <Button
-                    onClick={() => window.location.reload()}
-                    className="mt-4"
-                  >
-                    Päivitä sivu
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
-
-// ----------------- Helpers -----------------
+/* ---------------------- Helpers ---------------------- */
 function getSlotPeriod(time) {
   const [h] = String(time).split(":").map(Number);
   if (h < 12) return "aamu";
@@ -121,11 +42,13 @@ function toLocalISO(date) {
   ].join("-");
 }
 
-// --- timezone helpers ---
 function buildUTCSlot(selectedDate, localTime, tz) {
-  const dateStr = toLocalISO(selectedDate);
-  const localDateTime = `${dateStr}T${localTime}`;
-  return safeZonedTimeToUtc(localDateTime, tz);
+  const [hour, minute] = localTime.split(":").map(Number);
+  const local = new Date(selectedDate);
+  local.setHours(hour, minute, 0, 0);
+  return new Date(
+    local.toLocaleString("en-US", { timeZone: tz, hour12: false })
+  );
 }
 
 function displayInUserZone(slotDateUTC, nutritionistTz) {
@@ -137,13 +60,44 @@ function displayInUserZone(slotDateUTC, nutritionistTz) {
   };
 }
 
-// ----------------- Page -----------------
+/* ---------------------- Error Boundary ---------------------- */
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex flex-col items-center justify-center px-6">
+          <Card className="max-w-md w-full shadow-lg border-0 bg-card/90 backdrop-blur-sm">
+            <CardContent className="p-8 text-center space-y-4">
+              <CheckCircle2 className="w-10 h-10 text-destructive mx-auto" />
+              <h3 className="text-lg font-semibold text-foreground">
+                Jokin meni pieleen
+              </h3>
+              <p className="text-muted-foreground">
+                Kalenterin latauksessa tapahtui virhe. Päivitä sivu ja yritä
+                uudelleen.
+              </p>
+              <Button onClick={() => window.location.reload()}>
+                Päivitä sivu
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+/* ---------------------- Main Page ---------------------- */
 export default function BookingLayout() {
-  const [selectedDate, setSelectedDate] = useState(() => {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    return d;
-  });
+  const [selectedDate, setSelectedDate] = useState(startOfToday());
   const [availableDays, setAvailableDays] = useState([]);
   const [nutritionists, setNutritionists] = useState([]);
   const [tab, setTab] = useState("kaikki");
@@ -152,112 +106,76 @@ export default function BookingLayout() {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [isBooking, setIsBooking] = useState(false);
 
-  // 🕓 Debug: log user timezone
+  /* ---------------------- Fetch available days ---------------------- */
   useEffect(() => {
-    console.log(
-      "🌍 User timezone:",
-      Intl.DateTimeFormat().resolvedOptions().timeZone
-    );
-  }, []);
-
-  // Fetch available days
-  // 🕒 POLLING FETCH FOR AVAILABLE DAYS
-  useEffect(() => {
-    let isMounted = true;
+    let mounted = true;
 
     async function fetchDays() {
       try {
         const res = await PublicAPI.getAvailableDays();
         const days = res?.data?.data || [];
-
-        const localized = days.map((d) => {
-          if (!d) return null;
-          const [year, month, day] = d.split("-").map(Number);
-          return toLocalISO(new Date(year, month - 1, day));
-        });
-
-        const clean = Array.from(new Set(localized.filter(Boolean)));
-        if (isMounted) {
-          setAvailableDays(clean);
-          console.log("🔁 Updated available days:", clean);
-        }
-      } catch (err) {
-        console.error("❌ Failed to load available days:", err);
-        if (isMounted) setAvailableDays([]);
+        const clean = Array.from(
+          new Set(
+            days
+              .map((d) => {
+                const [y, m, dd] = d.split("-").map(Number);
+                return toLocalISO(new Date(y, m - 1, dd));
+              })
+              .filter(Boolean)
+          )
+        );
+        if (mounted) setAvailableDays(clean);
+      } catch {
+        if (mounted) setAvailableDays([]);
+        toast.error("Kalenterin lataaminen epäonnistui.");
       } finally {
-        if (isMounted) setLoadingDays(false);
+        if (mounted) setLoadingDays(false);
       }
     }
 
-    // Initial fetch
     fetchDays();
-
-    // 🔁 Re-fetch every 30 seconds
-    const interval = setInterval(fetchDays, 30000);
-
+    const interval = setInterval(fetchDays, 60000);
     return () => {
-      isMounted = false;
+      mounted = false;
       clearInterval(interval);
     };
   }, []);
 
-  // ⏱ When available days are loaded, ensure selectedDate is valid
+  /* ---------------------- Auto-select valid day ---------------------- */
   useEffect(() => {
     if (!availableDays.length) return;
     const todayKey = toLocalISO(startOfToday());
-
-    // If today has slots, keep today selected
     if (availableDays.includes(todayKey)) {
       setSelectedDate(startOfToday());
     } else {
-      // Otherwise pick the next available date
-      const nextAvailable = availableDays.find((d) => d > todayKey);
-      if (nextAvailable) {
-        const [y, m, dd] = nextAvailable.split("-").map(Number);
+      const next = availableDays.find((d) => d > todayKey);
+      if (next) {
+        const [y, m, dd] = next.split("-").map(Number);
         setSelectedDate(new Date(y, m - 1, dd));
       }
     }
   }, [availableDays]);
 
-  // Fetch slots when date changes
+  /* ---------------------- Fetch slots for selected day ---------------------- */
   useEffect(() => {
     if (!(selectedDate instanceof Date) || isNaN(selectedDate.getTime()))
       return;
     setLoadingSlots(true);
     const dateISO = toLocalISO(selectedDate);
-    console.log("📅 Fetching slots for:", dateISO);
 
     PublicAPI.getAvailableSlots(dateISO)
       .then((res) => {
         const data = res?.data?.data || [];
-        console.log("🧠 Raw API data:", data);
-
-        const debugRows = data.flatMap((n) =>
-          n.slots.map((s) => {
-            const utc = buildUTCSlot(selectedDate, s.start_time, n.timezone);
-            const display = displayInUserZone(utc, n.timezone);
-            return {
-              nutritionist: n.name,
-              start_time: s.start_time,
-              timezone: n.timezone,
-              utc: utc.toISOString(),
-              user_local: `${display.userLocal} (${display.userTz})`,
-              therapist_local: `${display.therapistLocal} (${n.timezone})`,
-            };
-          })
-        );
-
-        console.table(debugRows);
         setNutritionists(data);
       })
-      .catch((err) => {
-        console.error("❌ Failed to load slots:", err);
+      .catch(() => {
         setNutritionists([]);
+        toast.error("Aikojen lataaminen epäonnistui.");
       })
       .finally(() => setLoadingSlots(false));
   }, [selectedDate]);
 
-  // Filter by time of day
+  /* ---------------------- Filters ---------------------- */
   const filteredNutritionists = nutritionists
     .filter((n) => n && Array.isArray(n.slots))
     .map((n) => ({
@@ -277,72 +195,33 @@ export default function BookingLayout() {
     0
   );
 
-  const today = startOfToday();
-  const availableSet = new Set(availableDays);
-
-  const handleDateSelect = (date) => {
-    if (!date || isNaN(date.getTime())) return;
-    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    if (d < today) return;
-    setSelectedDate(d);
-  };
-
-  const isAvailableModifier = (date) => {
-    const key = toLocalISO(date);
-    return availableDays.includes(key);
-  };
-
+  /* ---------------------- Slot booking ---------------------- */
   const handleSlotBooking = async (slot, n) => {
-    if (!slot?.slot_id) return;
-    if (isBooking) return;
+    if (!slot?.slot_id || isBooking) return;
     try {
       setIsBooking(true);
       setSelectedSlot(slot.slot_id);
       await new Promise((r) => setTimeout(r, 800));
-      console.log("✅ booked", {
-        slot,
-        n,
-        date: toLocalISO(selectedDate),
-      });
-    } catch (e) {
-      console.error("❌ booking failed", e);
+      toast.success(
+        `Aika ${slot.start_time} varattu onnistuneesti ravitsemusterapeutilta ${n.name}.`
+      );
+    } catch {
+      toast.error("Ajan varaaminen epäonnistui. Yritä uudelleen.");
     } finally {
       setIsBooking(false);
       setSelectedSlot(null);
     }
   };
-  // 🧩 DEBUG LOGGING
-  useEffect(() => {
-    console.group("🧭 Calendar Debug Snapshot");
-    console.log(
-      "🕓 User timezone:",
-      Intl.DateTimeFormat().resolvedOptions().timeZone
-    );
-    console.log("📅 Today:", today, "→", toLocalISO(today));
-    console.log(
-      "📆 Selected date:",
-      selectedDate,
-      "→",
-      toLocalISO(selectedDate)
-    );
-    console.log("✅ Available days (raw):", availableDays);
-    console.log("✅ Available days count:", availableDays.length);
 
-    // Show what's considered available for next 3 days
-    const next3 = Array.from({ length: 3 }).map((_, i) => {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-      const iso = toLocalISO(d);
-      return {
-        date: iso,
-        available: availableDays.includes(iso),
-        resultFromModifier: isAvailableModifier(d),
-      };
-    });
-    console.table(next3);
-    console.groupEnd();
-  }, [availableDays, selectedDate]);
+  const today = startOfToday();
+  const handleDateSelect = (date) => {
+    if (!date || isNaN(date.getTime()) || date < today) return;
+    setSelectedDate(new Date(date));
+  };
+  const isAvailableModifier = (date) =>
+    availableDays.includes(toLocalISO(date));
 
+  /* ---------------------- UI ---------------------- */
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 my-20 to-background">
@@ -353,38 +232,34 @@ export default function BookingLayout() {
               <Card className="shadow-lg border-0 bg-card/80 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    <div className="w-2 h-2 bg-primary rounded-full" />
                     Valitse päivä
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
-                  {loadingDays ? (
-                    <div className="space-y-4">
-                      <Skeleton className="h-auto w-auto" />
-                      <Skeleton className="h-auto w-auto" />
-                    </div>
-                  ) : (
-                    <Calendar
-                      mode="single"
-                      selected={selectedDate}
-                      onSelect={handleDateSelect}
-                      disabled={(date) => date < today}
-                      modifiers={{
-                        available: isAvailableModifier,
-                      }}
-                      modifiersClassNames={{
-                        available:
-                          "bg-primary/10 text-primary font-semibold border-primary/20 hover:bg-primary/20",
-                      }}
-                      classNames={{
-                        day_selected:
-                          "bg-primary text-primary-foreground hover:bg-primary/90",
-                        day_today:
-                          "text-foreground font-bold underline underline-offset-2",
-                      }}
-                    />
-                  )}
-                </CardContent>
+  {loadingDays ? (
+    <CalendarSkeleton />
+  ) : (
+    <Calendar
+      mode="single"
+      selected={selectedDate}
+      onSelect={handleDateSelect}
+      disabled={(date) => date < today}
+      modifiers={{ available: isAvailableModifier }}
+      modifiersClassNames={{
+        available:
+          "bg-primary/10 text-primary font-semibold hover:bg-primary/20",
+      }}
+      classNames={{
+        day_selected:
+          "bg-primary text-primary-foreground hover:bg-primary/90",
+        day_today:
+          "text-foreground font-bold underline underline-offset-2",
+      }}
+    />
+  )}
+</CardContent>
+
               </Card>
             </div>
 
@@ -401,7 +276,9 @@ export default function BookingLayout() {
                     })}
                   </h2>
                   <p className="text-primary font-semibold mt-1">
-                    {totalSlots} vapaata aikaa saatavilla
+                    {totalSlots > 0
+                      ? `${totalSlots} vapaata aikaa saatavilla`
+                      : "Ei vapaita aikoja tällä päivällä"}
                   </p>
                 </CardContent>
               </Card>
@@ -415,99 +292,96 @@ export default function BookingLayout() {
                 </TabsList>
               </Tabs>
 
-              <div className="space-y-4">
-                {loadingSlots ? (
-                  <Skeleton className="h-64 w-full" />
-                ) : filteredNutritionists.length > 0 ? (
-                  filteredNutritionists.flatMap((n) =>
-                    n.slots.map((slot) => {
-                      const utc = buildUTCSlot(
-                        selectedDate,
-                        slot.start_time,
-                        n.timezone
-                      );
-                      const display = displayInUserZone(utc, n.timezone);
-                      return (
-                        <Card
-                          key={slot.slot_id}
-                          className="shadow-md bg-card/80 backdrop-blur-sm hover:scale-[1.01] transition"
-                        >
-
-<CardContent className="p-6 flex flex-col lg:flex-row gap-6">
-  {/* LEFT: Appointment info */}
-  <div className="flex-1 space-y-2">
-    <div className="flex items-center gap-2 flex-wrap">
-      <div className="text-2xl font-bold text-primary">
-        {display.userLocal}
-      </div>
-      <Badge
-        variant="outline"
-        className="text-xs capitalize flex items-center gap-1"
-      >
-        <Timer className="h-3 w-3" />
-        {slot.service_type || "Ravitsemusneuvonta"}
-      </Badge>
+             <div className="space-y-4">
+  {loadingSlots ? (
+    // 🩶 Show multiple realistic slot skeletons instead of one big block
+    <div className="space-y-4">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <SlotCardSkeleton key={i} />
+      ))}
     </div>
+  ) : filteredNutritionists.length > 0 ? (
+    filteredNutritionists.flatMap((n) =>
+      n.slots.map((slot) => {
+        const utc = buildUTCSlot(selectedDate, slot.start_time, n.timezone);
+        const display = displayInUserZone(utc, n.timezone);
 
-    <p className="text-sm text-muted-foreground">
-      ({n.name} local: {display.therapistLocal})
-    </p>
+        return (
+          <Card
+            key={slot.slot_id}
+            className="shadow-md bg-card/80 backdrop-blur-sm hover:scale-[1.01] transition"
+          >
+            <CardContent className="p-6 flex flex-col lg:flex-row gap-6">
+              {/* LEFT: Slot info */}
+              <div className="flex-1 space-y-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className="text-2xl font-bold text-primary">
+                    {display.userLocal}
+                  </div>
+                  <Badge
+                    variant="outline"
+                    className="text-xs flex items-center gap-1"
+                  >
+                    <Timer className="h-3 w-3" />
+                    {slot.service_type || "Ravitsemusneuvonta"}
+                  </Badge>
+                </div>
 
-    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mt-1">
-      <span className="flex items-center gap-1">
-        <Timer className="h-4 w-4 text-primary" />
-        {slot.start_time}–{slot.end_time}
-      </span>
-      <span className="flex items-center gap-1">
-        <Clock className="h-4 w-4 text-primary" />
-        {slot.duration_min} min
-      </span>
-      {slot.price && (
-        <span className="flex items-center gap-1">
-          <Euro className="h-4 w-4 text-primary" />
-          {slot.price} {n.currency || "EUR"}
-        </span>
-      )}
-    </div>
-  </div>
-
-  {/* RIGHT: Nutritionist + Booking */}
-  <div className="flex-1 flex items-center gap-4 justify-end">
-    <Avatar className="h-16 w-16 border">
-      <AvatarImage src={n.image} alt={n.name} />
-      <AvatarFallback>
-        {String(n.name || "")
-          .split(" ")
-          .map((x) => x?.[0])
-          .join("")}
-      </AvatarFallback>
-    </Avatar>
-    <div>
-      <h3 className="font-semibold text-foreground">{n.name}</h3>
-      <p className="text-muted-foreground text-sm">{n.timezone}</p>
-    </div>
-    <Button
-      onClick={() => handleSlotBooking(slot, n)}
-      disabled={isBooking && selectedSlot === slot.slot_id}
-      className="min-w-[140px]"
-    >
-      {isBooking && selectedSlot === slot.slot_id
-        ? "Varataan..."
-        : "Varaa aika"}
-    </Button>
-  </div>
-</CardContent>
-
-                        </Card>
-                      );
-                    })
-                  )
-                ) : (
-                  <p className="text-center text-muted-foreground mt-8">
-                    Ei vapaita aikoja
-                  </p>
-                )}
+                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mt-1">
+                  <span className="flex items-center gap-1">
+                    <Clock className="h-4 w-4 text-primary" />
+                    {slot.duration_min} min
+                  </span>
+                  {slot.price && (
+                    <span className="flex items-center gap-1">
+                      <Euro className="h-4 w-4 text-primary" />
+                      {slot.price} €
+                    </span>
+                  )}
+                </div>
               </div>
+
+              {/* RIGHT: Nutritionist & Booking */}
+              <div className="flex items-center gap-4 justify-end flex-1">
+                <Avatar className="h-16 w-16 border">
+                  <AvatarImage src={n.image} alt={n.name} />
+                  <AvatarFallback>
+                    {String(n.name || "")
+                      .split(" ")
+                      .map((x) => x?.[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h3 className="font-semibold text-foreground">{n.name}</h3>
+                  {n.location && (
+                    <p className="text-sm text-muted-foreground">
+                      {n.location}
+                    </p>
+                  )}
+                </div>
+                <Button
+                  onClick={() => handleSlotBooking(slot, n)}
+                  disabled={isBooking && selectedSlot === slot.slot_id}
+                  className="min-w-[140px]"
+                >
+                  {isBooking && selectedSlot === slot.slot_id
+                    ? "Varataan..."
+                    : "Varaa aika"}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })
+    )
+  ) : (
+    <p className="text-center text-muted-foreground mt-8">
+      Ei vapaita aikoja valitulle päivälle.
+    </p>
+  )}
+</div>
+
             </div>
           </div>
         </div>
