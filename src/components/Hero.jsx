@@ -35,6 +35,7 @@ const Hero = () => {
         {/* Heading */}
         <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-tight">
           {t("hero.title")}
+          deploy working 
         </h1>
 
         {/* Description */}
