@@ -7,6 +7,8 @@ export default defineConfig({
   server: {
     port: 5174,
   },
+  // 👇 this is the key fix for ReactPress
+  base: "/wp-content/reactpress/apps/nutrineuvo/build/",
   build: {
     outDir: "dist",
   },
