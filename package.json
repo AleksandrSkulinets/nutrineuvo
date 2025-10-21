@@ -40,10 +40,11 @@
     "zod": "^4.1.11"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "cross-env PUBLIC_URL=/wp-content/reactpress/apps/nutrineuvo/build vite build",
-    "preview": "vite preview"
-  },
+  "dev": "vite",
+  "build": "cross-env PUBLIC_URL=/wp-content/reactpress/apps/nutrineuvo/build/ vite build",
+  "preview": "vite preview"
+}
+,
   "eslintConfig": {
     "extends": [
       "react-app",

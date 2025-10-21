@@ -5,17 +5,17 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => {
   const basePath =
-    process.env.PUBLIC_URL || // ✅ use env var if provided (from CI/CD)
-    (mode === "development"
-      ? "/" // local dev
-      : "/wp-content/reactpress/apps/nutrineuvo/build/"); // default production path
+    process.env.PUBLIC_URL ||
+    "/wp-content/reactpress/apps/nutrineuvo/build/";
+
+  console.log(`✅ Using base path: ${basePath}`);
 
   return {
     plugins: [react(), tailwindcss()],
+    base: basePath,
     server: {
       port: 5174,
     },
-    base: basePath,
     build: {
       outDir: "build",
       emptyOutDir: true,
