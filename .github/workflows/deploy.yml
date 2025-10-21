@@ -2,8 +2,7 @@ name: Deploy Nutrineuvo Build Folder
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -11,25 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js (v22 LTS)
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '22'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci  
+        run: npm ci
 
-      - name: Build project
-        run: npm run build  
+      - name: Build (Vite -> build/)
+        run: npm run build
 
-      - name: Rename dist → build (required for ReactPress)
-        run: |
-          if [ -d dist ]; then mv dist build; fi
+      - name: Verify build exists (guard)
+        run: test -f build/index.html || (echo "❌ build/index.html missing" && exit 1)
 
-      - name: Deploy build folder via FTP
+      - name: Deploy build/ via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
