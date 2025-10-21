@@ -49,7 +49,7 @@ const Hero = () => {
             </Link>
           </Button>
 
-          <Button asChild size="lg" variant="outline" className="px-6 py-3 font-medium shadow-lg transition-transform hover:scale-105">
+          <Button asChild size="lg" variant="secondary" className="px-6 py-3 font-medium shadow-lg transition-transform hover:scale-105">
             <Link to="/services">
               <CirclePlay className="mr-2 h-5 w-5" />
               {t("hero.service")}

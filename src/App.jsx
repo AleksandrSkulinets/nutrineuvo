@@ -40,7 +40,6 @@ function App() {
 
   return (
     <>
-      <UnderConstruction isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       <Navigation />
       <ScrollToTop />
       
@@ -55,8 +54,8 @@ function App() {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/cookies" element={<Cookies />} />
+        <Route path="/ajanvaraus" element={<BookAppointmentPage/>} />
         <Route path="*" element={<NotFound />} /> 
-        <Route path="ajanvaraus" element={<BookAppointmentPage/>} /> 
       </Routes>
 
       <Footer />

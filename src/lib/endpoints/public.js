@@ -1,12 +1,15 @@
+// src/lib/PublicAPI.js
 import { api } from "../api";
 
 export const PublicAPI = {
-  getAvailableDays: (startISO, endISO) =>
-    api(`/public/available-days?start=${startISO}&end=${endISO}`),
+  getAvailableDays: (startISO, endISO) => {
+    const params = new URLSearchParams();
+    if (startISO) params.append("start", startISO);
+    if (endISO) params.append("end", endISO);
+    return api(`/public/available-days?${params.toString()}`);
+  },
 
-  getAvailableNutritionists: (dateISO) =>
-    api(`/public/availability?date=${dateISO}`),
-
-  getNextAvailableDay: () =>
-    api("/public/next-available-day"),
+  getAvailableSlots: (dateISO) => {
+    return api(`/public/available-slots?date=${dateISO}`);
+  },
 };

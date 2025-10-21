@@ -3,11 +3,10 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 /**
  * Unified fetch helper that NEVER throws.
- * Always returns: { ok, status, ...data }
+ * Always returns { ok, status, data, message }
  */
 export async function api(endpoint, { method = "GET", body, token } = {}) {
   const url = `${API_URL}${endpoint}`;
-
   try {
     const res = await fetch(url, {
       method,
@@ -19,19 +18,20 @@ export async function api(endpoint, { method = "GET", body, token } = {}) {
       credentials: "include",
     });
 
-    let data = {};
-    try {
-      data = await res.json();
-    } catch {
-      // ignore if no JSON body
-    }
+    const contentType = res.headers.get("content-type");
+    const isJson = contentType && contentType.includes("application/json");
+    const data = isJson ? await res.json() : {};
 
-    if (!res.ok && !data.message) {
-      data.message = `Request failed (${res.status})`;
-    }
+    const payload = {
+      ok: res.ok,
+      status: res.status,
+      data, // ✅ wrap everything under `.data` for consistent API usage
+      message: data.message || (res.ok ? "OK" : `Request failed (${res.status})`),
+    };
 
-    return { ok: res.ok, status: res.status, ...data };
+    return payload;
   } catch (err) {
-    return { ok: false, status: 0, message: err.message || "Network error" };
+    console.error("❌ API error:", err);
+    return { ok: false, status: 0, data: null, message: err.message || "Network error" };
   }
 }

@@ -1,302 +1,517 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import React, { useEffect, useState } from "react";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../components/ui/select";
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Calendar } from "../components/ui/calendar";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { api } from "../lib/api";
-import { AvailabilityCalendar } from "../components/calendar/AvailabilityCalendar";
-import  {toast}  from "../components/ui/sonner";
-import  LoadingScreen  from "../components/common/LoadingScreen";
+import { Badge } from "../components/ui/badge";
+import { Skeleton } from "../components/ui/skeleton";
+import { PublicAPI } from "../lib/endpoints/public";
+import { formatInTimeZone } from "date-fns-tz";
+import { Clock, Euro, Timer } from "lucide-react";
 
-export default function BookingLayout() {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [nutritionists, setNutritionists] = useState([]);
-  const [nextAvailableDate, setNextAvailableDate] = useState(null);
-  const [loading, setLoading] = useState(false);
+/**
+ * 🧩 Safe polyfill for zonedTimeToUtc
+ * Converts local date/time string in a given timezone to a UTC Date object
+ * Works in all environments (no named export issues)
+ */
+function safeZonedTimeToUtc(localDateTimeString, timeZone) {
+  const date = new Date(localDateTimeString);
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    hour12: false,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
 
-  const [location, setLocation] = useState("Kaikki");
-  const [service, setService] = useState("Kaikki");
-  const [expert, setExpert] = useState("Kaikki");
-  const [tab, setTab] = useState("kaikki");
+  // Extract the offset-corrected parts
+  const parts = formatter.formatToParts(date);
+  const lookup = Object.fromEntries(parts.map((p) => [p.type, p.value]));
 
-  // 🕓 Time period helper
-  const getSlotPeriod = (time) => {
-    const [h] = time.split(":").map(Number);
-    if (h < 12) return "aamu";
-    if (h < 17) return "iltapaiva";
-    return "ilta";
+  const isoLocal = `${lookup.year}-${lookup.month}-${lookup.day}T${lookup.hour}:${lookup.minute}:${lookup.second}`;
+  return new Date(isoLocal + "Z"); // create as UTC
+}
+
+// ----------------- Error Boundary -----------------
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("❌ Error caught by boundary:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 my-20 to-background">
+          <div className="container mx-auto px-6 py-12">
+            <Card className="max-w-md mx-auto shadow-lg border-0 bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8 text-center">
+                <div className="space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-destructive/10 rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-8 h-8 text-destructive"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    Jotain meni pieleen
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Kalenterissa tapahtui virhe. Yritä päivittää sivu.
+                  </p>
+                  <Button
+                    onClick={() => window.location.reload()}
+                    className="mt-4"
+                  >
+                    Päivitä sivu
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+// ----------------- Helpers -----------------
+function getSlotPeriod(time) {
+  const [h] = String(time).split(":").map(Number);
+  if (h < 12) return "aamu";
+  if (h < 17) return "iltapäivä";
+  return "ilta";
+}
+
+function startOfToday() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function toLocalISO(date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0"),
+  ].join("-");
+}
+
+// --- timezone helpers ---
+function buildUTCSlot(selectedDate, localTime, tz) {
+  const dateStr = toLocalISO(selectedDate);
+  const localDateTime = `${dateStr}T${localTime}`;
+  return safeZonedTimeToUtc(localDateTime, tz);
+}
+
+function displayInUserZone(slotDateUTC, nutritionistTz) {
+  const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return {
+    userLocal: formatInTimeZone(slotDateUTC, userTz, "HH:mm"),
+    therapistLocal: formatInTimeZone(slotDateUTC, nutritionistTz, "HH:mm"),
+    userTz,
   };
+}
 
-  // 🔹 Fetch available nutritionists for selected date
+// ----------------- Page -----------------
+export default function BookingLayout() {
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  });
+  const [availableDays, setAvailableDays] = useState([]);
+  const [nutritionists, setNutritionists] = useState([]);
+  const [tab, setTab] = useState("kaikki");
+  const [loadingDays, setLoadingDays] = useState(true);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [isBooking, setIsBooking] = useState(false);
+
+  // 🕓 Debug: log user timezone
   useEffect(() => {
-    async function fetchAvailable() {
-      if (!selectedDate) return;
-      setLoading(true);
-      const dateStr = selectedDate.toISOString().split("T")[0];
+    console.log(
+      "🌍 User timezone:",
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
+  }, []);
 
+  // Fetch available days
+  // 🕒 POLLING FETCH FOR AVAILABLE DAYS
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchDays() {
       try {
-        const res = await api(`/public/availability?date=${dateStr}`);
+        const res = await PublicAPI.getAvailableDays();
+        const days = res?.data?.data || [];
 
-        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
-          // Group by user_id
-          const grouped = res.data.reduce((acc, slot) => {
-            if (!acc[slot.user_id]) {
-              acc[slot.user_id] = {
-                ...slot,
-                fullName: slot.fullName,
-                slots: [],
-              };
-            }
-            acc[slot.user_id].slots.push({
-              start: slot.start_time,
-              end: slot.end_time,
-              day: slot.day_of_week,
-            });
-            return acc;
-          }, {});
-          setNutritionists(Object.values(grouped));
-          setNextAvailableDate(null);
-        } else {
-          setNutritionists([]);
-          // 🔍 If none found, check next available day
-          const next = await api("/public/next-available-day");
-          if (next.success && next.data?.date) {
-            setNextAvailableDate(next.data.date);
-          }
+        const localized = days.map((d) => {
+          if (!d) return null;
+          const [year, month, day] = d.split("-").map(Number);
+          return toLocalISO(new Date(year, month - 1, day));
+        });
+
+        const clean = Array.from(new Set(localized.filter(Boolean)));
+        if (isMounted) {
+          setAvailableDays(clean);
+          console.log("🔁 Updated available days:", clean);
         }
       } catch (err) {
-        console.error("❌ Error fetching availability:", err);
-        toast.error("Virhe haettaessa aikoja.");
+        console.error("❌ Failed to load available days:", err);
+        if (isMounted) setAvailableDays([]);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoadingDays(false);
       }
     }
 
-    fetchAvailable();
+    // Initial fetch
+    fetchDays();
+
+    // 🔁 Re-fetch every 30 seconds
+    const interval = setInterval(fetchDays, 30000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  // ⏱ When available days are loaded, ensure selectedDate is valid
+  useEffect(() => {
+    if (!availableDays.length) return;
+    const todayKey = toLocalISO(startOfToday());
+
+    // If today has slots, keep today selected
+    if (availableDays.includes(todayKey)) {
+      setSelectedDate(startOfToday());
+    } else {
+      // Otherwise pick the next available date
+      const nextAvailable = availableDays.find((d) => d > todayKey);
+      if (nextAvailable) {
+        const [y, m, dd] = nextAvailable.split("-").map(Number);
+        setSelectedDate(new Date(y, m - 1, dd));
+      }
+    }
+  }, [availableDays]);
+
+  // Fetch slots when date changes
+  useEffect(() => {
+    if (!(selectedDate instanceof Date) || isNaN(selectedDate.getTime()))
+      return;
+    setLoadingSlots(true);
+    const dateISO = toLocalISO(selectedDate);
+    console.log("📅 Fetching slots for:", dateISO);
+
+    PublicAPI.getAvailableSlots(dateISO)
+      .then((res) => {
+        const data = res?.data?.data || [];
+        console.log("🧠 Raw API data:", data);
+
+        const debugRows = data.flatMap((n) =>
+          n.slots.map((s) => {
+            const utc = buildUTCSlot(selectedDate, s.start_time, n.timezone);
+            const display = displayInUserZone(utc, n.timezone);
+            return {
+              nutritionist: n.name,
+              start_time: s.start_time,
+              timezone: n.timezone,
+              utc: utc.toISOString(),
+              user_local: `${display.userLocal} (${display.userTz})`,
+              therapist_local: `${display.therapistLocal} (${n.timezone})`,
+            };
+          })
+        );
+
+        console.table(debugRows);
+        setNutritionists(data);
+      })
+      .catch((err) => {
+        console.error("❌ Failed to load slots:", err);
+        setNutritionists([]);
+      })
+      .finally(() => setLoadingSlots(false));
   }, [selectedDate]);
 
-  // 🧭 Filter by location/service/expert/time of day
+  // Filter by time of day
   const filteredNutritionists = nutritionists
-    .filter((n) => expert === "Kaikki" || n.fullName === expert)
-    .filter((n) => location === "Kaikki" || n.city === location)
-    .filter(
-      (n) => service === "Kaikki" || n.services_offered?.includes(service)
-    )
+    .filter((n) => n && Array.isArray(n.slots))
     .map((n) => ({
       ...n,
       slots:
         tab === "kaikki"
           ? n.slots
-          : n.slots.filter((s) => getSlotPeriod(s.start) === tab),
-    }));
+          : n.slots.filter(
+              (slot) =>
+                slot?.start_time && getSlotPeriod(slot.start_time) === tab
+            ),
+    }))
+    .filter((n) => n.slots.length > 0);
 
   const totalSlots = filteredNutritionists.reduce(
     (sum, n) => sum + n.slots.length,
     0
   );
 
-  // 🧾 Handle booking click
-  async function handleBooking(userId, startTime, date) {
-    const isoDate = date.toISOString().split("T")[0];
+  const today = startOfToday();
+  const availableSet = new Set(availableDays);
+
+  const handleDateSelect = (date) => {
+    if (!date || isNaN(date.getTime())) return;
+    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    if (d < today) return;
+    setSelectedDate(d);
+  };
+
+  const isAvailableModifier = (date) => {
+    const key = toLocalISO(date);
+    return availableDays.includes(key);
+  };
+
+  const handleSlotBooking = async (slot, n) => {
+    if (!slot?.slot_id) return;
+    if (isBooking) return;
     try {
-      const res = await api("/bookings", {
-        method: "POST",
-        body: { userId, date: isoDate, time: startTime },
+      setIsBooking(true);
+      setSelectedSlot(slot.slot_id);
+      await new Promise((r) => setTimeout(r, 800));
+      console.log("✅ booked", {
+        slot,
+        n,
+        date: toLocalISO(selectedDate),
       });
-      if (res.success) toast.success("Aika varattu onnistuneesti!");
-      else toast.error("Varaus epäonnistui, yritä uudelleen.");
-    } catch {
-      toast.error("Virhe varauksen aikana.");
+    } catch (e) {
+      console.error("❌ booking failed", e);
+    } finally {
+      setIsBooking(false);
+      setSelectedSlot(null);
     }
-  }
+  };
+  // 🧩 DEBUG LOGGING
+  useEffect(() => {
+    console.group("🧭 Calendar Debug Snapshot");
+    console.log(
+      "🕓 User timezone:",
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
+    console.log("📅 Today:", today, "→", toLocalISO(today));
+    console.log(
+      "📆 Selected date:",
+      selectedDate,
+      "→",
+      toLocalISO(selectedDate)
+    );
+    console.log("✅ Available days (raw):", availableDays);
+    console.log("✅ Available days count:", availableDays.length);
+
+    // Show what's considered available for next 3 days
+    const next3 = Array.from({ length: 3 }).map((_, i) => {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      const iso = toLocalISO(d);
+      return {
+        date: iso,
+        available: availableDays.includes(iso),
+        resultFromModifier: isAvailableModifier(d),
+      };
+    });
+    console.table(next3);
+    console.groupEnd();
+  }, [availableDays, selectedDate]);
 
   return (
-    <section className="py-20 min-h-screen">
-      <div className="container mx-auto px-4 py-4 lg:py-20 space-y-6">
-        {/* --- Top Filters --- */}
-        <div className="grid gap-4 mt-10 sm:grid-cols-2 lg:grid-cols-3">
-          <Select value={location} onValueChange={setLocation}>
-            <SelectTrigger>
-              <SelectValue placeholder="Valitse kaupunki" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Kaikki">Kaikki kaupungit</SelectItem>
-              <SelectItem value="Helsinki">Helsinki</SelectItem>
-              <SelectItem value="Espoo">Espoo</SelectItem>
-              <SelectItem value="Vantaa">Vantaa</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={service} onValueChange={setService}>
-            <SelectTrigger>
-              <SelectValue placeholder="Valitse palvelu" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Kaikki">Kaikki palvelut</SelectItem>
-              <SelectItem value="konsultaatio">
-                Ravitsemuskonsultaatio
-              </SelectItem>
-              <SelectItem value="seuranta">Seurantakäynti</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={expert} onValueChange={setExpert}>
-            <SelectTrigger>
-              <SelectValue placeholder="Valitse asiantuntija" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Kaikki">Kaikki asiantuntijat</SelectItem>
-              {nutritionists.map((n) => (
-                <SelectItem key={n.user_id} value={n.fullName}>
-                  {n.fullName}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* --- Calendar + Results Layout --- */}
-        <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
-          {/* Left: Smart Calendar */}
-          <div className="flex items-center min-w-0 flex-col gap-2 ">
-            <AvailabilityCalendar
-              selectedDate={selectedDate}
-              onDateSelect={(iso, date) => setSelectedDate(date)}
-            />
-
-            <div className="text-muted-foreground text-center text-xs">
-              A minimum of 5 days is required
-            </div>
-          </div>
-
-          {/* Right: Available slots */}
-          <div className="space-y-4">
-            {/* Date header */}
-            <div className="px-2 text-sm font-medium">
-              {loading ? (
-                <p className="text-muted-foreground">Ladataan aikoja...</p>
-              ) : totalSlots > 0 ? (
-                <p className="text-foreground font-bold text-md lg:text-xl">
-                  {selectedDate?.toLocaleDateString("fi-FI", {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                  })}{" "}
-                  • {totalSlots} vapaata aikaa
-                </p>
-              ) : (
-                <p className="text-red-500">
-                  Ei vapaita aikoja valitulle päivälle.
-                </p>
-              )}
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 my-20 to-background">
+        <div className="container mx-auto px-6 py-12">
+          <div className="grid gap-8 lg:grid-cols-[400px_1fr] max-w-7xl mx-auto">
+            {/* LEFT: Calendar */}
+            <div className="space-y-6">
+              <Card className="shadow-lg border-0 bg-card/80 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    Valitse päivä
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  {loadingDays ? (
+                    <div className="space-y-4">
+                      <Skeleton className="h-auto w-auto" />
+                      <Skeleton className="h-auto w-auto" />
+                    </div>
+                  ) : (
+                    <Calendar
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={handleDateSelect}
+                      disabled={(date) => date < today}
+                      modifiers={{
+                        available: isAvailableModifier,
+                      }}
+                      modifiersClassNames={{
+                        available:
+                          "bg-primary/10 text-primary font-semibold border-primary/20 hover:bg-primary/20",
+                      }}
+                      classNames={{
+                        day_selected:
+                          "bg-primary text-primary-foreground hover:bg-primary/90",
+                        day_today:
+                          "text-foreground font-bold underline underline-offset-2",
+                      }}
+                    />
+                  )}
+                </CardContent>
+              </Card>
             </div>
 
-            {/* Time-of-day tabs */}
-            <Tabs value={tab} onValueChange={setTab}>
-              <TabsList className="flex gap-2 rounded-full bg-muted p-1">
-                <TabsTrigger value="kaikki">Kaikki</TabsTrigger>
-                <TabsTrigger value="aamu">Aamu</TabsTrigger>
-                <TabsTrigger value="iltapaiva">Iltapäivä</TabsTrigger>
-                <TabsTrigger value="ilta">Ilta</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            {/* RIGHT: Slots */}
+            <div className="space-y-6">
+              <Card className="shadow-lg border-0 bg-card/80 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <h2 className="text-2xl font-bold text-foreground">
+                    {selectedDate?.toLocaleDateString("fi-FI", {
+                      weekday: "long",
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </h2>
+                  <p className="text-primary font-semibold mt-1">
+                    {totalSlots} vapaata aikaa saatavilla
+                  </p>
+                </CardContent>
+              </Card>
 
-            {/* Results */}
-            {loading ? (
-                <LoadingScreen/>
-                
-              
-            ) : totalSlots > 0 ? (
-              filteredNutritionists.map((n) =>
-                n.slots.map((slot, i) => (
-                  <Card key={`${n.user_id}-${i}`}>
-                    <CardContent className="flex flex-row sm:items-center sm:justify-between gap-4 p-4 border-b">
-                      {/* Time info */}
-                      <div className="text-center text-sm font-medium">
-                        <div className="text-muted-foreground">
-                          {selectedDate?.toDateString() ===
-                          new Date().toDateString()
-                            ? "Tänään"
-                            : selectedDate?.toLocaleDateString("fi-FI", {
-                                weekday: "short",
-                                day: "numeric",
-                                month: "short",
-                              })}
-                        </div>
-                        <div className="text-lg font-bold text-primary">
-                          {slot.start.slice(0, 5)}
-                        </div>
-                        <div className="text-muted-foreground">
-                          {n.session_duration} min
-                        </div>
-                      </div>
+              <Tabs value={tab} onValueChange={setTab}>
+                <TabsList className="grid w-full grid-cols-4 bg-muted/50">
+                  <TabsTrigger value="kaikki">Kaikki</TabsTrigger>
+                  <TabsTrigger value="aamu">Aamu</TabsTrigger>
+                  <TabsTrigger value="iltapäivä">Iltapäivä</TabsTrigger>
+                  <TabsTrigger value="ilta">Ilta</TabsTrigger>
+                </TabsList>
+              </Tabs>
 
-                      {/* Nutritionist info */}
-                      <div className="flex items-center gap-4 flex-1">
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage
-                            src={n.profile_photo || "/therapist-avatar.png"}
-                          />
-                          <AvatarFallback>
-                            {n.fullName
-                              .split(" ")
-                              .map((p) => p[0])
-                              .join("")
-                              .toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="font-semibold uppercase">
-                            {n.fullName}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {n.country} • {n.currency}
-                          </p>
-                        </div>
-                      </div>
+              <div className="space-y-4">
+                {loadingSlots ? (
+                  <Skeleton className="h-64 w-full" />
+                ) : filteredNutritionists.length > 0 ? (
+                  filteredNutritionists.flatMap((n) =>
+                    n.slots.map((slot) => {
+                      const utc = buildUTCSlot(
+                        selectedDate,
+                        slot.start_time,
+                        n.timezone
+                      );
+                      const display = displayInUserZone(utc, n.timezone);
+                      return (
+                        <Card
+                          key={slot.slot_id}
+                          className="shadow-md bg-card/80 backdrop-blur-sm hover:scale-[1.01] transition"
+                        >
 
-                      {/* Book button */}
-                      <Button
-                        onClick={() =>
-                          handleBooking(n.user_id, slot.start, selectedDate)
-                        }
-                        className="w-full sm:w-auto"
-                      >
-                        Varaa
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))
-              )
-            ) : (
-              <div className="p-6 text-center text-muted-foreground">
-                Ei vapaita aikoja tälle päivälle.
+<CardContent className="p-6 flex flex-col lg:flex-row gap-6">
+  {/* LEFT: Appointment info */}
+  <div className="flex-1 space-y-2">
+    <div className="flex items-center gap-2 flex-wrap">
+      <div className="text-2xl font-bold text-primary">
+        {display.userLocal}
+      </div>
+      <Badge
+        variant="outline"
+        className="text-xs capitalize flex items-center gap-1"
+      >
+        <Timer className="h-3 w-3" />
+        {slot.service_type || "Ravitsemusneuvonta"}
+      </Badge>
+    </div>
+
+    <p className="text-sm text-muted-foreground">
+      ({n.name} local: {display.therapistLocal})
+    </p>
+
+    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mt-1">
+      <span className="flex items-center gap-1">
+        <Timer className="h-4 w-4 text-primary" />
+        {slot.start_time}–{slot.end_time}
+      </span>
+      <span className="flex items-center gap-1">
+        <Clock className="h-4 w-4 text-primary" />
+        {slot.duration_min} min
+      </span>
+      {slot.price && (
+        <span className="flex items-center gap-1">
+          <Euro className="h-4 w-4 text-primary" />
+          {slot.price} {n.currency || "EUR"}
+        </span>
+      )}
+    </div>
+  </div>
+
+  {/* RIGHT: Nutritionist + Booking */}
+  <div className="flex-1 flex items-center gap-4 justify-end">
+    <Avatar className="h-16 w-16 border">
+      <AvatarImage src={n.image} alt={n.name} />
+      <AvatarFallback>
+        {String(n.name || "")
+          .split(" ")
+          .map((x) => x?.[0])
+          .join("")}
+      </AvatarFallback>
+    </Avatar>
+    <div>
+      <h3 className="font-semibold text-foreground">{n.name}</h3>
+      <p className="text-muted-foreground text-sm">{n.timezone}</p>
+    </div>
+    <Button
+      onClick={() => handleSlotBooking(slot, n)}
+      disabled={isBooking && selectedSlot === slot.slot_id}
+      className="min-w-[140px]"
+    >
+      {isBooking && selectedSlot === slot.slot_id
+        ? "Varataan..."
+        : "Varaa aika"}
+    </Button>
+  </div>
+</CardContent>
+
+                        </Card>
+                      );
+                    })
+                  )
+                ) : (
+                  <p className="text-center text-muted-foreground mt-8">
+                    Ei vapaita aikoja
+                  </p>
+                )}
               </div>
-            )}
-
-            {/* 🔎 Show next available day if today empty */}
-            {!loading && totalSlots === 0 && nextAvailableDate && (
-              <div className="text-center text-xs text-muted-foreground">
-                Seuraava vapaa päivä:{" "}
-                <span className="font-medium text-primary">
-                  {new Date(nextAvailableDate).toLocaleDateString("fi-FI", {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                  })}
-                </span>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </ErrorBoundary>
   );
 }
