@@ -10,6 +10,13 @@
 </IfModule>
 # END React App Rewrite
 
+# BEGIN MIME Types
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType application/manifest+json .json
+</IfModule>
+# END MIME Types
+
 # BEGIN WordPress
 # The directives (lines) between "BEGIN WordPress" and "END WordPress" are
 # dynamically generated, and should only be modified via WordPress filters.
