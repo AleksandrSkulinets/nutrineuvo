@@ -20,10 +20,14 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci  
 
       - name: Build project
-        run: npm run build
+        run: npm run build  
+
+      - name: Rename dist → build (required for ReactPress)
+        run: |
+          if [ -d dist ]; then mv dist build; fi
 
       - name: Deploy build folder via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
