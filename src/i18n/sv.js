@@ -19,7 +19,7 @@ const svTranslations = {
     description: "Nutrineuvo är en online-tjänst som hjälper dig att uppnå en hälsosammare livsstil med personliga kostplaner, expertvägledning och användarvänliga måltidsplaneringsverktyg. Oavsett om du följer en speciell diet eller söker hälsosammare matalternativ, erbjuder Nutrineuvo allt du behöver för att lyckas."
   },
   "hero": {
-    "badge": "✨ Nutrineuvo",
+    "badge": " Nutrineuvo",
     "title": "Nutrineuvo",
     "description": "Personlig näringsrådgivning och experthjälp för specialkost.",
     "appointment": "Boka tid",

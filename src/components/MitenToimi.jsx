@@ -11,28 +11,28 @@ export default function WhyChooseUs() {
 
   const reasons = [
     {
-      icon: <User className="shrink-0" />,
+      icon: <User className="shrink-0 text-white" />,
       title: t("why.support_special_diets"),
       desc: t("why.support_special_diets_desc"),
-      bg: "bg-zinc-50 dark:bg-zinc-950",
-      border: "border-zinc-200 dark:border-zinc-700/50",
-      textColor: "text-foreground", // ✅ forces theme-aware text
+      bg: "bg-zinc-900 dark:bg-zinc-900", // stays dark always
+      border: "border border-zinc-700/50",
+      textColor: "text-white ",
     },
     {
       icon: <HeartPlus className="shrink-0" />,
       title: t("why.no_diagnosis"),
       desc: t("why.no_diagnosis_desc"),
-      bg: "bg-primary",
-      border: "border-white/20 dark:border-white/10",
-      textColor: "text-white", // ✅ white text always
+        bg: "bg-primary text-primary-foreground",
+      border: "border border-transparent",
+      textColor: "text-primary-foreground",
     },
     {
       icon: <PhoneCheck className="shrink-0" />,
       title: t("why.no_referral"),
       desc: t("why.no_referral_desc"),
-      bg: "bg-zinc-50 dark:bg-zinc-950",
-      border: "border-zinc-200 dark:border-zinc-700/50",
-      textColor: "text-foreground", // ✅ forces theme-aware text
+      bg: "bg-card dark:bg-zinc-900",
+      border: "border border-border/50",
+      textColor: "text-white",
     },
   ];
 
@@ -49,7 +49,7 @@ export default function WhyChooseUs() {
               {t("howitworks.title")}
             </h2>
           </div>
-          <p className="text-base font-medium text-muted-foreground">
+          <p className="text-base font-medium ">
             {t("howitworks.description")}
           </p>
         </div>
@@ -76,15 +76,16 @@ export default function WhyChooseUs() {
                 </div>
                 <p
                   className={`mt-4 ${
-                    reason.textColor || "text-muted-foreground"
+                    reason.textColor || "text-white"
                   }`}
                 >
                   {reason.desc}
                 </p>
               </div>
 
-              <Button variant="ghost" className="mt-6 w-fit">
-                {t("learn_more")} <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="ghost" className="mt-6 w-fit text-white">
+                {t("learn_more")}
+                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </motion.div>
           ))}

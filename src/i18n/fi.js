@@ -21,7 +21,7 @@ const fiTranslations = {
       "Nutrineuvo on verkkoalusta, joka auttaa sinua saavuttamaan terveellisemmän elämäntavan räätälöityjen ravitsemussuunnitelmien, asiantuntijaneuvonnan ja helppokäyttöisten ateriasuunnittelutyökalujen avulla. Olitpa sitten noudattamassa erityisruokavaliota tai etsit vain terveellisempiä ruokailuvaihtoehtoja, Nutrineuvo tarjoaa kaiken, mitä tarvitset onnistumiseen.",
   },
   hero: {
-    badge: "✨ Nutrineuvo",
+    badge: " Nutrineuvo",
     title: "Nutrineuvo",
     description:
       "Henkilökohtaista ravitsemusneuvontaa ja asiantuntijatukea erityisruokavalioihin.",

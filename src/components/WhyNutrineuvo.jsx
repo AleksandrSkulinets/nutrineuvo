@@ -9,34 +9,50 @@ export default function WhyNutrineuvo() {
 
   const features = [
     {
-      title: t("why.support_special_diets"),
-      desc: t("why.support_special_diets_desc"),
-      icon: <Settings2 className="shrink-0" />,
-    },
+  icon: <Settings2 className="shrink-0 text-primary " />,
+  title: t("why.support_special_diets"),
+  desc: t("why.support_special_diets_desc"),
+  bg: "bg-zinc-900 dark:bg-zinc-900", // stays dark always
+  border: "border border-zinc-700/50",
+  textColor: "text-white ",
+},
+
     {
+      icon: <Blocks className="shrink-0 text-primary dark:text-primary-foreground" />,
       title: t("why.no_diagnosis"),
       desc: t("why.no_diagnosis_desc"),
-      icon: <Blocks className="shrink-0" />,
+      bg: "bg-primary text-primary-foreground",
+      border: "border border-transparent",
+      textColor: "text-primary-foreground",
     },
     {
+      icon: <Settings2 className="shrink-0 text-primary " />,
       title: t("why.no_referral"),
       desc: t("why.no_referral_desc"),
-      icon: <Settings2 className="shrink-0" />,
+      bg: "bg-card dark:bg-zinc-900",
+      border: "border border-border/50",
+      textColor: "text-white",
     },
     {
+      icon: <Blocks className="shrink-0 text-primary " />,
       title: t("why.data_secure"),
       desc: t("why.data_secure_desc"),
-      icon: <Blocks className="shrink-0" />,
+      bg: "bg-card dark:bg-zinc-900",
+      border: "border border-border/50",
+      textColor: "text-white",
     },
     {
+      icon: <Settings2 className="shrink-0 text-primary dark:text-primary-foreground" />,
       title: t("why.no_commitment"),
       desc: t("why.no_commitment_desc"),
-      icon: <Settings2 className="shrink-0" />,
+      bg: "bg-primary text-primary-foreground",
+      border: "border border-transparent",
+      textColor: "text-primary-foreground",
     },
   ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center">
+    <section className="min-h-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-6xl mx-auto py-20 px-6">
         {/* Title */}
         <motion.h2
@@ -66,20 +82,31 @@ export default function WhyNutrineuvo() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1, duration: 0.5 }}
-              className="bg-muted rounded-xl p-6 flex flex-col justify-between"
+              className={`rounded-xl p-6 flex flex-col justify-between h-full shadow-sm transition-colors ${feature.bg} ${feature.border}`}
             >
               <div>
                 <div className="flex items-center gap-3">
                   {feature.icon}
-                  <span className="text-xl font-semibold tracking-tight">
+                  <span
+                    className={`text-xl font-semibold tracking-tight ${feature.textColor}`}
+                  >
                     {feature.title}
                   </span>
                 </div>
-                <p className="mt-4 text-muted-foreground">{feature.desc}</p>
+              <p
+                  className={`mt-4 ${
+                    feature.textColor 
+                  }`}
+                >{feature.desc}</p>
               </div>
 
-              <Button variant="ghost" className="mt-6 w-fit">
-                {t("learn_more")} <ArrowRight className="ml-2 h-4 w-4" />
+              <Button
+                variant="outline"
+                className="mt-6 w-fit text-sm "
+              >
+                
+                {t("learn_more")}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </motion.div>
           ))}

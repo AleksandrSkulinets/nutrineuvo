@@ -20,7 +20,7 @@ const enTranslations = {
 
   },
    hero: {
-    "badge": "✨ Nutrineuvo",
+    "badge": "Nutrineuvo",
     "title": "Nutrineuvo",
     "description": "Personalized nutrition counseling and expert support for special diets.",
     "appointment": "Book an appointment",
