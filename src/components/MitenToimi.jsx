@@ -83,11 +83,16 @@ export default function WhyChooseUs() {
                 </p>
               </div>
 
-              <Button variant="ghost" className="mt-6 w-fit text-white">
-                {t("learn_more")}
-                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </motion.div>
+            
+                          <Button
+                            variant="outline"
+                            className="mt-6 w-fit text-sm "
+                          >
+                            
+                            {t("learn_more")}
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </motion.div>
           ))}
         </div>
       </div>
