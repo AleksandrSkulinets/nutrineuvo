@@ -19,22 +19,21 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install PNPM
-        run: npm install -g pnpm
-
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Build project
-        run: pnpm run build
+        run: npm run build
 
-     
+      - name: Rename dist → build
+        run: |
+          if [ -d dist ]; then mv dist build; fi
 
-      - name: Deploy dist folder via FTP
+      - name: Deploy build folder via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/
-          server-dir: "/public_html/wp-content/reactpress/apps/nutrineuvo/dist/"
+          local-dir: build/
+          server-dir: "/public_html/wp-content/reactpress/apps/nutrineuvo/build/"
