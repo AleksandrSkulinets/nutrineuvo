@@ -60,7 +60,7 @@ const Hero = () => {
             className="flex items-center  text-base font-medium px-6 py-3 shadow-lg transition-transform hover:scale-105"
           >
             <CirclePlay className="mr-2 h-5 w-5" />
-            {t("hero.service")}  test deploy
+            {t("hero.service")} 
           </Button>
         </div>
       </div>

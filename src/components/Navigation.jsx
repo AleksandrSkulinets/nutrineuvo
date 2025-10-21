@@ -202,11 +202,13 @@ const Navbar = () => {
               />
             </Link>
 
-            <Input
-              type="text"
-              placeholder={t("search") || "Search..."}
-              className="h-auto border flex-grow"
-            />
+            <div className=" me-auto" >
+
+                   
+                    <ThemeToggle />
+                
+            </div>
+            
 
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
@@ -225,8 +227,7 @@ const Navbar = () => {
                       className="h-[80px] sm:h-[80px] md:h-[80px] "
                     />
                   </Link>
-                  <div className="flex justify-between items-center  mx-2 ">
-                    <DropdownMenu>
+                   <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
@@ -250,8 +251,6 @@ const Navbar = () => {
                       </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <ThemeToggle />
-                  </div>
                 </SheetHeader>
 
                 {/* Nav links */}
