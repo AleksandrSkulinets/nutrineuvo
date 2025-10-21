@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import "./i18n/i18n";
-import { HashRouter } from "react-router-dom";
 
 import { AuthProvider } from "./contexts/AuthContext.jsx"; // 👈 ensure .jsx
 import { ThemeProvider } from "./components/theme-provider";
@@ -15,12 +14,12 @@ import { Toaster } from "./components/ui/sonner";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      <HashRouter>
+      <BrowserRouter>
         <ThemeProvider>
           <App />
           <Toaster />
         </ThemeProvider>
-      </HashRouter>
+      </BrowserRouter>
     </AuthProvider>
   </React.StrictMode>
 );

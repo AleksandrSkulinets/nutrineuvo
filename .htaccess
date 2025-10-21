@@ -6,7 +6,7 @@
   RewriteCond %{REQUEST_URI} !^/wp-json
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)$ /wp-content/reactpress/apps/nutrineuvo/build/index.html [L,NC,QSA]
+  RewriteRule ^(.*)$ /build/index.html [L,NC,QSA]
 </IfModule>
 # END React App Rewrite
 

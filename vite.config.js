@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/wp-content/reactpress/apps/nutrineuvo/build/",
+  base: "/",
   build: {
     outDir: "build",
     emptyOutDir: true,
