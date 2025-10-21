@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     port: 5174, 
   },
-  base: "/",
+  base: "/wp-content/reactpress/apps/nutrineuvo/build/",
   build: {
     outDir: "build", 
     emptyOutDir: true,
