@@ -410,7 +410,44 @@ Käytämme markkinointievästeitä kampanjoiden seurantaan ja kohdentamiseen esi
   cta_desc:
     "Varaa aika Nutrineuvon ravitsemusterapeutille jo tänään ja aloita hyvinvointiasi tukeva muutos.",
   book_now: "Varaa aika",
-}
+},
+booking: {
+      title: "Ajanvaraus",
+      description:
+        "Varaa aika laillistetulta ravitsemusterapeutilta helposti ja turvallisesti verkossa.",
+nutritionist: "Ravitsemusterapeutti",
+      selectService: "Valitse palvelu",
+      selectExpert: "Valitse asiantuntija",
+      allServices: "Kaikki palvelut",
+      allExperts: "Kaikki asiantuntijat",
+      noServices: "Ei palveluita",
+      noExperts: "Ei asiantuntijoita",
+
+      availableSlots: "{{count}} vapaata aikaa saatavilla",
+      noSlots: "Ei vapaita aikoja valitulle päivälle",
+
+      morning: "Aamu",
+      afternoon: "Iltapäivä",
+      evening: "Ilta",
+      all: "Kaikki",
+
+      insuranceAccepted: "Kela-korvaus saatavilla",
+      insuranceNotAccepted: "Ei Kela-korvausta",
+
+      remoteConsultation: "Etävastaanotto",
+      inPersonConsultation: "Vastaanotto paikan päällä",
+
+      duration: "{{minutes}} min",
+      price: "€{{price}}",
+
+      bookNow: "Varaa aika",
+      booking: "Varataan...",
+      bookingSuccess: "Aika varattu onnistuneesti ravitsemusterapeutilta {{name}}.",
+      bookingError: "Ajan varaaminen epäonnistui. Yritä uudelleen.",
+
+      calendarLoadingError: "Kalenterin lataaminen epäonnistui.",
+      reload: "Päivitä sivu"
+    }
 
 };
 

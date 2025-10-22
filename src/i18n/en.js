@@ -345,10 +345,45 @@ nutrition: {
   cta_desc:
     "Book an appointment with a Nutrineuvo dietitian today and start your journey towards healthier, balanced eating habits.",
   book_now: "Book now",
-}
+},
+booking: {
+      title: "Book an Appointment",
+      description:
+        "Book a session with a licensed nutrition therapist easily and securely online.",
+nutritionist: "Nutritionist",
 
+      selectService: "Select service",
+      selectExpert: "Select expert",
+      allServices: "All services",
+      allExperts: "All experts",
+      noServices: "No services available",
+      noExperts: "No experts available",
 
-  
+      availableSlots: "{{count}} available slots",
+      noSlots: "No available times for the selected date",
+
+      morning: "Morning",
+      afternoon: "Afternoon",
+      evening: "Evening",
+      all: "All",
+
+      insuranceAccepted: "Kela reimbursement available",
+      insuranceNotAccepted: "No Kela reimbursement",
+
+      remoteConsultation: "Remote consultation",
+      inPersonConsultation: "In-person appointment",
+
+      duration: "{{minutes}} min",
+      price: "€{{price}}",
+
+      bookNow: "Book Now",
+      booking: "Booking...",
+      bookingSuccess: "Successfully booked an appointment with {{name}}.",
+      bookingError: "Booking failed. Please try again.",
+
+      calendarLoadingError: "Failed to load calendar.",
+      reload: "Reload page"
+    }
   
 };
 

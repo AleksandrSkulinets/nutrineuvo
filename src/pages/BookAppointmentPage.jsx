@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -13,15 +15,17 @@ import { Calendar } from "../components/ui/calendar";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Badge } from "../components/ui/badge";
-import { Skeleton } from "../components/ui/skeleton";
 import { PublicAPI } from "../lib/endpoints/public";
 import { formatInTimeZone } from "date-fns-tz";
-import { Clock, Euro, Timer, CheckCircle2 } from "lucide-react";
+import {
+  Clock,
+  VideoIcon,
+  CreditCardIcon,
+  ShieldIcon,
+  CheckCircle2,
+} from "lucide-react";
 import { toast } from "sonner";
 import { CalendarSkeleton, SlotCardSkeleton } from "../components/ui/skeletons";
-import { VideoIcon } from "lucide-react";
-import { CreditCardIcon } from "lucide-react";
-import { ShieldIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -29,6 +33,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { ClockIcon } from "lucide-react";
+
 /* ---------------------- Helpers ---------------------- */
 function getSlotPeriod(time) {
   const [h] = String(time).split(":").map(Number);
@@ -79,6 +85,7 @@ class ErrorBoundary extends React.Component {
     return { hasError: true };
   }
   render() {
+    const { t } = this.props;
     if (this.state.hasError) {
       return (
         <div className="min-h-screen flex flex-col items-center justify-center px-6">
@@ -86,14 +93,13 @@ class ErrorBoundary extends React.Component {
             <CardContent className="p-8 text-center space-y-4">
               <CheckCircle2 className="w-10 h-10 text-destructive mx-auto" />
               <h3 className="text-lg font-semibold text-foreground">
-                Jokin meni pieleen
+                {t("booking.errorTitle")}
               </h3>
               <p className="text-muted-foreground">
-                Kalenterin latauksessa tapahtui virhe. Päivitä sivu ja yritä
-                uudelleen.
+                {t("booking.errorMessage")}
               </p>
               <Button onClick={() => window.location.reload()}>
-                Päivitä sivu
+                {t("booking.reload")}
               </Button>
             </CardContent>
           </Card>
@@ -106,6 +112,7 @@ class ErrorBoundary extends React.Component {
 
 /* ---------------------- Main Page ---------------------- */
 export default function BookingLayout() {
+  const { t } = useTranslation();
   const [selectedDate, setSelectedDate] = useState(startOfToday());
   const [availableDays, setAvailableDays] = useState([]);
   const [nutritionists, setNutritionists] = useState([]);
@@ -121,7 +128,6 @@ export default function BookingLayout() {
   /* ---------------------- Fetch available days ---------------------- */
   useEffect(() => {
     let mounted = true;
-
     async function fetchDays() {
       try {
         const res = await PublicAPI.getAvailableDays();
@@ -139,19 +145,18 @@ export default function BookingLayout() {
         if (mounted) setAvailableDays(clean);
       } catch {
         if (mounted) setAvailableDays([]);
-        toast.error("Kalenterin lataaminen epäonnistui.");
+        toast.error(t("booking.calendarLoadingError"));
       } finally {
         if (mounted) setLoadingDays(false);
       }
     }
-
     fetchDays();
     const interval = setInterval(fetchDays, 60000);
     return () => {
       mounted = false;
       clearInterval(interval);
     };
-  }, []);
+  }, [t]);
 
   /* ---------------------- Auto-select valid day ---------------------- */
   useEffect(() => {
@@ -168,7 +173,7 @@ export default function BookingLayout() {
     }
   }, [availableDays]);
 
-  /* ---------------------- Fetch slots for selected day ---------------------- */
+  /* ---------------------- Fetch slots ---------------------- */
   useEffect(() => {
     if (!(selectedDate instanceof Date) || isNaN(selectedDate.getTime()))
       return;
@@ -176,35 +181,26 @@ export default function BookingLayout() {
     const dateISO = toLocalISO(selectedDate);
 
     PublicAPI.getAvailableSlots(dateISO)
-      .then((res) => {
-        const data = res?.data?.data || [];
-        setNutritionists(data);
-      })
+      .then((res) => setNutritionists(res?.data?.data || []))
       .catch(() => {
         setNutritionists([]);
-        toast.error("Aikojen lataaminen epäonnistui.");
+        toast.error(t("booking.calendarLoadingError"));
       })
       .finally(() => setLoadingSlots(false));
-  }, [selectedDate]);
+  }, [selectedDate, t]);
 
-  /* ---------------------- Fetch all available services (for filters) ---------------------- */
+  /* ---------------------- Fetch services ---------------------- */
   useEffect(() => {
     async function fetchServices() {
       try {
         const res = await PublicAPI.getAvailableServices();
-        const data = res?.data?.data || [];
-        console.groupCollapsed("📦 [PublicAPI] Available services");
-        console.table(data);
-        console.groupEnd();
-        setServices(data);
-      } catch (err) {
-        console.error("❌ [BookingLayout] Failed to load services", err);
-        toast.error("Palveluiden lataus epäonnistui.");
+        setServices(res?.data?.data || []);
+      } catch {
+        toast.error(t("booking.calendarLoadingError"));
       }
     }
-
     fetchServices();
-  }, []);
+  }, [t]);
 
   /* ---------------------- Filters ---------------------- */
   const filteredNutritionists = nutritionists
@@ -215,10 +211,8 @@ export default function BookingLayout() {
         const matchPeriod =
           tab === "kaikki" ||
           (slot?.start_time && getSlotPeriod(slot.start_time) === tab);
-
         const matchService =
           service === "Kaikki" || slot?.service_type === service;
-
         return matchPeriod && matchService;
       }),
     }))
@@ -229,18 +223,16 @@ export default function BookingLayout() {
     0
   );
 
-  /* ---------------------- Slot booking ---------------------- */
+  /* ---------------------- Booking ---------------------- */
   const handleSlotBooking = async (slot, n) => {
     if (!slot?.slot_id || isBooking) return;
     try {
       setIsBooking(true);
       setSelectedSlot(slot.slot_id);
       await new Promise((r) => setTimeout(r, 800));
-      toast.success(
-        `Aika ${slot.start_time} varattu onnistuneesti ravitsemusterapeutilta ${n.name}.`
-      );
+      toast.success(t("booking.bookingSuccess", { name: n.name }));
     } catch {
-      toast.error("Ajan varaaminen epäonnistui. Yritä uudelleen.");
+      toast.error(t("booking.bookingError"));
     } finally {
       setIsBooking(false);
       setSelectedSlot(null);
@@ -257,20 +249,20 @@ export default function BookingLayout() {
 
   /* ---------------------- UI ---------------------- */
   return (
-    <ErrorBoundary>
-      <section className=" min-h-screen  mt-20">
-        <main className="p-12">
-          <div className="flex-1 space-y-6 p-6 ">
-            <div className="grid gap-4  sm:grid-cols-2 lg:grid-cols-3">
+    <ErrorBoundary t={t}>
+      <section className="min-h-screen mt-20">
+        <main className="px-4 sm:px-6 lg:px-12 py-8 sm:py-12">
+          <div className="space-y-8 p-3">
+            {/* ===== Filters ===== */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Select value={service} onValueChange={setService}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Valitse palvelu" />
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={t("booking.selectService")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem key="opt-all-services" value="Kaikki">
-                    Kaikki palvelut
+                  <SelectItem value="Kaikki">
+                    {t("booking.allServices")}
                   </SelectItem>
-
                   {services.length > 0 ? (
                     services.map((s, i) => (
                       <SelectItem key={`service-${i}-${s}`} value={s}>
@@ -278,61 +270,49 @@ export default function BookingLayout() {
                       </SelectItem>
                     ))
                   ) : (
-                    <SelectItem key="opt-no-services" disabled>
-                      Ei palveluita
-                    </SelectItem>
+                    <SelectItem disabled>{t("booking.noServices")}</SelectItem>
                   )}
                 </SelectContent>
               </Select>
 
               <Select value={expert} onValueChange={setExpert}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Valitse asiantuntija" />
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={t("booking.selectExpert")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem key="opt-all-experts" value="Kaikki">
-                    Kaikki asiantuntijat
+                  <SelectItem value="Kaikki">
+                    {t("booking.allExperts")}
                   </SelectItem>
-
                   {nutritionists.length > 0 ? (
                     nutritionists.map((n, i) => (
-                      <SelectItem
-                        key={`expert-${i}-${n.nutritionist_id}`}
-                        value={n.name}
-                      >
+                      <SelectItem key={`expert-${i}`} value={n.name}>
                         {n.name}
                       </SelectItem>
                     ))
                   ) : (
-                    <SelectItem key="opt-no-experts" disabled>
-                      Ei asiantuntijoita
-                    </SelectItem>
+                    <SelectItem disabled>{t("booking.noExperts")}</SelectItem>
                   )}
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
+            {/* ===== Calendar + Slots ===== */}
+            <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8">
+              {/* Calendar */}
               {loadingDays ? (
                 <CalendarSkeleton />
               ) : (
-                <Card className="border-none shadow-none mx-auto">
+                <Card className="border-none shadow-none mx-auto w-full max-w-sm sm:max-w-md">
                   <Calendar
                     mode="single"
                     selected={selectedDate}
                     onSelect={handleDateSelect}
                     disabled={(date) => date < today}
-                    className=" rounded-lg border"
+                    className="rounded-lg border w-full"
                     modifiers={{ available: isAvailableModifier }}
                     modifiersClassNames={{
                       available:
                         "bg-primary/10 text-primary font-semibold hover:bg-primary/20",
-                    }}
-                    classNames={{
-                      day_selected:
-                        "bg-primary text-primary-foreground hover:bg-primary/90",
-                      day_today:
-                        "text-foreground font-bold underline underline-offset-2",
                     }}
                   />
                   <div className="text-muted-foreground text-center text-xs mt-2">
@@ -345,44 +325,34 @@ export default function BookingLayout() {
                   </div>
                   <div className="text-muted-foreground text-center text-xs">
                     {totalSlots > 0
-                      ? `${totalSlots} vapaata aikaa saatavilla`
-                      : "Ei vapaita aikoja tällä päivällä"}
+                      ? `${totalSlots} ${t("booking.availableSlots")}`
+                      : t("booking.noSlots")}
                   </div>
                 </Card>
               )}
 
-              <div className="space-y-6 ms-6">
+              {/* Slots */}
+              <div className="space-y-6">
                 <Tabs value={tab} onValueChange={setTab}>
                   <TabsList className="flex gap-2 rounded-full bg-muted p-1">
-                    <TabsTrigger
-                      className="rounded-full w-full px-4 py-1 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-                      value="kaikki"
-                    >
-                      Kaikki
-                    </TabsTrigger>
-                    <TabsTrigger
-                      className="rounded-full w-full px-4 py-1 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-                      value="aamu"
-                    >
-                      Aamu
-                    </TabsTrigger>
-                    <TabsTrigger
-                      className="rounded-full w-full px-4 py-1 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-                      value="iltapäivä"
-                    >
-                      Iltapäivä
-                    </TabsTrigger>
-                    <TabsTrigger
-                      className="rounded-full w-full px-4 py-1 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-                      value="ilta"
-                    >
-                      Ilta
-                    </TabsTrigger>
+                    {[
+                      { key: "kaikki", label: t("booking.all") },
+                      { key: "aamu", label: t("booking.morning") },
+                      { key: "iltapäivä", label: t("booking.afternoon") },
+                      { key: "ilta", label: t("booking.evening") },
+                    ].map(({ key, label }) => (
+                      <TabsTrigger
+                        key={key}
+                        value={key}
+                        className="rounded-full px-4 m-auto  py-1.5 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+                      >
+                        {label}
+                      </TabsTrigger>
+                    ))}
                   </TabsList>
                 </Tabs>
 
                 {loadingSlots ? (
-                  // 🩶 Show multiple realistic slot skeletons instead of one big block
                   <div className="space-y-4">
                     {Array.from({ length: 3 }).map((_, i) => (
                       <SlotCardSkeleton key={i} />
@@ -397,48 +367,61 @@ export default function BookingLayout() {
                         n.timezone
                       );
                       const display = displayInUserZone(utc, n.timezone);
-
                       return (
                         <Card
-                          key={`${n.nutritionist_id}-${
-                            slot.slot_id
-                          }-${selectedDate.toISOString()}`}
-                          className="shadow-sm bg-card hover:shadow-md hover:scale-[1.01] transition-all duration-200 border border-border rounded-xl"
+                          key={`${n.nutritionist_id}-${slot.slot_id}`}
+                          className="shadow-sm bg-card p-2 hover:shadow-md transition-all border border-border rounded-xl"
                         >
-                          {/* HEADER: Service + Insurance */}
-                          <CardHeader className="flex flex-row justify-between p-4 border-b border-border/50">
-                            <div>
-                              <h3 className="text-lg font-semibold text-card-foreground">
-                                {slot.service_type}
-                              </h3>
-                            </div>
-                            <div className="flex items-center gap-1 text-xs sm:text-sm">
-                              <ShieldIcon
-                                className={`h-4 w-4 ${
-                                  slot.accepts_insurance
-                                    ? "text-emerald-600"
-                                    : "text-muted-foreground"
-                                }`}
-                              />
-                              <span
-                                className={`${
-                                  slot.accepts_insurance
-                                    ? "text-emerald-600 font-medium"
-                                    : "text-muted-foreground"
-                                }`}
-                              >
-                                {slot.accepts_insurance
-                                  ? "Vakuutus hyväksytään"
-                                  : "Ei vakuutusta"}
+                          {/* HEADER */}
+                          <CardHeader className="flex flex-row sm:flex-row justify-between sm:items-center gap-3 p-4 border-b border-border/50">
+                            <h3 className="text-base font-semibold text-card-foreground text-center sm:text-left">
+                              {slot.service_type}
+                            </h3>
+
+                            <div className="flex  items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+                                <Clock className="h-4 w-4 text-primary" />
+                              </div>
+                              <span className="font-medium text-card-foreground">
+                                {slot.start_time}–{slot.end_time}
                               </span>
                             </div>
                           </CardHeader>
-
-                          {/* MAIN: Nutritionist + Slot info */}
-                          <CardContent className="p-6 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-8">
-                            {/* LEFT: Nutritionist */}
-                            <div className="flex items-center gap-4 flex-1">
-                              <Avatar className="h-16 w-16 border shadow-sm">
+                          {/* FOOTER */}
+                          <CardHeader className="flex flex-row sm:flex-row items-center justify-between gap-4 p-4 ">
+                            <div className="flex items-center gap-2">
+                              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+                                <ShieldIcon
+                                  className={`h-4 w-4 ${
+                                    slot.accepts_insurance
+                                      ? "text-emerald-600"
+                                      : "text-muted-foreground"
+                                  }`}
+                                />
+                              </div>
+                              <Badge
+                                variant="secondary"
+                                className={`px-2 py-0.5 text-xs rounded-md ${
+                                  slot.accepts_insurance
+                                    ? "bg-primary/80"
+                                    : "bg-muted text-muted-foreground"
+                                }`}
+                              >
+                                {slot.accepts_insurance
+                                  ? t("booking.insuranceAccepted")
+                                  : t("booking.insuranceNotAccepted")}
+                              </Badge>
+                            </div>
+                            <CardDescription className="text-2xl sm:text-1xl font-bold text-card-foreground leading-none">
+                              {display.userLocal}
+                            </CardDescription>
+                          </CardHeader>
+                          {/* CONTENT */}
+                          <CardContent className="p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+                            {/* LEFT: Nutritionist info */}
+                            <div className="flex items-center sm:items-start justify-between sm:justify-start gap-3 sm:gap-4 flex-1 w-full">
+                              {/* Avatar */}
+                              <Avatar className="h-14 w-14 sm:h-16 sm:w-16 border shadow-sm flex-shrink-0">
                                 <AvatarImage src={n.image} alt={n.name} />
                                 <AvatarFallback>
                                   {String(n.name || "")
@@ -448,38 +431,57 @@ export default function BookingLayout() {
                                 </AvatarFallback>
                               </Avatar>
 
-                              <div className="flex flex-col">
-                                <h4 className="font-semibold text-card-foreground">
-                                  {n.name}
-                                </h4>
-                                <p className="text-xs text-muted-foreground">
-                                  Ravitsemusterapeutti
-                                </p>
-                                <p className="text-xs text-primary/80 font-medium">
-                                  Etävastaanotto
-                                </p>
-                              </div>
+                              {/* Info */}
+                              <div className="flex flex-col text-center sm:text-left">
+  {/* Name + role */}
+  <CardTitle className="text-sm sm:text-base font-semibold">
+    {n.name}
+  </CardTitle>
+  <CardDescription className="text-xs text-muted-foreground">
+    {t("booking.nutritionist")}
+  </CardDescription>
+
+  {/* Country + Currency */}
+  <CardDescription className="flex items-center justify-center sm:justify-start gap-1 text-[11px] text-muted-foreground mt-1">
+    {n.country} • {n.currency}
+  </CardDescription>
+
+  {/* Consultation type */}
+  <CardDescription className="flex items-center justify-center sm:justify-start gap-1 text-xs font-medium mt-1.5">
+    {slot.consultation_type === "VIDEO" ? (
+      <>
+        <VideoIcon className="h-3.5 w-3.5 text-blue-500" />
+        <span className="text-blue-600">
+          {t("booking.remoteConsultation")}
+        </span>
+      </>
+    ) : (
+      <>
+        <Clock className="h-3.5 w-3.5 text-emerald-600" />
+        <span className="text-emerald-600">
+          {t("booking.inPersonConsultation")}
+        </span>
+      </>
+    )}
+  </CardDescription>
+</div>
+
                             </div>
 
-                            {/* RIGHT: Slot info */}
-                            <div className="flex flex-col sm:items-end items-center flex-1 text-sm font-medium">
-                              <div className="text-3xl font-bold text-card-foreground leading-none">
-                                {display.userLocal}
-                              </div>
-                              <div className="text-muted-foreground mt-1">
+                            {/* RIGHT: Duration + Price */}
+                            <div className="flex flex-row sm:flex-col justify-between sm:gap-1 gap-3 sm:items-end items-center flex-shrink-0 text-sm font-medium sm:text-right">
+                              <CardDescription className="text-muted-foreground text-xs sm:text-sm">
                                 {slot.duration_min} min
-                              </div>
+                              </CardDescription>
                               {slot.price && (
-                                <div className="text-base font-semibold text-primary mt-1">
+                                <CardDescription className="text-base font-semibold text-primary">
                                   €{slot.price}
-                                </div>
+                                </CardDescription>
                               )}
                             </div>
                           </CardContent>
 
-                          {/* FOOTER: Payment + Button */}
                           <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-border/50">
-                            {/* Payment methods */}
                             <div className="flex flex-wrap justify-center sm:justify-start gap-2">
                               {slot.payment_methods?.map((method, i) => (
                                 <Badge
@@ -493,17 +495,16 @@ export default function BookingLayout() {
                               ))}
                             </div>
 
-                            {/* Booking button */}
                             <Button
                               onClick={() => handleSlotBooking(slot, n)}
                               disabled={
                                 isBooking && selectedSlot === slot.slot_id
                               }
-                              className="min-w-[160px] h-9 text-sm font-medium"
+                              className="w-full sm:w-auto min-w-[150px] h-9 text-sm font-medium"
                             >
                               {isBooking && selectedSlot === slot.slot_id
-                                ? "Varataan..."
-                                : "Varaa aika"}
+                                ? t("booking.booking")
+                                : t("booking.bookNow")}
                             </Button>
                           </CardFooter>
                         </Card>
@@ -512,7 +513,7 @@ export default function BookingLayout() {
                   )
                 ) : (
                   <p className="text-center text-muted-foreground mt-8">
-                    Ei vapaita aikoja valitulle päivälle.
+                    {t("booking.noSlots")}
                   </p>
                 )}
               </div>

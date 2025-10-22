@@ -335,7 +335,43 @@ const svTranslations = {
   cta_desc:
     "Boka tid hos en Nutrineuvo-dietist redan idag och börja din resa mot hälsosammare matvanor.",
   book_now: "Boka tid",
-}
+},booking: {
+      title: "Boka tid",
+      description:
+        "Boka en tid med en legitimerad näringsterapeut enkelt och säkert online.",
+
+      selectService: "Välj tjänst",
+      selectExpert: "Välj expert",
+      allServices: "Alla tjänster",
+      allExperts: "Alla experter",
+      noServices: "Inga tjänster tillgängliga",
+      noExperts: "Inga experter tillgängliga",
+
+      availableSlots: "{{count}} lediga tider",
+      noSlots: "Inga lediga tider för valt datum",
+
+      morning: "Morgon",
+      afternoon: "Eftermiddag",
+      evening: "Kväll",
+      all: "Alla",
+
+      insuranceAccepted: "Kela-ersättning tillgänglig",
+      insuranceNotAccepted: "Ingen Kela-ersättning",
+
+      remoteConsultation: "Distansmottagning",
+      inPersonConsultation: "Mottagning på plats",
+
+      duration: "{{minutes}} min",
+      price: "€{{price}}",
+ nutritionist: "Näringsterapeut",
+      bookNow: "Boka tid",
+      booking: "Bokar...",
+      bookingSuccess: "Tiden bokades framgångsrikt med {{name}}.",
+      bookingError: "Bokningen misslyckades. Försök igen.",
+
+      calendarLoadingError: "Misslyckades att ladda kalendern.",
+      reload: "Ladda om sidan"
+    }
 
   
 };
