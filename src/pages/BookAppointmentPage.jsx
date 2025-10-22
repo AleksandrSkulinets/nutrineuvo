@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
@@ -18,8 +19,16 @@ import { formatInTimeZone } from "date-fns-tz";
 import { Clock, Euro, Timer, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { CalendarSkeleton, SlotCardSkeleton } from "../components/ui/skeletons";
-
-
+import { VideoIcon } from "lucide-react";
+import { CreditCardIcon } from "lucide-react";
+import { ShieldIcon } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
 /* ---------------------- Helpers ---------------------- */
 function getSlotPeriod(time) {
   const [h] = String(time).split(":").map(Number);
@@ -105,6 +114,9 @@ export default function BookingLayout() {
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [isBooking, setIsBooking] = useState(false);
+  const [services, setServices] = useState([]);
+  const [service, setService] = useState("Kaikki");
+  const [expert, setExpert] = useState("Kaikki");
 
   /* ---------------------- Fetch available days ---------------------- */
   useEffect(() => {
@@ -175,18 +187,40 @@ export default function BookingLayout() {
       .finally(() => setLoadingSlots(false));
   }, [selectedDate]);
 
+  /* ---------------------- Fetch all available services (for filters) ---------------------- */
+  useEffect(() => {
+    async function fetchServices() {
+      try {
+        const res = await PublicAPI.getAvailableServices();
+        const data = res?.data?.data || [];
+        console.groupCollapsed("📦 [PublicAPI] Available services");
+        console.table(data);
+        console.groupEnd();
+        setServices(data);
+      } catch (err) {
+        console.error("❌ [BookingLayout] Failed to load services", err);
+        toast.error("Palveluiden lataus epäonnistui.");
+      }
+    }
+
+    fetchServices();
+  }, []);
+
   /* ---------------------- Filters ---------------------- */
   const filteredNutritionists = nutritionists
     .filter((n) => n && Array.isArray(n.slots))
     .map((n) => ({
       ...n,
-      slots:
-        tab === "kaikki"
-          ? n.slots
-          : n.slots.filter(
-              (slot) =>
-                slot?.start_time && getSlotPeriod(slot.start_time) === tab
-            ),
+      slots: n.slots.filter((slot) => {
+        const matchPeriod =
+          tab === "kaikki" ||
+          (slot?.start_time && getSlotPeriod(slot.start_time) === tab);
+
+        const matchService =
+          service === "Kaikki" || slot?.service_type === service;
+
+        return matchPeriod && matchService;
+      }),
     }))
     .filter((n) => n.slots.length > 0);
 
@@ -224,168 +258,268 @@ export default function BookingLayout() {
   /* ---------------------- UI ---------------------- */
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 my-20 to-background">
-        <div className="container mx-auto px-6 py-12">
-          <div className="grid gap-8 lg:grid-cols-[400px_1fr] max-w-7xl mx-auto">
-            {/* LEFT: Calendar */}
-            <div className="space-y-6">
-              <Card className="shadow-lg border-0 bg-card/80 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-primary rounded-full" />
-                    Valitse päivä
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-  {loadingDays ? (
-    <CalendarSkeleton />
-  ) : (
-    <Calendar
-      mode="single"
-      selected={selectedDate}
-      onSelect={handleDateSelect}
-      disabled={(date) => date < today}
-      modifiers={{ available: isAvailableModifier }}
-      modifiersClassNames={{
-        available:
-          "bg-primary/10 text-primary font-semibold hover:bg-primary/20",
-      }}
-      classNames={{
-        day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary/90",
-        day_today:
-          "text-foreground font-bold underline underline-offset-2",
-      }}
-    />
-  )}
-</CardContent>
+      <section className=" min-h-screen  mt-20">
+        <main className="p-12">
+          <div className="flex-1 space-y-6 p-6 ">
+            <div className="grid gap-4  sm:grid-cols-2 lg:grid-cols-3">
+              <Select value={service} onValueChange={setService}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Valitse palvelu" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem key="opt-all-services" value="Kaikki">
+                    Kaikki palvelut
+                  </SelectItem>
 
-              </Card>
+                  {services.length > 0 ? (
+                    services.map((s, i) => (
+                      <SelectItem key={`service-${i}-${s}`} value={s}>
+                        {s}
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <SelectItem key="opt-no-services" disabled>
+                      Ei palveluita
+                    </SelectItem>
+                  )}
+                </SelectContent>
+              </Select>
+
+              <Select value={expert} onValueChange={setExpert}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Valitse asiantuntija" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem key="opt-all-experts" value="Kaikki">
+                    Kaikki asiantuntijat
+                  </SelectItem>
+
+                  {nutritionists.length > 0 ? (
+                    nutritionists.map((n, i) => (
+                      <SelectItem
+                        key={`expert-${i}-${n.nutritionist_id}`}
+                        value={n.name}
+                      >
+                        {n.name}
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <SelectItem key="opt-no-experts" disabled>
+                      Ei asiantuntijoita
+                    </SelectItem>
+                  )}
+                </SelectContent>
+              </Select>
             </div>
 
-            {/* RIGHT: Slots */}
-            <div className="space-y-6">
-              <Card className="shadow-lg border-0 bg-card/80 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-bold text-foreground">
+            <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
+              {loadingDays ? (
+                <CalendarSkeleton />
+              ) : (
+                <Card className="border-none shadow-none mx-auto">
+                  <Calendar
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={handleDateSelect}
+                    disabled={(date) => date < today}
+                    className=" rounded-lg border"
+                    modifiers={{ available: isAvailableModifier }}
+                    modifiersClassNames={{
+                      available:
+                        "bg-primary/10 text-primary font-semibold hover:bg-primary/20",
+                    }}
+                    classNames={{
+                      day_selected:
+                        "bg-primary text-primary-foreground hover:bg-primary/90",
+                      day_today:
+                        "text-foreground font-bold underline underline-offset-2",
+                    }}
+                  />
+                  <div className="text-muted-foreground text-center text-xs mt-2">
                     {selectedDate?.toLocaleDateString("fi-FI", {
                       weekday: "long",
                       day: "numeric",
                       month: "long",
                       year: "numeric",
                     })}
-                  </h2>
-                  <p className="text-primary font-semibold mt-1">
+                  </div>
+                  <div className="text-muted-foreground text-center text-xs">
                     {totalSlots > 0
                       ? `${totalSlots} vapaata aikaa saatavilla`
                       : "Ei vapaita aikoja tällä päivällä"}
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Tabs value={tab} onValueChange={setTab}>
-                <TabsList className="grid w-full grid-cols-4 bg-muted/50">
-                  <TabsTrigger value="kaikki">Kaikki</TabsTrigger>
-                  <TabsTrigger value="aamu">Aamu</TabsTrigger>
-                  <TabsTrigger value="iltapäivä">Iltapäivä</TabsTrigger>
-                  <TabsTrigger value="ilta">Ilta</TabsTrigger>
-                </TabsList>
-              </Tabs>
-
-             <div className="space-y-4">
-  {loadingSlots ? (
-    // 🩶 Show multiple realistic slot skeletons instead of one big block
-    <div className="space-y-4">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <SlotCardSkeleton key={i} />
-      ))}
-    </div>
-  ) : filteredNutritionists.length > 0 ? (
-    filteredNutritionists.flatMap((n) =>
-      n.slots.map((slot) => {
-        const utc = buildUTCSlot(selectedDate, slot.start_time, n.timezone);
-        const display = displayInUserZone(utc, n.timezone);
-
-        return (
-          <Card
-            key={slot.slot_id}
-            className="shadow-md bg-card/80 backdrop-blur-sm hover:scale-[1.01] transition"
-          >
-            <CardContent className="p-6 flex flex-col lg:flex-row gap-6">
-              {/* LEFT: Slot info */}
-              <div className="flex-1 space-y-2">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <div className="text-2xl font-bold text-primary">
-                    {display.userLocal}
                   </div>
-                  <Badge
-                    variant="outline"
-                    className="text-xs flex items-center gap-1"
-                  >
-                    <Timer className="h-3 w-3" />
-                    {slot.service_type || "Ravitsemusneuvonta"}
-                  </Badge>
-                </div>
+                </Card>
+              )}
 
-                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mt-1">
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-4 w-4 text-primary" />
-                    {slot.duration_min} min
-                  </span>
-                  {slot.price && (
-                    <span className="flex items-center gap-1">
-                      <Euro className="h-4 w-4 text-primary" />
-                      {slot.price} €
-                    </span>
-                  )}
-                </div>
+              <div className="space-y-6 ms-6">
+                <Tabs value={tab} onValueChange={setTab}>
+                  <TabsList className="flex gap-2 rounded-full bg-muted p-1">
+                    <TabsTrigger
+                      className="rounded-full w-full px-4 py-1 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+                      value="kaikki"
+                    >
+                      Kaikki
+                    </TabsTrigger>
+                    <TabsTrigger
+                      className="rounded-full w-full px-4 py-1 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+                      value="aamu"
+                    >
+                      Aamu
+                    </TabsTrigger>
+                    <TabsTrigger
+                      className="rounded-full w-full px-4 py-1 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+                      value="iltapäivä"
+                    >
+                      Iltapäivä
+                    </TabsTrigger>
+                    <TabsTrigger
+                      className="rounded-full w-full px-4 py-1 text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+                      value="ilta"
+                    >
+                      Ilta
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+
+                {loadingSlots ? (
+                  // 🩶 Show multiple realistic slot skeletons instead of one big block
+                  <div className="space-y-4">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <SlotCardSkeleton key={i} />
+                    ))}
+                  </div>
+                ) : filteredNutritionists.length > 0 ? (
+                  filteredNutritionists.flatMap((n) =>
+                    n.slots.map((slot) => {
+                      const utc = buildUTCSlot(
+                        selectedDate,
+                        slot.start_time,
+                        n.timezone
+                      );
+                      const display = displayInUserZone(utc, n.timezone);
+
+                      return (
+                        <Card
+                          key={`${n.nutritionist_id}-${
+                            slot.slot_id
+                          }-${selectedDate.toISOString()}`}
+                          className="shadow-sm bg-card hover:shadow-md hover:scale-[1.01] transition-all duration-200 border border-border rounded-xl"
+                        >
+                          {/* HEADER: Service + Insurance */}
+                          <CardHeader className="flex flex-row justify-between p-4 border-b border-border/50">
+                            <div>
+                              <h3 className="text-lg font-semibold text-card-foreground">
+                                {slot.service_type}
+                              </h3>
+                            </div>
+                            <div className="flex items-center gap-1 text-xs sm:text-sm">
+                              <ShieldIcon
+                                className={`h-4 w-4 ${
+                                  slot.accepts_insurance
+                                    ? "text-emerald-600"
+                                    : "text-muted-foreground"
+                                }`}
+                              />
+                              <span
+                                className={`${
+                                  slot.accepts_insurance
+                                    ? "text-emerald-600 font-medium"
+                                    : "text-muted-foreground"
+                                }`}
+                              >
+                                {slot.accepts_insurance
+                                  ? "Vakuutus hyväksytään"
+                                  : "Ei vakuutusta"}
+                              </span>
+                            </div>
+                          </CardHeader>
+
+                          {/* MAIN: Nutritionist + Slot info */}
+                          <CardContent className="p-6 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-8">
+                            {/* LEFT: Nutritionist */}
+                            <div className="flex items-center gap-4 flex-1">
+                              <Avatar className="h-16 w-16 border shadow-sm">
+                                <AvatarImage src={n.image} alt={n.name} />
+                                <AvatarFallback>
+                                  {String(n.name || "")
+                                    .split(" ")
+                                    .map((x) => x?.[0])
+                                    .join("")}
+                                </AvatarFallback>
+                              </Avatar>
+
+                              <div className="flex flex-col">
+                                <h4 className="font-semibold text-card-foreground">
+                                  {n.name}
+                                </h4>
+                                <p className="text-xs text-muted-foreground">
+                                  Ravitsemusterapeutti
+                                </p>
+                                <p className="text-xs text-primary/80 font-medium">
+                                  Etävastaanotto
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* RIGHT: Slot info */}
+                            <div className="flex flex-col sm:items-end items-center flex-1 text-sm font-medium">
+                              <div className="text-3xl font-bold text-card-foreground leading-none">
+                                {display.userLocal}
+                              </div>
+                              <div className="text-muted-foreground mt-1">
+                                {slot.duration_min} min
+                              </div>
+                              {slot.price && (
+                                <div className="text-base font-semibold text-primary mt-1">
+                                  €{slot.price}
+                                </div>
+                              )}
+                            </div>
+                          </CardContent>
+
+                          {/* FOOTER: Payment + Button */}
+                          <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-border/50">
+                            {/* Payment methods */}
+                            <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+                              {slot.payment_methods?.map((method, i) => (
+                                <Badge
+                                  key={`method-${i}`}
+                                  variant="secondary"
+                                  className="text-xs flex items-center gap-1 px-2 py-1 bg-muted text-muted-foreground"
+                                >
+                                  <CreditCardIcon className="h-3.5 w-3.5 text-primary" />
+                                  {method}
+                                </Badge>
+                              ))}
+                            </div>
+
+                            {/* Booking button */}
+                            <Button
+                              onClick={() => handleSlotBooking(slot, n)}
+                              disabled={
+                                isBooking && selectedSlot === slot.slot_id
+                              }
+                              className="min-w-[160px] h-9 text-sm font-medium"
+                            >
+                              {isBooking && selectedSlot === slot.slot_id
+                                ? "Varataan..."
+                                : "Varaa aika"}
+                            </Button>
+                          </CardFooter>
+                        </Card>
+                      );
+                    })
+                  )
+                ) : (
+                  <p className="text-center text-muted-foreground mt-8">
+                    Ei vapaita aikoja valitulle päivälle.
+                  </p>
+                )}
               </div>
-
-              {/* RIGHT: Nutritionist & Booking */}
-              <div className="flex items-center gap-4 justify-end flex-1">
-                <Avatar className="h-16 w-16 border">
-                  <AvatarImage src={n.image} alt={n.name} />
-                  <AvatarFallback>
-                    {String(n.name || "")
-                      .split(" ")
-                      .map((x) => x?.[0])
-                      .join("")}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <h3 className="font-semibold text-foreground">{n.name}</h3>
-                  {n.location && (
-                    <p className="text-sm text-muted-foreground">
-                      {n.location}
-                    </p>
-                  )}
-                </div>
-                <Button
-                  onClick={() => handleSlotBooking(slot, n)}
-                  disabled={isBooking && selectedSlot === slot.slot_id}
-                  className="min-w-[140px]"
-                >
-                  {isBooking && selectedSlot === slot.slot_id
-                    ? "Varataan..."
-                    : "Varaa aika"}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      })
-    )
-  ) : (
-    <p className="text-center text-muted-foreground mt-8">
-      Ei vapaita aikoja valitulle päivälle.
-    </p>
-  )}
-</div>
-
             </div>
           </div>
-        </div>
-      </div>
+        </main>
+      </section>
     </ErrorBoundary>
   );
 }

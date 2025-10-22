@@ -12,4 +12,8 @@ export const PublicAPI = {
   getAvailableSlots: (dateISO) => {
     return api(`/public/available-slots?date=${dateISO}`);
   },
+
+
+  getAvailableServices: () => api("/public/services"),
+
 };

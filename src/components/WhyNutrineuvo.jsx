@@ -18,7 +18,7 @@ export default function WhyNutrineuvo() {
 },
 
     {
-      icon: <Blocks className="shrink-0 text-primary dark:text-primary-foreground" />,
+      icon: <Blocks className="shrink-0 text-foreground" />,
       title: t("why.no_diagnosis"),
       desc: t("why.no_diagnosis_desc"),
       bg: "bg-primary text-primary-foreground",
@@ -26,23 +26,23 @@ export default function WhyNutrineuvo() {
       textColor: "text-primary-foreground",
     },
     {
-      icon: <Settings2 className="shrink-0 text-primary " />,
+      icon: <Settings2 className="shrink-0 text-foreground " />,
       title: t("why.no_referral"),
       desc: t("why.no_referral_desc"),
       bg: "bg-card dark:bg-zinc-900",
       border: "border border-border/50",
-      textColor: "text-white",
+      textColor: "text-primary-foreground",
     },
     {
-      icon: <Blocks className="shrink-0 text-primary " />,
+      icon: <Blocks className="shrink-0 text-foreground " />,
       title: t("why.data_secure"),
       desc: t("why.data_secure_desc"),
       bg: "bg-card dark:bg-zinc-900",
       border: "border border-border/50",
-      textColor: "text-white ",
+      textColor: "text-primary-foreground",
     },
     {
-      icon: <Settings2 className="shrink-0 text-primary dark:text-primary-foreground" />,
+      icon: <Settings2 className="shrink-0 text-foreground" />,
       title: t("why.no_commitment"),
       desc: t("why.no_commitment_desc"),
       bg: "bg-primary text-primary-foreground",

@@ -27,12 +27,12 @@ export default function WhyChooseUs() {
       textColor: "text-primary-foreground",
     },
     {
-      icon: <PhoneCheck className="shrink-0 text-white" />,
+      icon: <PhoneCheck className="shrink-0 text-foreground" />,
       title: t("why.no_referral"),
       desc: t("why.no_referral_desc"),
       bg: "bg-card dark:bg-zinc-900",
       border: "border border-border/50",
-      textColor: "text-white",
+      textColor: "text-foreground",
     },
   ];
 
